@@ -33,7 +33,7 @@ const Header = () => {
         transition=" 10s " // Adjust transition for menu swing
         cursor="cell"
         _active={{ transform: "rotate(360deg)" }}
-        color={colorMode === "dark" ? "black" : "black"}
+        color={colorMode === "dark" ? "white" : "black"}
         onClick={handleClick}
       >
         <GiLevelFour size={35} />
