@@ -30,7 +30,7 @@ const Header = () => {
     <>
       <Box
         as="span"
-        transition=" 10s " // Adjust transition for menu swing
+        transition=" 10s "
         cursor="cell"
         _active={{ transform: "rotate(360deg)" }}
         color={colorMode === "dark" ? "white" : "black"}
@@ -38,41 +38,43 @@ const Header = () => {
       >
         <GiLevelFour size={35} />
       </Box>
-      {isOpen && ( // Conditionally render menu based on isOpen state
+      {isOpen && (
         <Stack
           ref={menuRef}
           direction={"column"}
           position="absolute"
-          top={70}
+          top={65}
           right={2}
           transformOrigin={{ top: "50%", right: "0" }}
-          transition=" 10s "
-          backgroundColor={colorMode === "dark" ? "wheat" : "White"}
+          transition=" 1s "
+          backgroundColor={colorMode === "dark" ? "gray.800" : "White"}
           color={colorMode === "dark" ? "black" : "black"}
           boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
           p={5}
           borderBottomRadius={20}
+          borderTopRightRadius={20}
+          mr="77px"
         >
           <Button
-            color={colorMode === "dark" ? "black" : "black"}
+            color={colorMode === "dark" ? "wheat" : "black"}
             boxShadow="0px 4px 8px rgba(0, 0, 1, 0.15)"
           >
             <Link>Home</Link>
           </Button>
           <Button
-            color={colorMode === "dark" ? "black" : "black"}
+            color={colorMode === "dark" ? "wheat" : "black"}
             boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
           >
             <Link>Achievements</Link>
           </Button>
           <Button
-            color={colorMode === "dark" ? "black" : "black"}
+            color={colorMode === "dark" ? "wheat" : "black"}
             boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
           >
             <Link>Gallery</Link>
           </Button>
           <Button
-            color={colorMode === "dark" ? "black" : "black"}
+            color={colorMode === "dark" ? "wheat" : "black"}
             boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
           >
             <Link>Contact Me</Link>

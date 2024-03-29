@@ -1,5 +1,4 @@
 import { Button, HStack, useColorMode } from "@chakra-ui/react";
-
 import { FaRegLightbulb } from "react-icons/fa6";
 import { FaLightbulb } from "react-icons/fa";
 
@@ -15,11 +14,16 @@ const ColorModeSwitch = () => {
         size="100px"
         _hover={{ bg: "transparent", size: "120px" }}
         transition="1.5s"
+        position="relative"
       >
         {colorMode === "dark" ? (
           <>
             <FaLightbulb
-              style={{ transform: "rotate(180deg)" }}
+              style={{
+                transform: "rotate(180deg)",
+                boxShadow: "0px 0px 70px 20px  #f1c008",
+                borderRadius: "100px",
+              }}
               color="#f1c008"
               size={52}
             />
@@ -41,7 +45,11 @@ const ColorModeSwitch = () => {
         ) : (
           <>
             <FaRegLightbulb
-              style={{ transform: "rotate(180deg)" }}
+              style={{
+                transform: "rotate(180deg)",
+                boxShadow: "0px 5px 10px black",
+                borderRadius: "50px",
+              }}
               color="black"
               size={55}
             />

@@ -4,7 +4,13 @@ import ProfilePhoto from "./ProfilePhoto";
 
 const ProfileBox = () => {
   return (
-    <VStack boxShadow=" 10px 20px 20px 20px rgba(0, 0, 0, 0.2)" margin={150}>
+    <VStack
+      boxShadow=" 10px 20px 20px 20px rgba(0, 0, 0, 0.2)"
+      mr={150}
+      ml={150}
+      mb={100}
+      mt={70}
+    >
       <Box
         margin={0}
         backgroundColor="#ced8e4"
