@@ -25,6 +25,8 @@ const Header = () => {
         borderWidth={0}
       >
         <Image
+          transition=" 1s "
+          _hover={{ transform: "rotate(360deg)" }}
           backgroundColor={colorMode === "dark" ? "White" : "transparent"}
           borderRadius={colorMode === "dark" ? "30px" : "30px"}
           boxShadow=" 0px 0px 20px 0px rgba(1, 1, 1)"

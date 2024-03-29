@@ -21,16 +21,16 @@ const ColorModeSwitch = () => {
             <FaLightbulb
               style={{
                 transform: "rotate(180deg)",
-                boxShadow: "0px 0px 70px 20px  #f1c008",
+                boxShadow: "0px 0px 90px 15px  #f1c008",
                 borderRadius: "100px",
               }}
               color="#f1c008"
-              size={52}
+              size={55}
             />
             <span
               style={{
                 position: "absolute",
-                top: "-5px", // Adjust top position for desired wire length
+                top: "-5px",
                 left: "50%", // Center the line horizontally
                 transform: "translateX(-50%)", // Offset for proper centering
                 width: "0",
@@ -47,8 +47,8 @@ const ColorModeSwitch = () => {
             <FaRegLightbulb
               style={{
                 transform: "rotate(180deg)",
-                boxShadow: "0px 5px 10px black",
-                borderRadius: "50px",
+                boxShadow: "0px 0px 70px 20px  black",
+                borderRadius: "100px",
               }}
               color="black"
               size={55}

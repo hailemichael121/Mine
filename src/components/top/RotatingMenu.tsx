@@ -6,16 +6,19 @@ import {
   useOutsideClick,
 } from "@chakra-ui/react";
 import { GiLevelFour } from "react-icons/gi";
-import { Link } from "@chakra-ui/react"; // Import Link for navigation
+import { Link } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false); // Start menu closed
+  const [isOpen, setIsOpen] = useState(false);
+  const [isIconRotated, setIsIconRotated] = useState(false);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   const { colorMode } = useColorMode();
   const handleClick = () => {
     setIsOpen(!isOpen);
+    setIsIconRotated(!isIconRotated);
   };
   const closeMenu = () => {
     setIsOpen(false);
@@ -30,10 +33,10 @@ const Header = () => {
     <>
       <Box
         as="span"
-        transition=" 10s "
+        transition=" 1s "
         cursor="cell"
-        _active={{ transform: "rotate(360deg)" }}
         color={colorMode === "dark" ? "white" : "black"}
+        transform={isIconRotated ? "rotate(360deg)" : ""}
         onClick={handleClick}
       >
         <GiLevelFour size={35} />
@@ -43,8 +46,8 @@ const Header = () => {
           ref={menuRef}
           direction={"column"}
           position="absolute"
-          top={65}
-          right={2}
+          top="0px"
+          right="80px"
           transformOrigin={{ top: "50%", right: "0" }}
           transition=" 1s "
           backgroundColor={colorMode === "dark" ? "gray.800" : "White"}
