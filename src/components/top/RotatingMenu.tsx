@@ -1,13 +1,7 @@
-import {
-  Box,
-  Button,
-  Stack,
-  useColorMode,
-  useOutsideClick,
-} from "@chakra-ui/react";
+import { Box, Stack, useColorMode, useOutsideClick } from "@chakra-ui/react";
 import { GiLevelFour } from "react-icons/gi";
-import { Link } from "@chakra-ui/react";
 import { useRef, useState } from "react";
+import Menu from "./Menu";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,30 +52,7 @@ const Header = () => {
           borderTopRightRadius={20}
           mr="77px"
         >
-          <Button
-            color={colorMode === "dark" ? "wheat" : "black"}
-            boxShadow="0px 4px 8px rgba(0, 0, 1, 0.15)"
-          >
-            <Link>Home</Link>
-          </Button>
-          <Button
-            color={colorMode === "dark" ? "wheat" : "black"}
-            boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
-          >
-            <Link>Achievements</Link>
-          </Button>
-          <Button
-            color={colorMode === "dark" ? "wheat" : "black"}
-            boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
-          >
-            <Link>Gallery</Link>
-          </Button>
-          <Button
-            color={colorMode === "dark" ? "wheat" : "black"}
-            boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
-          >
-            <Link>Contact Me</Link>
-          </Button>
+          <Menu />
         </Stack>
       )}
     </>
