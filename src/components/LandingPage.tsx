@@ -1,10 +1,12 @@
-import { Header, ProfileBox } from ".";
+import { Outlet } from "react-router-dom";
+import { Header } from ".";
 
 const LandingPage = () => {
   return (
     <>
       <Header />
-      <ProfileBox />
+
+      <Outlet />
     </>
   );
 };

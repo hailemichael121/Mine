@@ -1,6 +1,7 @@
 import { Box, Button, HStack, VStack, useColorMode } from "@chakra-ui/react";
 import { ProfileText } from "..";
 import ProfilePhoto from "./ProfilePhoto";
+import { Link } from "react-router-dom";
 
 const ProfileBox = () => {
   const { colorMode } = useColorMode();
@@ -45,7 +46,7 @@ const ProfileBox = () => {
         fontSize="x-large"
         width="350px"
       >
-        Achiements 🏆 →
+        <Link to={"/Achievments"}>Achiements 🏆 →</Link>
       </Button>
     </VStack>
   );
