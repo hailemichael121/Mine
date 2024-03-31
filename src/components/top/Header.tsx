@@ -32,7 +32,7 @@ const Header = () => {
           boxShadow=" 0px 0px 20px 0px rgba(1, 1, 1)"
           width="50px"
           height="50px"
-          src=" src/assets/Logo2Bg.png"
+          src="/images/Logo2Bg.png"
         />{" "}
         <Stack
           margin="20px 30px 10px 0px"
