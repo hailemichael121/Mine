@@ -14,7 +14,7 @@ const ProfilePhoto = () => {
       <Image
         objectFit="cover"
         boxSize="fit-content"
-        src="src/assets/ProfilePicture.jpg"
+        src="public\images\ProfilePicture.jpg"
         alt="Profile Photo"
         pb={100}
       />
