@@ -1,3 +1,19 @@
 ::-webkit-scrollbar {
   display: none;
 }
+@font-face {
+  font-family: "Arenq";
+  src: local("Arenq"), url("../fonts/Arenq.otf") format("opentype");
+}
+@font-face {
+  font-family: "Beckman";
+  src: local("Beckman"), url("../fonts/Beckman-FREE.otf") format("opentype");
+}
+@font-face {
+  font-family: "Mova";
+  src: local("Mova"), url("../fonts/Mova.otf") format("opentype");
+}
+@font-face {
+  font-family: "Mova";
+  src: local("Mova"), url("../fonts/Mova.ttf") format("truetype");
+}
