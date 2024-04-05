@@ -1,5 +1,7 @@
 import { Button, useColorMode } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import "../../App.css";
+import "../../fonts/Mova.ttf";
 
 const Menu = () => {
   const { colorMode } = useColorMode();
@@ -7,27 +9,44 @@ const Menu = () => {
     <>
       <Button
         color={colorMode === "dark" ? "wheat" : "black"}
-        boxShadow="0px 4px 8px rgba(0, 0, 1, 0.15)"
+        width="150px"
+        transition="0.8s"
+        backgroundColor="transparent"
+        _hover={{
+          borderBottomWidth: "5px",
+          borderColor: "black",
+          backgroundColor: "transparent",
+        }}
+        fontFamily="Arenq"
       >
-        <Link to={"/"}>Home</Link>
+        <Link to={"/"}>About</Link>
       </Button>
       <Button
         color={colorMode === "dark" ? "wheat" : "black"}
-        boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
+        width="150px"
+        transition="0.8s"
+        backgroundColor="transparent"
+        _hover={{
+          borderBottomWidth: "5px",
+          borderColor: "black",
+          backgroundColor: "transparent",
+        }}
       >
-        <Link to={"/Achievments"}>Achievements</Link>
+        <Link to={"/Achievments"}>Projects</Link>
       </Button>
+
       <Button
         color={colorMode === "dark" ? "wheat" : "black"}
-        boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
+        width="150px"
+        backgroundColor="transparent"
+        transition="0.1ms"
+        _hover={{
+          borderBottomWidth: "5px",
+          borderColor: "black",
+          backgroundColor: "transparent",
+        }}
       >
-        <Link to={"/Gallery"}>Gallery</Link>
-      </Button>
-      <Button
-        color={colorMode === "dark" ? "wheat" : "black"}
-        boxShadow="0px 4px 8px rgba(0, 0, 0, 0.15)"
-      >
-        <Link to={"/Contact"}>Contact Me</Link>
+        <Link to={"/Contact"}>Contact</Link>
       </Button>
     </>
   );

@@ -1,7 +1,14 @@
-import { Box, Image, Stack, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Image,
+  Stack,
+  useColorMode,
+} from "@chakra-ui/react";
 
-import RotatingMenu from "./RotatingMenu";
 import ColorModeSwitch from "../ColorModeSwitch";
+import Menu from "./Menu";
 
 const Header = () => {
   const { colorMode } = useColorMode();
@@ -9,37 +16,45 @@ const Header = () => {
   return (
     <>
       <Box
-        mt={20}
-        mr={20}
-        ml={20}
-        mb={1}
+        pt="15px"
+        pr={5}
+        pl={5}
+        pb="9px"
+        mb="5px"
         backgroundColor={"transparent"}
         display={"flex"}
-        alignItems="center" // Vertically centers content within the Box
+        alignItems="center"
         justifyContent="space-between"
-        minWidth={"10vh"}
-        minHeight={"10vh"}
-        boxShadow=" 0px 0px 20px 0px rgba(0, 0, 0, 0.1)"
-        borderLeftRadius="30px"
-        borderRightRadius="45px"
-        borderWidth={0}
+        marginLeft={0}
+        marginRight={0}
+        borderBottomWidth="thin"
+        borderBottomColor="GrayText"
       >
-        <Image
-          transition=" 1s "
-          _hover={{ transform: "rotate(360deg)" }}
-          backgroundColor={colorMode === "dark" ? "White" : "transparent"}
-          borderRadius={colorMode === "dark" ? "30px" : "30px"}
-          boxShadow=" 0px 0px 20px 0px rgba(1, 1, 1)"
-          width="50px"
-          height="50px"
-          src="/images/Logo2Bg.png"
-        />{" "}
+        <Button
+          backgroundColor={"transparent"}
+          _hover={{ backgroundColor: "transparent" }}
+        >
+          <Image
+            transition=" 0.3s "
+            _hover={{ transform: "rotate(45deg)", mr: "5px" }}
+            backgroundColor={colorMode === "dark" ? "White" : "transparent"}
+            borderRadius={colorMode === "dark" ? "35px" : "35px"}
+            boxShadow=" 0px 0px 20px 0px rgba(1, 1, 1)"
+            width="70px"
+            height="70px"
+            src="/images/Logo2Bg.png"
+          />
+          <Heading pl="10px" fontFamily="revert">
+            Yihun
+          </Heading>
+        </Button>
+
         <Stack
           margin="20px 30px 10px 0px"
           direction="row"
           justifyContent={"space-between"}
         >
-          <RotatingMenu />
+          <Menu />
         </Stack>
       </Box>
 
