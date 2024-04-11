@@ -1,5 +1,4 @@
 import { ContactBox, DisplayBox, Header, ProfileBox } from ".";
-import PageHero from "./top/PageHero";
 
 const LandingPage = () => {
   return (

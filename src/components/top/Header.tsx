@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Image,
-  Stack,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, Heading, Image, Stack, useColorMode } from "@chakra-ui/react";
 import "@fontsource/ruslan-display";
 
 import ColorModeSwitch from "../ColorModeSwitch";
