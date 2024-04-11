@@ -7,7 +7,7 @@ const ProfileText = () => {
       <Box
         width="90%"
         marginLeft={10}
-        color={colorMode === "dark" ? "black" : "black"}
+        color={colorMode === "dark" ? "White" : "black"}
       >
         <Heading
           fontFamily="sans-serif"

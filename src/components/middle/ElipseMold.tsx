@@ -3,6 +3,7 @@ import { Box } from "@chakra-ui/react";
 interface Props {
   borderRadius: string;
   w: string;
+  Tw?: string;
   h: string;
   backgroundColor: string;
   m?: string;
@@ -14,14 +15,17 @@ interface Props {
   Tmr?: string;
   Tml?: string;
   Tmb?: string;
+  id?: string;
 
   opacity?: string;
   rotate?: string;
   Trotate?: string;
 }
 const ElipseMold = ({
+  id,
   borderRadius,
   w,
+  Tw,
   h,
   backgroundColor,
   m,
@@ -49,16 +53,18 @@ const ElipseMold = ({
         ml={ml}
         mr={mr}
         mb={mb}
+        id={id}
         opacity={opacity}
         position="absolute"
         transform={`rotate(${rotate})`}
         _hover={{
           transform: `rotate(${Trotate})`,
-          transition: "0.7s",
+          transition: "1.4s",
           mt: `${Tmt}`,
           ml: `${Tml}`,
           mr: `${Tmr}`,
           mb: `${Tmb}`,
+          w: `${Tw}`,
         }}
       ></Box>
     </>

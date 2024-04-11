@@ -4,7 +4,7 @@ import ElipseMold from "./ElipseMold";
 const Elipses = () => {
   return (
     <>
-      <Stack direction={"row"}>
+      <Stack direction={"row"} mt={100}>
         <ElipseMold
           backgroundColor="#22A699"
           borderRadius="300px"
@@ -15,16 +15,19 @@ const Elipses = () => {
           opacity="1"
           Tml="-60px"
         />
+
         <ElipseMold
           backgroundColor="gold"
           borderRadius="120px"
           w="100px"
           h="200px"
-          m="75px"
+          mt="500px"
+          ml="75px"
           opacity="0.9"
           Trotate="90Deg"
         />
         <ElipseMold
+          id="elip3"
           backgroundColor="#003C43"
           borderRadius="16px"
           w="60px"
@@ -35,50 +38,12 @@ const Elipses = () => {
           Tmt="100px"
         />
         <ElipseMold
+          id="elip4"
           backgroundColor="#157D13"
           borderRadius="16px"
           w="90px"
           h="20px"
           mt="75px"
-        />
-        <ElipseMold
-          backgroundColor="#7F27FF"
-          borderRadius="16px"
-          w="230px"
-          h="27px"
-          m="40px"
-          ml="0px"
-        />
-        <ElipseMold
-          backgroundColor="#E72929"
-          borderRadius="20px"
-          w="35px"
-          h="35px"
-        />
-        <ElipseMold
-          backgroundColor="#59D5E0"
-          borderRadius="20px"
-          w="20px"
-          h="20px"
-          mt="15px"
-          ml="40px"
-        />
-        <ElipseMold
-          backgroundColor="#02576C"
-          borderRadius="20px"
-          w="10px"
-          h="10px"
-          mt="25px"
-          ml="68px"
-        />
-        <ElipseMold
-          backgroundColor="#FFE837"
-          borderRadius="20px"
-          w="160px"
-          h="20px"
-          mt="-15px"
-          ml="-15px"
-          rotate="29deg"
         />
       </Stack>
     </>
@@ -86,3 +51,13 @@ const Elipses = () => {
 };
 
 export default Elipses;
+
+const elip3 = document.getElementById("elip3");
+const elip4 = document.getElementById("elip4");
+
+window.addEventListener("scroll", () => {
+  const value = window.scrollY;
+
+  elip3.style.left = value * 4 + "px";
+  elip4.style.right = value * 4 + "px";
+});

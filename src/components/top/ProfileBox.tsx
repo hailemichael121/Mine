@@ -1,5 +1,5 @@
 import { Box, Button, HStack, VStack, useColorMode } from "@chakra-ui/react";
-import { Elipse, ProfileText } from "..";
+import { Elipse, ElipseMold, ProfileText } from "..";
 import ProfilePhoto from "./ProfilePhoto";
 import { Link } from "react-router-dom";
 
@@ -8,29 +8,20 @@ const ProfileBox = () => {
 
   return (
     <>
-      <Box position="absolute">
+      <Box>
         <Elipse />
       </Box>
 
       <VStack
         margin={0}
-        backgroundColor="#ced8e4"
+        backgroundColor="Transparent"
         display="flex"
         placeItems="start"
         minWidth="60vh"
         minHeight="70vh"
         boxShadow="inset 0px 20px 20px 20px rgba(0, 0, 0, 0.2)"
-        _hover={{
-          backgroundcolor: "rgb(238,174,202)",
-          background:
-            "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)",
-          mr: "50px",
-          ml: "300px",
-          mt: "30px",
-        }}
-        transition={"1s"}
-        mr={150}
-        ml={150}
+        mr={10}
+        ml={200}
         mb={100}
         mt={70}
       >
@@ -38,8 +29,28 @@ const ProfileBox = () => {
           <Box>
             <ProfileText />
           </Box>
+
           <Box>
+            {" "}
+            <ElipseMold
+              backgroundColor="#FFE837"
+              borderRadius="20px"
+              w="190px"
+              h="40px"
+              mt="-10px"
+              ml="-15px"
+              rotate="-29deg"
+            />
             <ProfilePhoto />
+            <ElipseMold
+              backgroundColor="#7F27FF"
+              borderRadius="16px"
+              w="410px"
+              h="27px"
+              mt="0px"
+              Tml="-20px"
+              Tmr="10px"
+            />
           </Box>
         </HStack>
         <Button

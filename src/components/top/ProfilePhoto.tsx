@@ -7,8 +7,8 @@ const ProfilePhoto = () => {
       borderLeftRadius="90px"
       overflow="hidden"
       boxShadow="md"
-      width="300px"
-      height="300px"
+      width="400px"
+      height="400px"
       backgroundColor="GrayText"
     >
       <Image

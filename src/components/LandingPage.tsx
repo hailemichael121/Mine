@@ -1,12 +1,13 @@
-import { Outlet } from "react-router-dom";
-import { Header } from ".";
+import { ContactBox, DisplayBox, Header, ProfileBox } from ".";
+import PageHero from "./top/PageHero";
 
 const LandingPage = () => {
   return (
     <>
       <Header />
-
-      <Outlet />
+      <ProfileBox />
+      <DisplayBox />
+      <ContactBox />
     </>
   );
 };

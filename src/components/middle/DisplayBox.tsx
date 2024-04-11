@@ -1,17 +1,14 @@
-import { Box } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
+import AchievmentBox from "./AchievmentBox";
 
 const DisplayBox = () => {
   return (
-    <>
-      <Box
-        margin={60}
-        backgroundColor="white"
-        display={"flex"}
-        placeItems={"center"}
-        minWidth={"10vh"}
-        minHeight={"10vh"}
-      ></Box>
-    </>
+    <HStack>
+      <AchievmentBox />
+      <AchievmentBox />
+      <AchievmentBox />
+      <AchievmentBox />
+    </HStack>
   );
 };
 

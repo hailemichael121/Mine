@@ -34,7 +34,7 @@ const ColorModeSwitch = () => {
                 left: "50%", // Center the line horizontally
                 transform: "translateX(-50%)", // Offset for proper centering
                 width: "0",
-                height: "100",
+                height: "100px",
                 borderTop: "49px solid  #f1c008", // Adjust color and thickness
                 borderLeft: "1px solid #f1c008",
                 borderRight: "1px solid  #f1c008",
@@ -60,7 +60,7 @@ const ColorModeSwitch = () => {
                 left: "50%", // Center the line horizontally
                 transform: "translateX(-50%)", // Offset for proper centering
                 width: "0",
-                height: "100",
+                height: "70",
                 borderTop: "49px solid black", // Adjust color and thickness
                 borderLeft: "1px solid black",
                 borderRight: "3px solid none",
