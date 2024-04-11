@@ -8,7 +8,7 @@ const ColorModeSwitch = () => {
   return (
     <HStack display="flex" justifyContent="center" alignItems="center">
       <Button
-        pt={45}
+        pt={125}
         onClick={toggleColorMode}
         background="transparent"
         size="100px"
@@ -34,7 +34,7 @@ const ColorModeSwitch = () => {
                 left: "50%", // Center the line horizontally
                 transform: "translateX(-50%)", // Offset for proper centering
                 width: "0",
-                height: "100px",
+                height: "130px",
                 borderTop: "49px solid  #f1c008", // Adjust color and thickness
                 borderLeft: "1px solid #f1c008",
                 borderRight: "1px solid  #f1c008",
