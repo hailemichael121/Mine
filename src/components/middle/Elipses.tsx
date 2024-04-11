@@ -51,13 +51,3 @@ const Elipses = () => {
 };
 
 export default Elipses;
-
-const elip3 = document.getElementById("elip3");
-const elip4 = document.getElementById("elip4");
-
-window.addEventListener("scroll", () => {
-  const value = window.scrollY;
-
-  elip3.style.left = value * 4 + "px";
-  elip4.style.right = value * 4 + "px";
-});

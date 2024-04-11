@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { RefObject } from "react";
 
 interface Props {
   borderRadius: string;
@@ -16,6 +17,7 @@ interface Props {
   Tml?: string;
   Tmb?: string;
   id?: string;
+  ref?: RefObject<HTMLDivElement>;
 
   opacity?: string;
   rotate?: string;
@@ -23,6 +25,7 @@ interface Props {
 }
 const ElipseMold = ({
   id,
+  ref,
   borderRadius,
   w,
   Tw,
@@ -44,6 +47,7 @@ const ElipseMold = ({
   return (
     <>
       <Box
+        ref={ref}
         borderRadius={borderRadius}
         w={w}
         h={h}
