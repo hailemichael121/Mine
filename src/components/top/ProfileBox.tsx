@@ -14,12 +14,11 @@ const ProfileBox = () => {
 
       <VStack
         margin={0}
-        backgroundColor="Transparent"
+        backgroundColor="none"
         display="flex"
         placeItems="start"
         minWidth="60vh"
         minHeight="70vh"
-        boxShadow="inset 0px 20px 20px 20px rgba(0, 0, 0, 0.2)"
         mr={10}
         ml={200}
         mb={100}
