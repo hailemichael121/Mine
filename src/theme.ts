@@ -5,7 +5,7 @@ const lightTheme = {
     bg: "#gray", // Light theme background color
     text: "black", // Text color
     primary: "#ced8e4", // Primary color
-    secondary: "#e8f0f3", // Secondary color
+    secondary: "#121212", // Secondary color
     accent: "#f59e0b",
   },
   fonts: {
