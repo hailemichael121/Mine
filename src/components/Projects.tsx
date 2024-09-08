@@ -14,16 +14,15 @@ const ProjectSec: React.FC = () => {
     activeCategory === "All Projects"
       ? projects
       : projects.filter((project) => project.category === activeCategory);
+
   const { colorMode } = useColorMode();
 
   return (
     <Box
-      p={8}
-      bg="gray.800"
-      color="white"
+      color={colorMode === "dark" ? "white" : "black"}
       bgColor={colorMode === "dark" ? "#222222" : "#FFFFFF"}
     >
-      <Box ml={{ base: "0px", md: "200px" }} m={16}>
+      <Box p={{ base: "0px", md: "150px" }}>
         <ProjectSecCategory onCategoryChange={handleCategoryChange} />
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8} mt={8}>
           {filteredProjects.map((project) => (
@@ -32,6 +31,9 @@ const ProjectSec: React.FC = () => {
               title={project.title}
               description={project.description}
               image={project.image}
+              video={project.video}
+              gitLink={project.gitLink}
+              webLink={project.webLink}
             />
           ))}
         </SimpleGrid>

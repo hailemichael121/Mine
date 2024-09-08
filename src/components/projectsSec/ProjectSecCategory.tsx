@@ -8,13 +8,15 @@ interface Props {
 const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
   const categories = [
     "All Projects",
-    "Bot Development",
+    "FrontEnd",
     "Backend",
-    "Automation",
+    "Machine Learning",
+    "Mobile",
+    "Others",
   ];
 
   return (
-    <Box p={4} bg="transparent" borderRadius="none">
+    <Box bg="transparent" borderRadius="none">
       <Tabs
         align="center"
         variant="unstyled"
@@ -25,11 +27,8 @@ const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
           {categories.map((category) => (
             <Tab
               key={category}
-              _selected={{ color: "white", borderBottom: "2px solid #30F2F2" }}
+              _selected={{ color: "white", textDecoration: "underline" }}
               _focus={{ boxShadow: "none" }}
-              py={2}
-              px={4}
-              mx={2}
               fontSize="lg"
               borderRadius="md"
               _hover={{ bg: "gray.600" }}
