@@ -1,5 +1,5 @@
 // ResumeSecEducation.tsx
-import { Link } from "@chakra-ui/react";
+import { Link, Text } from "@chakra-ui/react";
 import ResumeSecCard from "./ResumeSecCard";
 
 const ResumeSecEducation: React.FC = () => {
@@ -12,19 +12,22 @@ const ResumeSecEducation: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          "Addis Ababa Science and Technology University"
+          Addis Ababa Science and Technology University
         </Link>
       ),
-      dateRange: "june 2022 - Present",
-      description: [
-        "Graduating soon with a strong foundation in full-stack development and backend services.",
-      ],
+      dateRange: "June 2022 - Present",
+      description: (
+        <Text>
+          Graduating soon with a strong foundation in full-stack development and
+          backend services.
+        </Text>
+      ),
     },
     {
-      title: "Highschool and Preparatory",
-      subtitle: "St. Daniel COmboni  Hawassa , Ethiopia",
-      dateRange: "2016 - 202021",
-      description: ["Attended Secondary and Preparatory School."],
+      title: "High School and Preparatory",
+      subtitle: "St. Daniel Comboni, Hawassa, Ethiopia",
+      dateRange: "2016 - 2021",
+      description: <Text>Attended Secondary and Preparatory School.</Text>,
     },
   ];
 
