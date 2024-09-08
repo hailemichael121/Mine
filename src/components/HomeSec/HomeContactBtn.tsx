@@ -13,7 +13,7 @@ const HomeContactBtn: React.FC = () => {
   return (
     <Button
       border="solid 1px #30F2F2"
-      borderRadius={{ base: "20px", md: "30%" }}
+      borderRadius={{ base: "20px", md: "30% 12px 45px" }}
       _hover={{
         backgroundColor: "#E8FCCF",
         color: "black",

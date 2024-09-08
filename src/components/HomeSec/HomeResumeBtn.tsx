@@ -20,7 +20,7 @@ const HomeResumeBtn: React.FC = () => {
       }}
       backgroundColor={colorMode === "light" ? "primary" : "secondary"}
       border="solid 1px #30F2F2"
-      borderRadius={{ base: "20px", md: "30%" }}
+      borderRadius={{ base: "60px", md: "30% 50px 10px " }}
       shadow="0px 5px 10px #E47580"
       width={{ base: "full", md: "auto" }}
       onClick={handleDownloadResume}
