@@ -12,5 +12,5 @@ export const menuItems = [
   { id: "resume", label: "Resume", icon: BiSolidUserDetail },
   { id: "projects", label: "Projects", icon: FaBriefcase },
   { id: "services", label: "Services", icon: GrServices },
-  { id: "contact", label: "Contact", icon: MdConnectWithoutContact },
+  { id: "contacts", label: "Contact", icon: MdConnectWithoutContact },
 ];
