@@ -12,6 +12,7 @@ import {
   SideMenu,
 } from ".";
 import Home from "./Home";
+import Footer from "./shared/Footer";
 
 // Use a div with motion and apply Chakra styles via style
 const MotionDiv = motion.div;
@@ -110,6 +111,7 @@ const LandingPage = () => {
             <ContactMe />
           </MotionDiv>
         </div>
+        <Footer />
       </Box>
     </MotionDiv>
   );
