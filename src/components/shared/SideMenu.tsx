@@ -5,9 +5,12 @@ import {
   DrawerContent,
   useDisclosure,
   IconButton,
+  DrawerHeader,
+  DrawerBody,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
+import { AiOutlineClose } from "react-icons/ai"; // Importing close icon
 
 import { menuItems } from "./MenuItemsArray";
 import MenuItem from "./MenuItem";
@@ -56,10 +59,11 @@ const SideMenu = () => {
       {!isMobile ? (
         // Desktop View
         <VStack
-          ml={"30px"}
+          ml={"10px"}
           gap={"20px"}
           top={230}
           left={30}
+          paddingBottom={"100px"}
           position="fixed"
           zIndex={10000}
         >
@@ -81,25 +85,38 @@ const SideMenu = () => {
             icon={<CiMenuFries />}
             position="fixed"
             top={10}
-            right={10} // Proper alignment for mobile menu button
+            right={10}
             zIndex={100000}
             onClick={onOpen}
           />
 
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-            <DrawerContent>
-              <VStack gap={"20px"} mt={10}>
-                {menuItems.map((item) => (
-                  <MenuItem
-                    key={item.id}
-                    isActive={activeSection === item.id}
-                    label={item.label}
-                    sectionId={item.id}
-                    icon={item.icon}
-                    onClick={scrollToSection}
-                  />
-                ))}
-              </VStack>
+            <DrawerContent w={"30%"}>
+              <DrawerHeader>
+                {/* Close Button */}
+                <IconButton
+                  aria-label="Close Menu"
+                  icon={<AiOutlineClose />}
+                  onClick={onClose}
+                  position="absolute"
+                  top={4}
+                  right={4}
+                />
+              </DrawerHeader>
+              <DrawerBody>
+                <VStack gap={"20px"} mt={10}>
+                  {menuItems.map((item) => (
+                    <MenuItem
+                      key={item.id}
+                      isActive={activeSection === item.id}
+                      label={item.label}
+                      sectionId={item.id}
+                      icon={item.icon}
+                      onClick={scrollToSection}
+                    />
+                  ))}
+                </VStack>
+              </DrawerBody>
             </DrawerContent>
           </Drawer>
         </>
