@@ -7,7 +7,6 @@ interface Props {
 
 const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
   const categories = [
-    "All Projects",
     "FrontEnd",
     "Backend",
     "Machine Learning",
@@ -23,15 +22,13 @@ const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
         onChange={(index) => onCategoryChange(categories[index])}
         defaultIndex={0}
       >
-        <TabList>
+        <TabList w={"50%"}>
           {categories.map((category) => (
             <Tab
               key={category}
               _selected={{ color: "white", textDecoration: "underline" }}
-              _focus={{ boxShadow: "none" }}
-              fontSize="lg"
+              fontSize={{ base: "sm", md: "lg" }}
               borderRadius="md"
-              _hover={{ bg: "gray.600" }}
             >
               {category}
             </Tab>
