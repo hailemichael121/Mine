@@ -40,7 +40,7 @@ export const projects = [
     title: "Legion Backend",
     category: "Backend",
     description: "A backend project for the Legion platform.",
-    image: "https://via.placeholder.com/150",
+    image: "images/ProjectsImage/HatespeechImage.jpeg",
     gitLink: "https://github.com/hailemichael121/legion_backend",
   },
   {
@@ -48,7 +48,7 @@ export const projects = [
     title: "Gamehub Demo",
     category: "FrontEnd",
     description: "A demo platform for game downloads.",
-    image: "images/ProjectsImage/Gamehub.webp",
+    image: "images/ProjectsImage/Gamehub .webp",
     webLink: "https://gamehubdemo.addissystems.et/",
   },
 ];
