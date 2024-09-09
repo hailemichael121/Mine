@@ -54,7 +54,7 @@ const NavMenu: React.FC = () => {
         borderTopRightRadius={"20px"}
         color={colorMode === "dark" ? "#D5D5D5" : "black"}
         fontSize={"15px"}
-        onClick={() => scrollToSection("contact")}
+        onClick={() => scrollToSection("contacts")}
         width="150px"
         backgroundColor="transparent"
         transition="0.1s"
