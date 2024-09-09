@@ -11,6 +11,7 @@ import React from "react";
 import ContactForm from "./contactMeSec/ContactForm";
 import ContactMeSecLocation from "./contactMeSec/ContactMeSecLocation";
 import ContactMeEmail from "./contactMeSec/ContactMeEmail";
+import HomeSocialMEdiaBtn from "./HomeSec/HomeSocialMEdiaBtn";
 
 const ContactMe: React.FC = () => {
   const { colorMode } = useColorMode();
@@ -25,7 +26,12 @@ const ContactMe: React.FC = () => {
         flexDir={isMobile ? "column" : "row"}
         fontFamily={"fantasy"}
       >
-        <VStack justifyContent={"center"} width={"30%"} mr={16} gap={8}>
+        <VStack
+          justifyContent={"center"}
+          width={{ base: "100%", md: "30%" }}
+          mr={{ base: 0, md: 16 }}
+          gap={8}
+        >
           <Flex justifyContent={"Center"} as={"b"} fontSize={"50px"}>
             Get in touch
           </Flex>
@@ -34,9 +40,12 @@ const ContactMe: React.FC = () => {
             Whether you have a question or just want to say hi, I’ll try my best
             to get back to you!
           </Text>
-          <Box p={4}>
+          <Box p={0} gap={24}>
             <ContactMeSecLocation />
             <ContactMeEmail />
+          </Box>
+          <Box width={"100%"}>
+            <HomeSocialMEdiaBtn />
           </Box>
         </VStack>
 
