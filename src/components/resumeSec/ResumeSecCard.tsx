@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Heading, Text, useColorMode } from "@chakra-ui/react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 interface ResumeSecCardProps {
   title?: string;
@@ -15,9 +17,39 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
   description,
 }) => {
   const { colorMode } = useColorMode();
+  const controls = useAnimation();
+  const { ref, inView } = useInView({
+    threshold: 0.3, // Trigger animation when 10% of the component is in view
+  });
+
+  const boxVariants = {
+    hidden: { opacity: 0, x: "-10vw" },
+    visible: {
+      opacity: 1,
+      x: "0vw",
+      transition: {
+        type: "spring",
+        stiffness: 50,
+        damping: 20,
+      },
+    },
+  };
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [controls, inView]);
 
   return (
     <Box
+      as={motion.div}
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={boxVariants}
       bg="transparent"
       p={5}
       shadow="lg"
@@ -29,7 +61,6 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
       borderColor={colorMode === "light" ? "gray.400" : "gray.600"}
       borderRight="1px solid"
       borderBottom="1px solid"
-      className="resume-sec-card"
     >
       <Heading as="h2" size="lg" mb={2}>
         {title}
