@@ -24,7 +24,7 @@ const HomeContactBtn: React.FC = () => {
       }
       backgroundColor={colorMode === "light" ? "primary" : "secondary"}
       width={{ base: "full", md: "auto" }}
-      onClick={() => scrollToSection("contact")}
+      onClick={() => scrollToSection("contacts")}
     >
       Contact
     </Button>

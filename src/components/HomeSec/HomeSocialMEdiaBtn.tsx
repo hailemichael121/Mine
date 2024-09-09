@@ -14,7 +14,7 @@ const HomeSocialMEdiaBtn: React.FC = () => {
       <Flex
         cursor={"pointer"}
         justifyContent={"space-around"}
-        fontSize={"25px"}
+        fontSize={"20px"}
       >
         <a
           href="https://github.com/Hailemichael121"
