@@ -21,8 +21,11 @@ const ProjectSec: React.FC = () => {
     <Box
       color={colorMode === "dark" ? "white" : "black"}
       bgColor={colorMode === "dark" ? "#222222" : "#FFFFFF"}
+      pl={{ base: "20px", md: "200px" }}
+      pr={{ base: "20px", md: "100px" }}
+      pb={{ base: "20px", md: "50px" }}
     >
-      <Box p={{ base: "0px", md: "150px" }}>
+      <Box>
         <ProjectSecCategory onCategoryChange={handleCategoryChange} />
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8} mt={8}>
           {filteredProjects.map((project) => (

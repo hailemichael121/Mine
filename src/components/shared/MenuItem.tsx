@@ -21,7 +21,7 @@ const MenuItem = ({
       border={"none"}
       bgColor={"transparent"}
       _hover={{ backgroundColor: "transparent" }}
-      fontSize={isActive ? "22px" : "24px"} // Subtle font size change
+      fontSize={isActive ? "16px" : "24px"} // Subtle font size change
       onClick={() => onClick(sectionId)}
       color={isActive ? "#30F2F2" : "inherit"} // Use inherit for default color
     >
