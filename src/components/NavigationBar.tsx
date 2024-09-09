@@ -11,6 +11,7 @@ import ColorModeSwitch from "./shared/ColorModeSwitch";
 import NavLogoSection from "./navigationSec/NavLogoSection";
 import NavMenu from "./navigationSec/NavMenu";
 import SideMenu from "./shared/SideMenu";
+import MobileColorModeSwitch from "./shared/MobileColorMode";
 
 const NavigationBar = () => {
   const { onOpen } = useDisclosure();
@@ -31,6 +32,8 @@ const NavigationBar = () => {
       >
         {isMobile ? (
           <>
+            <MobileColorModeSwitch />
+
             <Box onClick={onOpen} cursor="pointer">
               <NavLogoSection />
             </Box>
