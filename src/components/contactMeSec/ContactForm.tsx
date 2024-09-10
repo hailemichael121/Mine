@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, Button, Flex, Tooltip, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Tooltip,
+  useColorMode,
+  useToast,
+} from "@chakra-ui/react";
 import { validateForm } from "./formValidation";
 import { ContactFormValues, initialFormValues } from "./formTypes";
 import FormLabelWithError from "./FormLabelWithError";
@@ -9,8 +16,10 @@ const ContactForm: React.FC = () => {
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
   const [errors, setErrors] = useState<ContactFormValues>(initialFormValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { colorMode } = useColorMode();
+  const toast = useToast();
 
   // Handle input change for all form fields
   const handleInputChange = (
@@ -21,15 +30,74 @@ const ContactForm: React.FC = () => {
   };
 
   // Validate form and submit
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validationErrors = validateForm(formValues);
     setErrors(validationErrors);
 
     if (isFormValid(validationErrors)) {
-      console.log("Form data:", formValues);
-      // Backend call here
+      setIsSubmitting(true);
+
+      // Show loading toast
+      const toastId = toast({
+        title: "Submitting...",
+        description: "Please wait while we submit your form.",
+        status: "loading",
+        duration: null, // Keeps the toast open until it's manually closed
+        isClosable: false,
+        position: "top",
+      });
+
+      try {
+        console.log("Form data:", formValues);
+        const response = await fetch("http://localhost:5000/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+        });
+
+        if (response.ok) {
+          console.log("Form Submitted Successfully!");
+          setFormValues(initialFormValues);
+          setErrors(initialFormValues);
+
+          // Update toast to show success
+          toast.update(toastId, {
+            title: "Success!",
+            description: "Your form has been submitted successfully.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
+        } else {
+          console.error("Error submitting the form");
+
+          // Update toast to show error
+          toast.update(toastId, {
+            title: "Submission Failed",
+            description: "There was an error submitting your form.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
+        }
+      } catch (err) {
+        console.error("Error:", err);
+
+        // Update toast to show error
+        toast.update(toastId, {
+          title: "Error",
+          description: "An unexpected error occurred.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -125,7 +193,7 @@ const ContactForm: React.FC = () => {
             </Box>
 
             <ContactSecFormSubmitButton
-              isDisabled={!isFormValid(errors)} // Disable if form is not valid
+              isDisabled={!isFormValid(errors) || isSubmitting}
               colorMode={colorMode}
             />
           </Flex>
