@@ -16,8 +16,6 @@ const ContactForm: React.FC = () => {
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
   const [errors, setErrors] = useState<ContactFormValues>(initialFormValues);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const { colorMode } = useColorMode();
   const toast = useToast();
 
@@ -37,48 +35,31 @@ const ContactForm: React.FC = () => {
     setErrors(validationErrors);
 
     if (isFormValid(validationErrors)) {
-      setIsSubmitting(true);
-
-      // Show loading toast
-      const toastId = toast({
-        title: "Submitting...",
-        description: "Please wait while we submit your form.",
-        status: "loading",
-        duration: null, // Keeps the toast open until it's manually closed
-        isClosable: false,
-        position: "top",
-      });
-
       try {
         console.log("Form data:", formValues);
-        const response = await fetch("http://localhost:5000/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        });
-
+        const response = await fetch(
+          "https://mine-backend-x55x.onrender.com/api/contact",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formValues),
+          }
+        );
         if (response.ok) {
-          console.log("Form Submitted Successfully!");
-          setFormValues(initialFormValues);
-          setErrors(initialFormValues);
-
-          // Update toast to show success
-          toast.update(toastId, {
-            title: "Success!",
-            description: "Your form has been submitted successfully.",
+          toast({
+            title: "Success",
+            description: "Form submitted successfully!",
             status: "success",
             duration: 5000,
             isClosable: true,
           });
+          setFormValues(initialFormValues); // Clear form after successful submission
         } else {
-          console.error("Error submitting the form");
-
-          // Update toast to show error
-          toast.update(toastId, {
-            title: "Submission Failed",
-            description: "There was an error submitting your form.",
+          toast({
+            title: "Error",
+            description: "Error submitting the form.",
             status: "error",
             duration: 5000,
             isClosable: true,
@@ -86,17 +67,13 @@ const ContactForm: React.FC = () => {
         }
       } catch (err) {
         console.error("Error:", err);
-
-        // Update toast to show error
-        toast.update(toastId, {
+        toast({
           title: "Error",
           description: "An unexpected error occurred.",
           status: "error",
           duration: 5000,
           isClosable: true,
         });
-      } finally {
-        setIsSubmitting(false);
       }
     }
   };
@@ -193,7 +170,7 @@ const ContactForm: React.FC = () => {
             </Box>
 
             <ContactSecFormSubmitButton
-              isDisabled={!isFormValid(errors) || isSubmitting}
+              isDisabled={!isFormValid(errors)}
               colorMode={colorMode}
             />
           </Flex>
