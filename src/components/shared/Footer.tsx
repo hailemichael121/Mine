@@ -10,7 +10,7 @@ const Footer = () => {
       padding="10px"
       borderRadius="5px"
     >
-      <Text fontFamily="monospace" fontSize="15px" textAlign="center">
+      <Text fontFamily="monospace" fontSize="10px" textAlign="center">
         Made with <span>❤</span> By Yihun Shekuri
       </Text>
     </Box>

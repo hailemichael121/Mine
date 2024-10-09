@@ -13,12 +13,12 @@ const MobileColorModeSwitch = () => {
       top={10}
       right={20}
       zIndex={1000}
+      pr={"10px"}
     >
       <IconButton
         aria-label="Toggle color mode"
         icon={<IoIosSwitch size={30} />}
         onClick={toggleColorMode}
-        background="transparent"
         _hover={{ bg: "gray.100" }}
         _focus={{ outline: "none" }}
       />
