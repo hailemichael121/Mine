@@ -10,8 +10,8 @@ const Footer = () => {
       padding="10px"
       borderRadius="5px"
     >
-      <Text fontFamily="cursive" fontSize="1px" textAlign="center">
-        Copyright © 2024 all rights reserved, Developed by Yihun S
+      <Text fontFamily="monospace" fontSize="15px" textAlign="center">
+        Made with <span>❤</span> By Yihun Shekuri
       </Text>
     </Box>
   );
