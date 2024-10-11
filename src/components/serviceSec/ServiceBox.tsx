@@ -1,25 +1,33 @@
-import { Box, HStack, Circle, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Circle,
+  useColorMode,
+  IconButton,
+  Flex,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import ServiceSecCard from "./ServiceSecCard";
+import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 
 const ServiceBox: React.FC = () => {
   const { colorMode } = useColorMode();
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeDot, setActiveDot] = useState(0);
 
   const services = [
+    {
+      iconSrc: "images/ServiceIcon/BackendDev.png",
+      altText: "BackEnd Icon",
+      serviceText: "Develop scalable and quality backend applications.",
+      titleText: "BackEnd Development",
+    },
     {
       iconSrc: "images/ServiceIcon/frontendDev.png",
       altText: "FrontEnd Icon",
       serviceText:
         "Developing complex and intuitive web applications with optimized user interfaces.",
       titleText: "FrontEnd Development",
-    },
-    {
-      iconSrc: "images/ServiceIcon/BackendDev.png",
-      altText: "BackEnd Icon",
-      serviceText: "Develop scalable and quality backend applications.",
-      titleText: "BackEnd Development",
     },
     {
       iconSrc: "images/ServiceIcon/mobile-applicationDev.png",
@@ -44,79 +52,88 @@ const ServiceBox: React.FC = () => {
     },
   ];
 
-  const maxIndex = Math.max(0, services.length - 3); // Ensure index range fits the number of services
+  const servicesPerSlide = 3;
+  const maxIndex = Math.ceil(services.length / servicesPerSlide) - 1;
 
-  // Handle swipe logic
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => {
-      if (activeIndex < maxIndex) {
-        setActiveIndex((prevIndex) => prevIndex + 1); // Move 1 card forward
-      }
-    },
-    onSwipedRight: () => {
-      if (activeIndex > 0) {
-        setActiveIndex((prevIndex) => prevIndex - 1); // Move 1 card backward
-      }
-    },
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handlePrev(),
     preventScrollOnSwipe: true,
     trackMouse: true,
-    trackTouch: true,
   });
 
-  const handleDotClick = (index: number) => {
-    setActiveIndex(index * 1); // Set index based on swiping by 1
+  const handleDotClick = (index: number) => setActiveDot(index);
+
+  const handleNext = () => {
+    setActiveDot((prevIndex) => Math.min(prevIndex + 1, maxIndex));
   };
 
-  return (
-    <Box bg={colorMode === "light" ? "#FFFFFF" : "#222222"} width="100%" p={5}>
-      <Box
-        position="relative"
-        overflow="hidden"
-        {...swipeHandlers}
-        cursor="grab"
-      >
-        <HStack
-          spacing={6}
-          transform={`translateX(-${activeIndex * (100 / 3)}%)`} // Move by 1 card-width steps
-          transition="transform 0.5s ease-in-out"
-          width={`${(services.length / 3) * 100}%`}
-          minWidth="max-content"
-        >
-          {services.map((service, index) => (
-            <Box
-              key={index}
-              minWidth="calc(100% / 3)" // Ensure each card takes 1/3 of the width of the container
-            >
-              <ServiceSecCard
-                iconSrc={service.iconSrc}
-                altText={service.altText}
-                serviceText={service.serviceText}
-                titleText={service.titleText}
-              />
-            </Box>
-          ))}
-        </HStack>
+  const handlePrev = () => {
+    setActiveDot((prevIndex) => Math.max(prevIndex - 1, 0));
+  };
 
-        {/* Progress Dots */}
-        <HStack justify="center" mt={4}>
-          {[...Array(Math.ceil((services.length - 2) / 2))].map(
-            (_, dotIndex) => (
-              <Circle
-                key={dotIndex}
-                size="10px"
-                onClick={() => handleDotClick(dotIndex)}
-                cursor="pointer"
-                bg={
-                  Math.floor(activeIndex / 2) === dotIndex
-                    ? "#30F2F2"
-                    : "#1B1B1B"
-                }
-                border={"solid 1px #254B4B"}
-              />
-            )
-          )}
-        </HStack>
-      </Box>
+  // Slice the services array based on the active dot
+  const displayedServices = services.slice(
+    activeDot * servicesPerSlide,
+    (activeDot + 1) * servicesPerSlide
+  );
+
+  return (
+    <Box bg={colorMode === "light" ? "#FFFFFF" : "#222222"} width="100%" p={4}>
+      <Flex justify="space-between" align="center">
+        {/* Left navigation button */}
+        <IconButton
+          aria-label="Previous"
+          icon={<TiChevronLeftOutline fontSize={"30px"} />}
+          onClick={handlePrev}
+          isDisabled={activeDot === 0}
+          variant="ghost"
+        />
+
+        {/* Swipeable container */}
+        <Box
+          position="relative"
+          overflow="hidden"
+          {...swipeHandlers}
+          cursor="grab"
+        >
+          <HStack justify="center" spacing={2} width="100%">
+            {displayedServices.map((service, index) => (
+              <Box key={index} p={"20px"} flexShrink={0}>
+                <ServiceSecCard
+                  iconSrc={service.iconSrc}
+                  altText={service.altText}
+                  serviceText={service.serviceText}
+                  titleText={service.titleText}
+                />
+              </Box>
+            ))}
+          </HStack>
+        </Box>
+
+        {/* Right navigation button */}
+        <IconButton
+          aria-label="Next"
+          icon={<TiChevronRightOutline fontSize={"30px"} />}
+          onClick={handleNext}
+          isDisabled={activeDot >= maxIndex}
+          variant="ghost"
+        />
+      </Flex>
+
+      {/* Pagination dots */}
+      <HStack justify="center" mt={4}>
+        {[...Array(maxIndex + 1)].map((_, dotIndex) => (
+          <Circle
+            key={dotIndex}
+            size="10px"
+            onClick={() => handleDotClick(dotIndex)}
+            cursor="pointer"
+            bg={activeDot === dotIndex ? "#30F2F2" : "#1B1B1B"}
+            border={"solid 1px #254B4B"}
+          />
+        ))}
+      </HStack>
     </Box>
   );
 };
