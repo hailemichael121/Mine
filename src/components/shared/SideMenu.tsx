@@ -60,8 +60,8 @@ const SideMenu = () => {
         // Desktop View
         <VStack
           ml={"10px"}
-          gap={"20px"}
-          top={230}
+          gap={"10px"}
+          top={210}
           left={30}
           paddingBottom={"100px"}
           position="fixed"

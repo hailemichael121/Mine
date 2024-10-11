@@ -24,10 +24,11 @@ const MenuItem = ({
       fontSize={isActive ? "16px" : "24px"} // Subtle font size change
       onClick={() => onClick(sectionId)}
       color={isActive ? "#30F2F2" : "inherit"} // Use inherit for default color
+      ml={"10px"}
     >
       <HStack align={"center"} position="relative">
         {isActive && (
-          <Text position="absolute" left="-60px" fontSize="10px">
+          <Text position="absolute" left="-50px" fontSize="10px">
             {label}
           </Text>
         )}
