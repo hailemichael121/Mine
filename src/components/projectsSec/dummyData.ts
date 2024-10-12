@@ -49,6 +49,6 @@ export const projects = [
     category: "FrontEnd",
     description: "A demo platform for game downloads.",
     image: "images/ProjectsImage/Gamehub .webp",
-    webLink: "https://gamehubdemo.addissystems.et/",
+    webLink: "https://game-hub-psi-three.vercel.app/",
   },
 ];
