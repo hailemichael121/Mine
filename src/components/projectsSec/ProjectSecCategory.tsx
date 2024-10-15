@@ -1,11 +1,13 @@
 import React from "react";
-import { Tabs, TabList, Tab, Box } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, Box, useColorMode } from "@chakra-ui/react";
 
 interface Props {
   onCategoryChange: (category: string) => void;
 }
 
 const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
+  const { colorMode } = useColorMode();
+
   const categories = [
     "FrontEnd",
     "Backend",
@@ -26,7 +28,10 @@ const ProjectSecCategory: React.FC<Props> = ({ onCategoryChange }) => {
           {categories.map((category) => (
             <Tab
               key={category}
-              _selected={{ color: "white", textDecoration: "underline" }}
+              _selected={{
+                color: colorMode === "dark" ? "white" : "black",
+                textDecoration: "underline",
+              }}
               fontSize={{ base: "sm", md: "lg" }}
               borderRadius="md"
             >

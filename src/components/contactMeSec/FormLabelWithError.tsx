@@ -5,6 +5,7 @@ import {
   FormLabel,
   Textarea,
   FormErrorMessage,
+  useColorMode,
 } from "@chakra-ui/react";
 
 interface Props {
@@ -30,6 +31,7 @@ const FloatingLabelInput: React.FC<Props> = ({
   isTextArea = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const { colorMode } = useColorMode();
 
   return (
     <FormControl
@@ -69,6 +71,7 @@ const FloatingLabelInput: React.FC<Props> = ({
           shadow={isFocused ? "4px 5px 4px #E47580" : "gray"}
           paddingTop="16px"
           fontSize={"10px"}
+          bg={colorMode === "light" ? "#FADFA1" : "transparent"}
         />
       ) : (
         <Textarea
@@ -81,6 +84,7 @@ const FloatingLabelInput: React.FC<Props> = ({
           focusBorderColor="teal.400"
           shadow="sm"
           paddingTop="16px"
+          bg={colorMode === "light" ? "#FADFA1" : "transparent"}
         />
       )}
 
