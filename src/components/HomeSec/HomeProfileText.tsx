@@ -15,15 +15,19 @@ const HomeProfileText = () => {
         fontFamily="sans-serif"
         pb={5}
         fontWeight="bold"
-        fontSize={{ base: "30px", md: "70px" }}
+        fontSize={{ base: "30px", md: "50px" }}
       >
         👋 Hi,
       </Heading>
       <Text fontSize={{ base: "small", md: "lg" }}>My name is</Text>
-      <Text fontWeight="bold" fontSize={{ base: "40px", md: "70px" }}>
+      <Text fontWeight="bold" fontSize={{ base: "40px", md: "50px" }}>
         Yihun Shekuri
       </Text>
-      <Text fontSize={{ base: "sm", md: "md" }}>
+      <Text
+        fontSize={{ base: "sm", md: "md" }}
+        fontFamily={"monospace"}
+        as={"p"}
+      >
         I’m a Software Developer from Addis Ababa, Ethiopia. With a solid
         foundation in full-stack development. I enhance user experiences and
         optimize performance. Whether it’s developing complex web applications
