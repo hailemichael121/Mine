@@ -12,15 +12,19 @@ const HomeProfileText = () => {
       pt={"70px"}
     >
       <Heading
-        fontFamily="sans-serif"
+        fontFamily="monospace"
         pb={5}
-        fontWeight="bold"
+        as={"h2"}
         fontSize={{ base: "30px", md: "50px" }}
       >
         👋 Hi,
       </Heading>
       <Text fontSize={{ base: "small", md: "lg" }}>My name is</Text>
-      <Text fontWeight="bold" fontSize={{ base: "40px", md: "50px" }}>
+      <Text
+        as={"h1"}
+        fontSize={{ base: "40px", md: "50px" }}
+        fontFamily={"monospace"}
+      >
         Yihun Shekuri
       </Text>
       <Text
@@ -34,7 +38,7 @@ const HomeProfileText = () => {
         or optimizing user interfaces, I’m committed to crafting scalable and
         maintainable software solutions.
       </Text>
-      <Text as="b" fontSize={{ base: "sm", md: "md" }}>
+      <Text as="p" fontSize={{ base: "sm", md: "md" }}>
         Let’s connect and create something impactful together!
       </Text>
     </Box>

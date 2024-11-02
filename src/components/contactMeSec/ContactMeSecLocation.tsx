@@ -8,7 +8,9 @@ const ContactMeSecLocation: React.FC = () => {
       <Box width={"100%"}>
         <Flex align={"center"}>
           <CiLocationOn />
-          <Text pl={8}>Addis Abeba,Ethiopia</Text>
+          <Text as={"p"} pl={8}>
+            Addis Abeba,Ethiopia
+          </Text>
         </Flex>
       </Box>
     </>

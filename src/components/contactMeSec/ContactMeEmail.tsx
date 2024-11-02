@@ -13,6 +13,7 @@ const ContactMeEmail: React.FC = () => {
           rel="noopener noreferrer"
           href={"mailto:yihunaashe@gmail.com"}
           pl={8}
+          as={"p"}
           fontSize={"large"}
           fontFamily={"fantasy"}
         >

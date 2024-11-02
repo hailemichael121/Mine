@@ -52,6 +52,7 @@ const FloatingLabelInput: React.FC<Props> = ({
         transition="0.2s ease all"
         zIndex={1}
         color={value || isFocused ? "teal.500" : "gray.400"}
+        as={"p"}
       >
         {label}
       </FormLabel>

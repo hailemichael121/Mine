@@ -32,10 +32,10 @@ const ContactMe: React.FC = () => {
           mr={{ base: 0, md: 16 }}
           gap={8}
         >
-          <Flex justifyContent={"Center"} as={"b"} fontSize={"50px"}>
+          <Flex justifyContent={"Center"} as={"h1"} fontSize={"50px"}>
             Get in touch
           </Flex>
-          <Text>
+          <Text as={"p"}>
             I’m looking for great new opportunities so my inbox is always open.
             Whether you have a question or just want to say hi, I’ll try my best
             to get back to you!
