@@ -10,8 +10,20 @@ const Footer = () => {
       padding="10px"
       borderRadius="5px"
     >
-      <Text fontFamily="monospace" fontSize="10px" textAlign="center">
+      <Text fontFamily="monospace" fontSize="14px" textAlign="center">
         Made with <span>❤</span> By Yihun Shekuri
+        <Text fontSize="3px">
+          Design Motivation By{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={"https://chapimenge.com/"}
+          >
+            <span style={{ fontSize: "5px", color: "#205CDA" }}>
+              Temekin Mengstu(Hapi Mengi)
+            </span>
+          </a>
+        </Text>
       </Text>
     </Box>
   );
