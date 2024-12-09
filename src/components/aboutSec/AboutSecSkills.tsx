@@ -14,8 +14,10 @@ const AboutSecSkills: React.FC = () => {
     python: useBreakpointValue({ base: "Python", md: "Python" }) || "Python",
     css: useBreakpointValue({ base: "CSS", md: "CSS" }) || "CSS",
     database:
-      useBreakpointValue({ base: "DB", md: "Database (MongoDB, MySQL)" }) ||
-      "Database",
+      useBreakpointValue({
+        base: "DB",
+        md: "Database (MongoDB, MySQL,Postgress)",
+      }) || "Database",
     remix: useBreakpointValue({ base: "Remix", md: "Remix" }) || "Remix",
     ml:
       useBreakpointValue({
@@ -106,11 +108,11 @@ const AboutSecSkills: React.FC = () => {
         altText="TailwindCSS Logo"
         label={skillLabels.tailwind}
       />
-      <AboutSecSkillItem
+      {/* <AboutSecSkillItem
         imgSrc="/images/SkillsLogo/rLogo.png"
         altText="R Logo"
         label={skillLabels.r}
-      />
+      /> */}
       <AboutSecSkillItem
         imgSrc={
           colorMode === "dark"
@@ -130,11 +132,11 @@ const AboutSecSkills: React.FC = () => {
         altText="Java Logo"
         label={skillLabels.java}
       />
-      <AboutSecSkillItem
+      {/* <AboutSecSkillItem
         imgSrc="/images/SkillsLogo/KotlinLogo.png"
         altText="Kotlin Logo"
         label={skillLabels.kotlin}
-      />
+      /> */}
       <AboutSecSkillItem
         imgSrc="/images/SkillsLogo/androidLogo.png"
         altText="Android Logo"
