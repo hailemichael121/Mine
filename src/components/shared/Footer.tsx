@@ -12,8 +12,8 @@ const Footer = () => {
     >
       <Text fontFamily="monospace" fontSize="14px" textAlign="center">
         Made with <span>❤</span> By Yihun Shekuri
-        <Text fontSize="3px">
-          Design Motivation By{" "}
+        <Text fontSize="xx-small">
+          Design Copied From{" "}
           <a
             target="_blank"
             rel="noopener noreferrer"
