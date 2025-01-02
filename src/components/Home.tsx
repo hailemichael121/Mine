@@ -6,6 +6,7 @@ import {
   HomeResumeBtn,
   HomeSocialMEdiaBtn,
 } from ".";
+import GitHubActivity from "./shared/GitHubActivity";
 
 const Home = () => {
   return (
@@ -31,6 +32,7 @@ const Home = () => {
         pt={{ base: "10px", md: "140px" }}
       >
         <HomeProfileText />
+        <GitHubActivity />
         <Flex
           width="100%"
           justifyContent="center"
