@@ -12,18 +12,6 @@ const Footer = () => {
     >
       <Text fontFamily="monospace" fontSize="14px" textAlign="center">
         Made with <span>❤</span> By Yihun Shekuri
-        <Text fontSize="xx-small">
-          Design Copied From{" "}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={"https://chapimenge.com/"}
-          >
-            <span style={{ fontSize: "5px", color: "#205CDA" }}>
-              Temekin Mengstu(Hapi Mengi)
-            </span>
-          </a>
-        </Text>
       </Text>
     </Box>
   );
