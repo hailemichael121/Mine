@@ -7,10 +7,12 @@ import {
   Text,
   List,
   ListItem,
-  Select,
   Icon,
   Flex,
   useColorMode,
+  Divider,
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { FaStar, FaGithub } from "react-icons/fa";
 
@@ -52,35 +54,51 @@ const GitHubActivity: React.FC = () => {
     fetchGitHubData();
   }, []);
 
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedYear(parseInt(event.target.value));
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
   };
 
   return (
     <Box
       p={6}
-      bg={colorMode === "light" ? "gray.100" : "gray.700"}
+      mb={12}
+      bg={
+        colorMode === "light"
+          ? "var(--chakra-colors-primary)"
+          : "var(--chakra-colors-secondary)"
+      }
       color={colorMode === "light" ? "black" : "white"}
       borderRadius="md"
       boxShadow="lg"
     >
+      <Heading as="h1" size="40px" mt={4} mb={2}>
+        {" "}
+        GitHub Activity:{" "}
+      </Heading>
       <Box display="flex" justifyContent="center" mb={4}>
-        <Select
-          value={selectedYear}
-          onChange={handleYearChange}
-          width="auto"
-          bg={colorMode === "light" ? "white" : "gray.600"}
-          borderColor={colorMode === "light" ? "gray.300" : "gray.500"}
-        >
+        <ButtonGroup size="sm" isAttached variant="outline">
           {Array.from(
             { length: 5 },
             (_, i) => new Date().getFullYear() - i
           ).map((year) => (
-            <option key={year} value={year}>
+            <Button
+              key={year}
+              onClick={() => handleYearChange(year)}
+              isActive={selectedYear === year}
+              _active={{
+                bg: "teal.500",
+                color: "white",
+              }}
+              _hover={{
+                bg: "teal.300",
+                color: "white",
+              }}
+              transition="all 0.3s"
+            >
               {year}
-            </option>
+            </Button>
           ))}
-        </Select>
+        </ButtonGroup>
       </Box>
       <Box display="flex" justifyContent="center" mb={4}>
         <GitHubCalendar username="hailemichael121" year={selectedYear} />
@@ -100,15 +118,24 @@ const GitHubActivity: React.FC = () => {
       <Heading as="h6" size="md" mt={6} mb={2}>
         Top 5 Repositories:
       </Heading>
-      <List spacing={2}>
-        {repos.map((repo, index) => (
-          <ListItem key={index}>
-            <Flex alignItems="center">
-              <Icon as={FaGithub} w={5} h={5} mr={2} />
-              <Text>{repo}</Text>
-            </Flex>
-          </ListItem>
-        ))}
+      <List spacing={2} mt={4}>
+        <Box position="relative" pl={4}>
+          <Divider
+            orientation="vertical"
+            position="absolute"
+            left="10px"
+            height="100%"
+            borderColor={colorMode === "light" ? "gray.400" : "gray.600"}
+          />
+          {repos.map((repo, index) => (
+            <ListItem key={index} pl={4} position="relative">
+              <Flex alignItems="center">
+                <Icon as={FaGithub} w={5} h={5} mr={2} />
+                <Text>{repo}</Text>
+              </Flex>
+            </ListItem>
+          ))}
+        </Box>
       </List>
     </Box>
   );
