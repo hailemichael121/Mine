@@ -12,9 +12,10 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@fontsource/ruslan-display": "^5.0.23",
+    "@mui/material": "^6.3.0",
     "@octokit/rest": "^20.0.2",
     "@octokit/types": "^12.6.0",
     "axios": "^1.7.9",
