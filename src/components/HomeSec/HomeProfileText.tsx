@@ -32,12 +32,11 @@ const HomeProfileText = () => {
         fontFamily={"monospace"}
         as={"p"}
       >
-        I’m a Software Developer from Addis Ababa, Ethiopia. With a solid
-        foundation in full-stack development. I enhance user experiences and
-        optimize performance. Whether it’s developing complex web applications
-        or optimizing user interfaces, I’m committed to crafting scalable and
-        maintainable software solutions.
+        I'm a Full-stack Developer from Addis Ababa, Ethiopia. I specialize in
+        creating efficient, scalable web applications and enhancing user
+        experiences.
       </Text>
+
       <Text as="p" fontSize={{ base: "sm", md: "md" }}>
         Let’s connect and create something impactful together!
       </Text>
