@@ -29,7 +29,6 @@ const Home = () => {
           pb={{ base: "30px", md: "50px" }}
           width={{ base: "100%", md: "auto" }}
           textAlign={{ base: "center", md: "left" }}
-          // bgColor={"red"}
           pt={{ base: "10px", md: "140px" }}
         >
           <HomeProfileText />
@@ -48,7 +47,9 @@ const Home = () => {
           </Box>
         </VStack>
       </HStack>
-      <GitHubActivity />
+      <Box width="100%" overflowX="auto">
+        <GitHubActivity />
+      </Box>
     </VStack>
   );
 };
