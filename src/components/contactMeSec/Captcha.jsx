@@ -18,7 +18,7 @@ const Captcha = ({ onVerify }) => {
   return (
     <Box width={"300px"} height={"60px"} pt={4}>
       <ReCAPTCHA
-        sitekey="6LeSgLkqAAAAACVmJ7YIjCZPVhJczjjqy6Ttqs_n" // Replace with your Site Key
+        sitekey="6LePgrkqAAAAAArc6ZeYcz-u6rws1jPz8-Bqbe0J" // Use your Site Key
         onChange={handleCaptchaChange}
       />
     </Box>
