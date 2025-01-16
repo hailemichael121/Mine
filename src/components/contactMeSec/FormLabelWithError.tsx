@@ -19,6 +19,7 @@ interface Props {
   placeholder: string;
   type?: string;
   isTextArea?: boolean;
+  isDisabled?: boolean;
 }
 
 const FloatingLabelInput: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const FloatingLabelInput: React.FC<Props> = ({
   error,
   type = "text",
   isTextArea = false,
+  isDisabled = false,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const { colorMode } = useColorMode();
@@ -73,6 +75,7 @@ const FloatingLabelInput: React.FC<Props> = ({
           paddingTop="16px"
           fontSize={"10px"}
           bg={colorMode === "light" ? "#FADFA1" : "transparent"}
+          isDisabled={isDisabled}
         />
       ) : (
         <Textarea
