@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -15,10 +16,12 @@ const Captcha = ({ onVerify }) => {
   };
 
   return (
-    <ReCAPTCHA
-      sitekey="6Le9sbIqAAAAAG0OwizAy_PS14zYiq1E6fC4BR-H" // Replace with your Site Key
-      onChange={handleCaptchaChange}
-    />
+    <Box width={"300px"} height={"60px"} pt={4}>
+      <ReCAPTCHA
+        sitekey="6LeSgLkqAAAAACVmJ7YIjCZPVhJczjjqy6Ttqs_n" // Replace with your Site Key
+        onChange={handleCaptchaChange}
+      />
+    </Box>
   );
 };
 
