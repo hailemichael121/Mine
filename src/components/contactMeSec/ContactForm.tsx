@@ -11,13 +11,19 @@ import { validateForm } from "./formValidation";
 import { ContactFormValues, initialFormValues } from "./formTypes";
 import FormLabelWithError from "./FormLabelWithError";
 import ContactSecFormSubmitButton from "./ContactSecFormSubmitButton";
-
+import Captcha from "./Captcha";
 const ContactForm: React.FC = () => {
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
   const [errors, setErrors] = useState<ContactFormValues>(initialFormValues);
   const { colorMode } = useColorMode();
   const toast = useToast();
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Track form submission status
+
+  const handleCaptchaVerify = (isValid: boolean) => {
+    setIsCaptchaValid(isValid); // Update CAPTCHA validity
+  };
 
   // Handle input change for all form fields
   const handleInputChange = (
@@ -35,6 +41,8 @@ const ContactForm: React.FC = () => {
     setErrors(validationErrors);
 
     if (isFormValid(validationErrors)) {
+      setIsFormSubmitted(true); // Set form submission to true
+
       try {
         console.log("Form data:", formValues);
         const response = await fetch(
@@ -104,6 +112,7 @@ const ContactForm: React.FC = () => {
               onChange={handleInputChange}
               error={errors.name}
               placeholder="Name"
+              isDisabled={isFormSubmitted} // Disable input after submit
             />
 
             <FormLabelWithError
@@ -114,6 +123,7 @@ const ContactForm: React.FC = () => {
               error={errors.email}
               placeholder="Email"
               type="email"
+              isDisabled={isFormSubmitted} // Disable input after submit
             />
 
             <FormLabelWithError
@@ -123,6 +133,11 @@ const ContactForm: React.FC = () => {
               onChange={handleInputChange}
               error={errors.subject}
               placeholder="Subject"
+              isDisabled={isFormSubmitted} // Disable input after submit
+            />
+            <Captcha
+              onVerify={handleCaptchaVerify}
+              isDisabled={isFormSubmitted}
             />
           </Flex>
 
@@ -137,6 +152,7 @@ const ContactForm: React.FC = () => {
                 error={errors.message}
                 placeholder="Message"
                 isTextArea
+                isDisabled={isFormSubmitted} // Disable input after submit
               />
               <Tooltip
                 color={"red"}
@@ -170,7 +186,9 @@ const ContactForm: React.FC = () => {
             </Box>
 
             <ContactSecFormSubmitButton
-              isDisabled={!isFormValid(errors)}
+              isDisabled={
+                !isFormValid(errors) || !isCaptchaValid || isFormSubmitted
+              } // Disable submit if invalid or CAPTCHA not passed
               colorMode={colorMode}
             />
           </Flex>
