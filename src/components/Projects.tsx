@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box, SimpleGrid, useColorMode } from "@chakra-ui/react";
 import { projects } from "./projectsSec/dummyData";
+import { motion } from "framer-motion";
 import { ProjectSecCard, ProjectSecCategory } from ".";
 
-const ProjectSec: React.FC = () => {
+const Projects: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("All Projects");
+  const { colorMode } = useColorMode();
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
@@ -15,8 +17,6 @@ const ProjectSec: React.FC = () => {
       ? projects
       : projects.filter((project) => project.category === activeCategory);
 
-  const { colorMode } = useColorMode();
-
   return (
     <Box
       color={colorMode === "dark" ? "white" : "black"}
@@ -24,25 +24,39 @@ const ProjectSec: React.FC = () => {
       pl={{ base: "20px", md: "200px" }}
       pr={{ base: "20px", md: "100px" }}
       pb={{ base: "20px", md: "50px" }}
+      pt={8}
     >
-      <Box>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
         <ProjectSecCategory onCategoryChange={handleCategoryChange} />
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8} mt={8}>
           {filteredProjects.map((project) => (
-            <ProjectSecCard
+            <motion.div
               key={project.id}
-              title={project.title}
-              description={project.description}
-              image={project.image}
-              video={project.video}
-              gitLink={project.gitLink}
-              webLink={project.webLink}
-            />
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <ProjectSecCard
+                title={project.title}
+                description={project.description}
+                images={project.images}
+                video={project.video}
+                tags={project.tags}
+                siteLink={project.siteLink}
+                sourceLink={project.sourceLink}
+              />
+            </motion.div>
           ))}
         </SimpleGrid>
-      </Box>
+      </motion.div>
     </Box>
   );
 };
 
-export default ProjectSec;
+export default Projects;
