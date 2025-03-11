@@ -1,5 +1,5 @@
 import { Stack } from "@chakra-ui/react";
-import { ElipseMold } from "..";
+import { ElipseMold } from "../../pages";
 
 const Elipses = () => {
   return (

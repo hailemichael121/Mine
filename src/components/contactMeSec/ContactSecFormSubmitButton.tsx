@@ -1,14 +1,16 @@
 import React from "react";
-import { Button } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 
 interface Props {
   colorMode: "light" | "dark";
   isDisabled: boolean;
+  isLoading: boolean;
 }
 
 const ContactSecFormSubmitButton: React.FC<Props> = ({
   colorMode,
   isDisabled,
+  isLoading,
 }) => {
   return (
     <Button
@@ -27,7 +29,9 @@ const ContactSecFormSubmitButton: React.FC<Props> = ({
         color: isDisabled ? undefined : "black",
       }}
       cursor={isDisabled ? "not-allowed" : "pointer"}
-      disabled={isDisabled} // Disable the button when form is invalid
+      disabled={isDisabled || isLoading} // Disable the button when form is invalid or loading
+      isLoading={isLoading} // Show loading state
+      spinner={<Spinner size="md" />} // Custom spinner
     >
       Submit
     </Button>

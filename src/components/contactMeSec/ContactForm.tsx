@@ -19,6 +19,7 @@ const ContactForm: React.FC = () => {
   const { colorMode } = useColorMode();
   const toast = useToast();
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Track form submission status
 
   const handleCaptchaVerify = (isValid: boolean) => {
@@ -35,26 +36,25 @@ const ContactForm: React.FC = () => {
 
   // Validate form and submit
   const handleSubmit = async (e: React.FormEvent) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const validationErrors = validateForm(formValues);
     setErrors(validationErrors);
 
-    if (isFormValid(validationErrors)) {
+    if (isFormValid(validationErrors) && isCaptchaValid) {
       setIsFormSubmitted(true); // Set form submission to true
 
       try {
         console.log("Form data:", formValues);
-        const response = await fetch(
-          "https://mine-backend-x55x.onrender.com/api/contact",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formValues),
-          }
-        );
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+        });
+
         if (response.ok) {
           toast({
             title: "Success",
@@ -83,7 +83,18 @@ const ContactForm: React.FC = () => {
           isClosable: true,
         });
       }
+    } else {
+      toast({
+        title: "Error",
+        description:
+          "Please fill out all fields correctly and complete the CAPTCHA.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
+
+    setIsLoading(false);
   };
 
   const isFormValid = (validationErrors: ContactFormValues) => {
@@ -105,6 +116,10 @@ const ContactForm: React.FC = () => {
         <Flex direction={{ base: "column", md: "row" }} gap={4}>
           {/* Column 1: Name, Email, Subject */}
           <Flex direction="column" flex="1">
+            <Captcha
+              onVerify={handleCaptchaVerify}
+              isDisabled={isFormSubmitted}
+            />
             <FormLabelWithError
               label="Name"
               name="name"
@@ -134,10 +149,6 @@ const ContactForm: React.FC = () => {
               error={errors.subject}
               placeholder="Subject"
               isDisabled={isFormSubmitted} // Disable input after submit
-            />
-            <Captcha
-              onVerify={handleCaptchaVerify}
-              isDisabled={isFormSubmitted}
             />
           </Flex>
 
@@ -190,6 +201,7 @@ const ContactForm: React.FC = () => {
                 !isFormValid(errors) || !isCaptchaValid || isFormSubmitted
               } // Disable submit if invalid or CAPTCHA not passed
               colorMode={colorMode}
+              isLoading={isLoading} // Add isLoading prop
             />
           </Flex>
         </Flex>

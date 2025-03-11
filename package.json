@@ -28,11 +28,15 @@
     "react-intersection-observer": "^9.13.1",
     "react-router-dom": "^6.22.3",
     "react-router-hash-link": "^2.4.3",
-    "react-swipeable": "^7.0.1"
+    "react-swipeable": "^7.0.1",
+    "swiper": "^11.2.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-google-recaptcha": "^2.1.9",
+    "@types/webidl-conversions": "^7.0.3",
+    "@types/whatwg-url": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
