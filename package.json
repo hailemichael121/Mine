@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-google-recaptcha": "^2.1.9",
     "@types/webidl-conversions": "^7.0.3",
     "@types/whatwg-url": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
