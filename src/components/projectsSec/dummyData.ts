@@ -51,4 +51,12 @@ export const projects = [
     image: "images/ProjectsImage/Gamehub .webp",
     webLink: "https://game-hub-psi-three.vercel.app/",
   },
+  {
+    id: 7,
+    title: "Emojitale",
+    category: "Others",
+    description: "An interactive emoji-based storytelling platform.",
+    image: "images/ProjectsImage/emojitale.png",
+    webLink: "https://emojitale.netlify.app/",
+  },
 ];
