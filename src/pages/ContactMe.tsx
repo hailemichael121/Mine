@@ -8,10 +8,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import ContactForm from "./contactMeSec/ContactForm";
-import ContactMeSecLocation from "./contactMeSec/ContactMeSecLocation";
-import ContactMeEmail from "./contactMeSec/ContactMeEmail";
-import HomeSocialMEdiaBtn from "./HomeSec/HomeSocialMEdiaBtn";
+import ContactForm from "../components/contactMeSec/ContactForm";
+import ContactMeSecLocation from "../components/contactMeSec/ContactMeSecLocation";
+import ContactMeEmail from "../components/contactMeSec/ContactMeEmail";
+import HomeSocialMEdiaBtn from "../components/HomeSec/HomeSocialMEdiaBtn";
 
 const ContactMe: React.FC = () => {
   const { colorMode } = useColorMode();

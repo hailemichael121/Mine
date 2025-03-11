@@ -6,7 +6,7 @@ import {
   HomeResumeBtn,
   HomeSocialMEdiaBtn,
 } from ".";
-import GitHubActivity from "./shared/GitHubActivity";
+import GitHubActivity from "../components/shared/GitHubActivity";
 
 const Home = () => {
   return (

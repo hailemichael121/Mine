@@ -7,11 +7,11 @@ import {
 } from "@chakra-ui/react";
 import "@fontsource/ruslan-display";
 
-import ColorModeSwitch from "./shared/ColorModeSwitch";
-import NavLogoSection from "./navigationSec/NavLogoSection";
-import NavMenu from "./navigationSec/NavMenu";
-import SideMenu from "./shared/SideMenu";
-import MobileColorModeSwitch from "./shared/MobileColorMode";
+import ColorModeSwitch from "../components/shared/ColorModeSwitch";
+import NavLogoSection from "../components/navigationSec/NavLogoSection";
+import NavMenu from "../components/navigationSec/NavMenu";
+import SideMenu from "../components/shared/SideMenu";
+import MobileColorModeSwitch from "../components/shared/MobileColorMode";
 
 const NavigationBar = () => {
   const { onOpen } = useDisclosure();

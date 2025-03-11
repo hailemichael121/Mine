@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, SimpleGrid, useColorMode } from "@chakra-ui/react";
-import { projects } from "./projectsSec/dummyData";
 import { motion } from "framer-motion";
 import { ProjectSecCard, ProjectSecCategory } from ".";
+import { projects } from "../components/projectsSec/dummyData";
 
 const Projects: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("All Projects");
