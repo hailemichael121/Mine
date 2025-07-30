@@ -1,5 +1,46 @@
 export const projects = [
   {
+    id: 1,
+    title: "Gebeta SACCOS",
+    category: "Full Stack",
+    description:
+      "Financial services platform for Ethiopia's most trusted SACCOS, serving 10,000+ members with savings, loans, and investment services.",
+    images: [
+      "images/ProjectsImage/gebeta1.png",
+      "images/ProjectsImage/gebeta2.png",
+      "images/ProjectsImage/gebeta3.png",
+      "images/ProjectsImage/gebeta4.png",
+    ],
+    tags: ["NextJs", "Node.js", "Supabase", "Financial Services"],
+    siteLink: "https://gebeta-saccos.onrender.com/",
+    stats: [
+      "10,000+ Active Members",
+      "50M+ Birr in Loans",
+      "15+ Years of Service",
+      "98% Customer Satisfaction",
+    ],
+  },
+  {
+    id: 2,
+    title: "AURA Community",
+    category: "FrontEnd",
+    description:
+      "Mental wellness platform providing support, resources and community for mental health awareness in Ethiopia.",
+    images: [
+      "images/ProjectsImage/aura1.png",
+      "images/ProjectsImage/aura2.png",
+      "images/ProjectsImage/aura3.png",
+    ],
+    tags: ["NextJs", "Mental Health", "Community Support"],
+    siteLink: "https://aura-community.onrender.com/",
+    stats: [
+      "1000+ Community Members",
+      "500+ Lives Supported",
+      "50+ Support Groups",
+      "4.9/5 Rating",
+    ],
+  },
+  {
     id: 4,
     title: "Dirlink-Shipping Connector",
     category: "FrontEnd",
