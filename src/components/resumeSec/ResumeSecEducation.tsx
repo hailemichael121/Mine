@@ -18,8 +18,7 @@ const ResumeSecEducation: React.FC = () => {
       dateRange: "June 2022 - Present",
       description: (
         <Text>
-          Graduating soon with a strong foundation in full-stack development and
-          backend services.
+          Graduated  with a CGPA of <h1>3.49</h1> 
         </Text>
       ),
     },
