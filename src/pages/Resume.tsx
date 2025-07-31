@@ -14,19 +14,21 @@ const Resume: React.FC = () => {
       <ResumeSecHeader />
       <SimpleGrid columns={[1, null, 2]} spacing="20px">
         <ResumeSecWorkExperience />
-   <Flex
+        <Flex
   direction={{ base: 'column', md: 'row' }}
-  gap="20px"
   width="100%"
-  align="stretch" // stretch makes child boxes take full height if needed
+  gap="20px"
+  align="stretch"
+  justify="space-between"
 >
-  <Box flex={1} width="100%">
+  <Box flex="1" minWidth="0">
     <ResumeSecEducation />
   </Box>
-  <Box flex={1} width="100%">
+  <Box flex="1" minWidth="0">
     <ResumeSecSkills />
   </Box>
 </Flex>
+
       </SimpleGrid>
       <Box mt={16}>
         {" "}
