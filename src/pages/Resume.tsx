@@ -14,10 +14,10 @@ const Resume: React.FC = () => {
       <ResumeSecHeader />
       <SimpleGrid columns={[1, null, 2]} spacing="20px">
         <ResumeSecWorkExperience />
-        <Box>
-          <ResumeSecEducation />
-          <ResumeSecSkills />
-        </Box>
+       <Flex gap="20px">
+    <Box flex={1}><ResumeSecEducation /></Box>
+    <Box flex={1}><ResumeSecSkills /></Box>
+  </Flex>
       </SimpleGrid>
       <Box mt={16}>
         {" "}
