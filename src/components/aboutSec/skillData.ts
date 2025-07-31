@@ -1,9 +1,9 @@
 const skillLabels = {
   javascript: "JavaScript",
   nodejs: "NodeJs",
-  html: "HTML",
+  Springboot: "Springboot",
   python: "Python",
-  css: "CSS",
+  NextJs: "NextJs",
   database: "Database",
   remix: "Remix",
   ml: "Machine Learning",
@@ -29,9 +29,9 @@ export const skillData = [
     label: skillLabels.nodejs,
   },
   {
-    imgSrc: "/images/SkillsLogo/htmlLogo.png",
-    altText: "HTML Logo",
-    label: skillLabels.html,
+    imgSrc: "/images/SkillsLogo/SpringbootLogo.png",
+    altText: "Springboot Logo",
+    label: skillLabels.Springboot,
   },
   {
     imgSrc: "/images/SkillsLogo/pythonLogo.png",
@@ -39,9 +39,9 @@ export const skillData = [
     label: skillLabels.python,
   },
   {
-    imgSrc: "/images/SkillsLogo/cssLogo.png",
-    altText: "CSS Logo",
-    label: skillLabels.css,
+    imgSrc: "/images/SkillsLogo/NextjsLogo.png",
+    altText: "NextJs Logo",
+    label: skillLabels.NextJs,
   },
   {
     imgSrc: "/images/SkillsLogo/databaseLogo.png",
