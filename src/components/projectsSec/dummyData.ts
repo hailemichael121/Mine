@@ -121,4 +121,25 @@ export const projects = [
     tags: ["React", "Storytelling", "Emojis"],
     siteLink: "https://emojitale.netlify.app/",
   },
+   {
+    id: 11,
+    title: "ትምህርት ቤት (Timhrt Bet)",
+    category: "Full Stack",
+    description: "Modern Learning Management System for Ethiopian educational institutions to manage courses, track student progress, and facilitate learning experiences.",
+    images: [
+      "images/ProjectsImage/timhrt1.png",
+      "images/ProjectsImage/timhrt2.png",
+      "images/ProjectsImage/timhrt3.png"
+    ],
+    tags: ["React", "Node.js", "MongoDB", "Education", "LMS"],
+    siteLink: "https://timhrtbet-hailemichael121s-projects.vercel.app/",
+    features: [
+      "Course Management",
+      "Student Progress Tracking",
+      "Assignment Management",
+      "Analytics Dashboard",
+      "Plagiarism Detection",
+      "Communication Tools"
+    ]
+  },
 ];
