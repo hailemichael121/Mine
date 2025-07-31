@@ -33,7 +33,7 @@ const HomeProfileText = () => {
         as={"p"}
       >
         I'm a Full-stack Developer from Addis Ababa, Ethiopia. I specialize in
-        creating efficient, scalable web applications and enhancing user
+        creating efficient, scalable web and mobile applications and enhancing user
         experiences.
       </Text>
 
