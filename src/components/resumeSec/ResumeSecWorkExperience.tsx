@@ -25,53 +25,7 @@ const ResumeSecWorkExperience: React.FC = () => {
                 as={CheckCircleIcon}
                 color="green.500"
               />
-              Developed a functional 'Forgot Password' feature using React,
-              Chakra UI, and Firebase.
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Implemented dynamic routing to redirect users to company-specific
-              URLs after login.
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Built a sign-up page with email verification and role-based access
-              management for company admins.
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Configured Firebase authentication for sign-up and login with
-              real-time email verification.
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Worked on a sales management dashboard that fetches and displays
-              data for different companies dynamically.
-            </ListItem>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Collaborated on a Git-based project with multiple branches for
-              team development.
+              Developed a functional shipping connector dashboard.
             </ListItem>
           </List>
           <Text mt={4}>
@@ -104,6 +58,33 @@ const ResumeSecWorkExperience: React.FC = () => {
               Admin Dashboard
             </Link>
           </Text>
+        </Box>
+      ),
+    },
+     {
+      title: "Springboot Fullstack Developer",
+      subtitle: (
+        <Link
+          href="https://www.bankofabyssinia.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+         Bank Of Abyssinia
+        </Link>
+      ),
+      dateRange: "July 2024 - Present",
+      description: (
+        <Box>
+          <List spacing={3}>
+            <ListItem>
+              <ListIcon
+                fontSize={"smaller"}
+                as={CheckCircleIcon}
+                color="green.500"
+              />
+            Hired as a fullstack Springboot adn React  developer.
+            </ListItem>
+          </List>
         </Box>
       ),
     },
