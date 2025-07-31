@@ -15,7 +15,6 @@ const ContactMeEmail: React.FC = () => {
           pl={8}
           as={"p"}
           fontSize={"large"}
-          fontFamily={"fantasy"}
         >
           Yihunaashe@gmail.com
         </Link>

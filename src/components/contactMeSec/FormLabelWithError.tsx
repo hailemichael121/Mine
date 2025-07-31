@@ -36,12 +36,7 @@ const FloatingLabelInput: React.FC<Props> = ({
   const { colorMode } = useColorMode();
 
   return (
-    <FormControl
-      isInvalid={!!error}
-      mt={4}
-      position="relative"
-      fontFamily={"fantasy"}
-    >
+    <FormControl isInvalid={!!error} mt={4} position="relative">
       <FormLabel
         htmlFor={name}
         position="absolute"
@@ -74,7 +69,8 @@ const FloatingLabelInput: React.FC<Props> = ({
           shadow={isFocused ? "4px 5px 4px #E47580" : "gray"}
           paddingTop="16px"
           fontSize={"10px"}
-          bg={colorMode === "light" ? "#FADFA1" : "transparent"}
+          color={colorMode === "dark" ? "white" : "black"}
+          bg={colorMode === "light" ? "#d6d6d6ff" : "transparent"}
           isDisabled={isDisabled}
         />
       ) : (
@@ -88,7 +84,8 @@ const FloatingLabelInput: React.FC<Props> = ({
           focusBorderColor="teal.400"
           shadow="sm"
           paddingTop="16px"
-          bg={colorMode === "light" ? "#FADFA1" : "transparent"}
+          color={colorMode === "dark" ? "white" : "black"}
+          bg={colorMode === "light" ? "#d6d6d6ff" : "transparent"}
         />
       )}
 

@@ -32,6 +32,8 @@ const ContactSecFormSubmitButton: React.FC<Props> = ({
       disabled={isDisabled || isLoading} // Disable the button when form is invalid or loading
       isLoading={isLoading} // Show loading state
       spinner={<Spinner size="md" />} // Custom spinner
+      opacity={isDisabled ? 0.6 : 1}
+      pointerEvents={isDisabled ? "none" : "auto"}
     >
       Submit
     </Button>

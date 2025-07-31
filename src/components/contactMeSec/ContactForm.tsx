@@ -108,10 +108,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <Box
-      bg={colorMode === "dark" ? "#222222" : "#FFFFFF"}
-      fontFamily={"fantasy"}
-    >
+    <Box bg={colorMode === "dark" ? "#222222" : "#FFFFFF"}>
       <form onSubmit={handleSubmit}>
         <Flex direction={{ base: "column", md: "row" }} gap={4}>
           {/* Column 1: Name, Email, Subject */}
@@ -198,10 +195,13 @@ const ContactForm: React.FC = () => {
 
             <ContactSecFormSubmitButton
               isDisabled={
-                !isFormValid(errors) || !isCaptchaValid || isFormSubmitted
-              } // Disable submit if invalid or CAPTCHA not passed
+                !isFormValid(errors) ||
+                !isCaptchaValid ||
+                isFormSubmitted ||
+                isLoading
+              }
               colorMode={colorMode}
-              isLoading={isLoading} // Add isLoading prop
+              isLoading={isLoading}
             />
           </Flex>
         </Flex>

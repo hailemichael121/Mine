@@ -24,7 +24,6 @@ const ContactMe: React.FC = () => {
         p={{ base: 4, md: 40 }}
         justifyContent={"center"}
         flexDir={isMobile ? "column" : "row"}
-        fontFamily={"fantasy"}
       >
         <VStack
           justifyContent={"center"}
