@@ -11,10 +11,8 @@ const ResumeSecSkills: React.FC = () => {
     "React",
     "Next.js",
     "Angular",
-    "HTML",
-    "CSS",
-    "Node.js (beginner)",
-    "C++",
+    "Node.js",
+    "TailwindsCSS",
   ];
 
   return (
