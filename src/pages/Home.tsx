@@ -19,7 +19,6 @@ const Home = () => {
         spacing={{ base: 5, md: 5 }}
         mt={{ base: "0px", md: "-100px" }}
         ml={{ base: "0px", md: "200px" }}
-        fontFamily={"fantasy"}
       >
         <Box width={{ base: "100%", md: "auto" }}>
           <HomeProfilePhoto />

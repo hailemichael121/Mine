@@ -15,7 +15,7 @@ const HomeProfileText = () => {
         fontFamily="monospace"
         pb={5}
         as={"h2"}
-        fontSize={{ base: "30px", md: "50px" }}
+        fontSize={{ base: "30px", md: "40px" }}
       >
         👋 Hi,
       </Heading>
