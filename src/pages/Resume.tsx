@@ -1,4 +1,4 @@
-import { Box, SimpleGrid,flex } from "@chakra-ui/react";
+import { Box, SimpleGrid,Flex } from "@chakra-ui/react";
 import React from "react";
 import {
   ProjectSecHeader,
