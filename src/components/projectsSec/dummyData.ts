@@ -12,7 +12,7 @@ export const projects = [
       "images/ProjectsImage/gebeta4.png",
     ],
     tags: ["NextJs", "Node.js", "Supabase", "Financial Services"],
-    siteLink: "https://gebeta-saccos.onrender.com/",
+    siteLink: "https://gebeta-saccos.netlify.app/",
     stats: [
       "10,000+ Active Members",
       "50M+ Birr in Loans",
@@ -32,7 +32,7 @@ export const projects = [
       "images/ProjectsImage/aura3.png",
     ],
     tags: ["NextJs", "Mental Health", "Community Support"],
-    siteLink: "https://aura-community.onrender.com/",
+    siteLink: "https://aura-community.netlify.app/",
     stats: [
       "1000+ Community Members",
       "500+ Lives Supported",
@@ -131,7 +131,7 @@ export const projects = [
       "images/ProjectsImage/timhrt2.png",
       "images/ProjectsImage/timhrt3.png"
     ],
-    tags: ["React", "Node.js", "MongoDB", "Education", "LMS"],
+    tags: ["NextJs", "Node.js", "MongoDB", "Education", "LMS"],
     siteLink: "https://timhrtbet-hailemichael121s-projects.vercel.app/",
     features: [
       "Course Management",
