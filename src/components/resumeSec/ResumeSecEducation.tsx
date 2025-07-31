@@ -15,10 +15,10 @@ const ResumeSecEducation: React.FC = () => {
           Addis Ababa Science and Technology University
         </Link>
       ),
-      dateRange: "June 2022 - Present",
+      dateRange: "June 2022 - June 2024",
       description: (
         <Text>
-          Graduated  with a CGPA of <h1>3.49</h1> 
+          Graduated with a CGPA of <h1>3.49</h1>
         </Text>
       ),
     },

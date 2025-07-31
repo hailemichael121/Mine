@@ -15,7 +15,7 @@ const ResumeSecWorkExperience: React.FC = () => {
           Addis Systems
         </Link>
       ),
-      dateRange: "July 2023 - Present",
+      dateRange: "July 2023 - september 2023",
       description: (
         <Box>
           <List spacing={3}>
@@ -61,7 +61,7 @@ const ResumeSecWorkExperience: React.FC = () => {
         </Box>
       ),
     },
-     {
+    {
       title: "Springboot Fullstack Developer",
       subtitle: (
         <Link
@@ -69,7 +69,7 @@ const ResumeSecWorkExperience: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-         Bank Of Abyssinia
+          Bank Of Abyssinia
         </Link>
       ),
       dateRange: "July 2024 - Present",
@@ -82,7 +82,7 @@ const ResumeSecWorkExperience: React.FC = () => {
                 as={CheckCircleIcon}
                 color="green.500"
               />
-            Hired as a fullstack Springboot adn React  developer.
+              Hired as a fullstack Springboot adn React developer.
             </ListItem>
           </List>
         </Box>

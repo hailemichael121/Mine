@@ -1,4 +1,4 @@
-import { Box, SimpleGrid,Flex } from "@chakra-ui/react";
+import { Box, SimpleGrid, Flex, HStack } from "@chakra-ui/react";
 import React from "react";
 import {
   ProjectSecHeader,
@@ -14,15 +14,13 @@ const Resume: React.FC = () => {
       <ResumeSecHeader />
       <SimpleGrid columns={[1, null, 2]} spacing="20px">
         <ResumeSecWorkExperience />
-        <Flex
-          direction={{ base: 'column', md: 'row' }}
-          width="100%"
-          justify="space-between"
-        >
-          <ResumeSecEducation />
-          <ResumeSecSkills />
-      </Flex>
 
+        <Box flex="1" minWidth="0">
+          <ResumeSecEducation />
+        </Box>
+        <Box flex="1" minWidth="0">
+          <ResumeSecSkills />
+        </Box>
       </SimpleGrid>
       <Box mt={16}>
         {" "}
