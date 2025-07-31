@@ -15,19 +15,13 @@ const Resume: React.FC = () => {
       <SimpleGrid columns={[1, null, 2]} spacing="20px">
         <ResumeSecWorkExperience />
         <Flex
-  direction={{ base: 'column', md: 'row' }}
-  width="100%"
-  gap="20px"
-  align="stretch"
-  justify="space-between"
->
-  <Box flex="1" minWidth="0">
-    <ResumeSecEducation />
-  </Box>
-  <Box flex="1" minWidth="0">
-    <ResumeSecSkills />
-  </Box>
-</Flex>
+          direction={{ base: 'column', md: 'row' }}
+          width="100%"
+          justify="space-between"
+        >
+          <ResumeSecEducation />
+          <ResumeSecSkills />
+      </Flex>
 
       </SimpleGrid>
       <Box mt={16}>
