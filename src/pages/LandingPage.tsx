@@ -6,13 +6,13 @@ import {
   Blogs,
   ContactMe,
   NavigationBar,
-  Projects,
   Resume,
   Services,
   SideMenu,
 } from ".";
 import Home from "./Home";
 import Footer from "../components/shared/Footer";
+import ProjectsCurtain from "../components/projectsSec/ProjectsCurtain";
 
 // Use a div with motion and apply Chakra styles via style
 const MotionDiv = motion.div;
@@ -96,7 +96,7 @@ const LandingPage = () => {
           <Resume />
         </div>
         <div id="projects">
-          <Projects />
+          <ProjectsCurtain />
         </div>
         <div id="blogs">
           <Blogs />

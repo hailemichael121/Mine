@@ -47,7 +47,6 @@ export const projects = [
     description:
       "A well-designed shipping connector with admin and customer dashboard.",
     images: [
-      "images/ProjectsImage/dirlink_logo1.png",
       "images/ProjectsImage/dirlink_logo2.png",
       "images/ProjectsImage/dirlink_logo3.png",
       "images/ProjectsImage/dirlink_logo4.png",
@@ -121,15 +120,16 @@ export const projects = [
     tags: ["React", "Storytelling", "Emojis"],
     siteLink: "https://emojitale.netlify.app/",
   },
-   {
+  {
     id: 11,
     title: "ትምህርት ቤት (Timhrt Bet)",
     category: "Full Stack",
-    description: "Modern Learning Management System for Ethiopian educational institutions to manage courses, track student progress, and facilitate learning experiences.",
+    description:
+      "Modern Learning Management System for Ethiopian educational institutions to manage courses, track student progress, and facilitate learning experiences.",
     images: [
       "images/ProjectsImage/timhrt1.png",
       "images/ProjectsImage/timhrt2.png",
-      "images/ProjectsImage/timhrt3.png"
+      "images/ProjectsImage/timhrt3.png",
     ],
     tags: ["NextJs", "Node.js", "MongoDB", "Education", "LMS"],
     siteLink: "https://timhrtbet-hailemichael121s-projects.vercel.app/",
@@ -139,7 +139,7 @@ export const projects = [
       "Assignment Management",
       "Analytics Dashboard",
       "Plagiarism Detection",
-      "Communication Tools"
-    ]
+      "Communication Tools",
+    ],
   },
 ];

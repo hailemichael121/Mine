@@ -1,3 +1,4 @@
+// components/projectsSec/Projects.tsx
 import React, { useState } from "react";
 import { Box, SimpleGrid, useColorMode } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -7,6 +8,17 @@ import { projects } from "../components/projectsSec/dummyData";
 const Projects: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("All Projects");
   const { colorMode } = useColorMode();
+
+  // Calculate project counts for each category
+  const projectCounts = {
+    all: projects.length,
+    frontend: projects.filter((p) => p.category === "FrontEnd").length,
+    backend: projects.filter((p) => p.category === "Backend").length,
+    ml: projects.filter((p) => p.category === "Machine Learning").length,
+    mobile: projects.filter((p) => p.category === "Mobile").length,
+    others: projects.filter((p) => p.category === "Others").length,
+    fullstack: projects.filter((p) => p.category === "Full Stack").length,
+  };
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
@@ -31,16 +43,20 @@ const Projects: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <ProjectSecCategory onCategoryChange={handleCategoryChange} />
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={8} mt={8}>
+        <ProjectSecCategory
+          onCategoryChange={handleCategoryChange}
+          activeCategory={activeCategory}
+          projectCounts={projectCounts}
+        />
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6} mt={8}>
           {filteredProjects.map((project) => (
             <motion.div
               key={project.id}
+              className="project-card"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
             >
               <ProjectSecCard
                 title={project.title}
