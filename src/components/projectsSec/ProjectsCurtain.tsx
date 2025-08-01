@@ -1,5 +1,5 @@
 // components/projectsSec/ProjectsCurtain.tsx
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Box, Icon, Flex, useColorMode } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";

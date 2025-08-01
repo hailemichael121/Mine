@@ -1,7 +1,6 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
 import React from "react";
 import {
-  ProjectSecHeader,
   ResumeSecEducation,
   ResumeSecHeader,
   ResumeSecSkills,
@@ -10,22 +9,26 @@ import {
 
 const Resume: React.FC = () => {
   return (
-    <Box ml={{ base: "0px", md: "200px" }}>
+    <Box maxW="1200px" mx="auto" px={{ base: 5, md: 8 }} py={10}>
       <ResumeSecHeader />
-      <SimpleGrid columns={[1, null, 2]} spacing="20px">
-        <ResumeSecWorkExperience />
 
-        <Box flex="1" minWidth="0">
+      <SimpleGrid
+        columns={{ base: 1, lg: 2 }}
+        spacing={16}
+        alignItems="flex-start"
+      >
+        {/* Left Column */}
+        <VStack spacing={8} align="stretch">
+          <ResumeSecWorkExperience />
+        </VStack>
+
+        {/* Right Column */}
+        <VStack spacing={8} align="stretch">
           <ResumeSecEducation />
-        </Box>
-        <Box flex="1" minWidth="0">
           <ResumeSecSkills />
-        </Box>
+          {/* Add other sections here if needed */}
+        </VStack>
       </SimpleGrid>
-      <Box mt={16}>
-        {" "}
-        <ProjectSecHeader />
-      </Box>
     </Box>
   );
 };

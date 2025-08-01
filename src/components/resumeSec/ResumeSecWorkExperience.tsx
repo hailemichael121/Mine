@@ -1,91 +1,93 @@
 import { Box, Link, Text, List, ListItem, ListIcon } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import { FiCheckCircle } from "react-icons/fi";
 import ResumeSecCard from "./ResumeSecCard";
+import { FaBriefcase, FaLaptopCode } from "react-icons/fa";
 
 const ResumeSecWorkExperience: React.FC = () => {
   const experiences = [
     {
-      title: "Frontend Developer / Intern",
+      title: "JavaScript/Go Backend Developer",
       subtitle: (
-        <Link
-          href="https://www.addissystems.et/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <Link href="https://taptosign.com" isExternal color="inherit">
+          TapToSign (via Upwork)
+        </Link>
+      ),
+      dateRange: "March 2024 - May 2024",
+      description: (
+        <Box mt={1}>
+          <List spacing={1}>
+            {[
+              "Maintained backend services for e-signature platform",
+              "Implemented and Optimized PDF processing features with Go",
+              "Collaborated with remote team on feature development",
+            ].map((item, i) => (
+              <ListItem key={i} display="flex" alignItems="flex-start">
+                <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+                <Text>{item}</Text>
+              </ListItem>
+            ))}
+          </List>
+          <Box mt={4}>
+            <Text fontSize="sm" color="gray.500">
+              <strong>Technologies:</strong> JavaScript, Go, Node.js, AWS,
+              PostgreSQL
+            </Text>
+          </Box>
+        </Box>
+      ),
+      icon: <FaLaptopCode color="white" />,
+      variant: "work",
+    },
+    {
+      title: "Frontend Developer Intern",
+      subtitle: (
+        <Link href="https://www.addissystems.et/" isExternal color="inherit">
           Addis Systems
         </Link>
       ),
-      dateRange: "July 2023 - september 2023",
+      dateRange: "July 2023 - September 2023",
       description: (
-        <Box>
-          <List spacing={3}>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Developed a functional shipping connector dashboard.
-            </ListItem>
+        <Box mt={3}>
+          <List spacing={2}>
+            {[
+              "Developed shipping connector dashboard with React/TypeScript",
+              "Implemented responsive UI components",
+              "Collaborated with backend team on API integration",
+            ].map((item, i) => (
+              <ListItem key={i} display="flex" alignItems="flex-start">
+                <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+                <Text>{item}</Text>
+              </ListItem>
+            ))}
           </List>
-          <Text mt={4}>
-            <Link
-              href="https://dirlinksdev.addissystems.et/"
-              target="_blank"
-              rel="noopener noreferrer"
-              color="blue.500"
-            >
-              Landing Page
-            </Link>
-          </Text>
-          <Text mt={2}>
-            <Link
-              href="https://customerdashboarddev.addissystems.et/"
-              target="_blank"
-              rel="noopener noreferrer"
-              color="blue.500"
-            >
-              Customer Dashboard
-            </Link>
-          </Text>
-          <Text mt={2}>
-            <Link
-              href="https://admin.addissystems.et/"
-              target="_blank"
-              rel="noopener noreferrer"
-              color="blue.500"
-            >
-              Admin Dashboard
-            </Link>
-          </Text>
         </Box>
       ),
     },
     {
-      title: "Springboot Fullstack Developer",
+      title: "Fullstack Developer",
       subtitle: (
         <Link
           href="https://www.bankofabyssinia.com/"
-          target="_blank"
-          rel="noopener noreferrer"
+          isExternal
+          color="inherit"
         >
-          Bank Of Abyssinia
+          Bank of Abyssinia
         </Link>
       ),
       dateRange: "July 2024 - Present",
       description: (
-        <Box>
-          <List spacing={3}>
-            <ListItem>
-              <ListIcon
-                fontSize={"smaller"}
-                as={CheckCircleIcon}
-                color="green.500"
-              />
-              Hired as a fullstack Springboot adn React developer.
+        <List spacing={2} mt={3}>
+          {[
+            "Developing financial applications with Spring Boot and React",
+            "Implementing secure banking features",
+            "Optimizing application performance",
+          ].map((item, i) => (
+            <ListItem key={i} display="flex" alignItems="flex-start">
+              <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+              <Text>{item}</Text>
             </ListItem>
-          </List>
-        </Box>
+          ))}
+        </List>
       ),
     },
   ];
@@ -99,6 +101,8 @@ const ResumeSecWorkExperience: React.FC = () => {
           subtitle={exp.subtitle}
           dateRange={exp.dateRange}
           description={exp.description}
+          icon={<FaBriefcase color="white" />}
+          variant="work"
         />
       ))}
     </>
