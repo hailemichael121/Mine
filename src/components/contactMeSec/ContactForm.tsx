@@ -12,21 +12,25 @@ import { ContactFormValues, initialFormValues } from "./formTypes";
 import FormLabelWithError from "./FormLabelWithError";
 import ContactSecFormSubmitButton from "./ContactSecFormSubmitButton";
 import Captcha from "./Captcha";
+
+const FORMSPREE_URL = "https://formspree.io/f/mdkdpjyg";
+
 const ContactForm: React.FC = () => {
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
-  const [errors, setErrors] = useState<ContactFormValues>(initialFormValues);
+  const [errors, setErrors] = useState<ContactFormValues>(
+    initialFormValues
+  );
   const { colorMode } = useColorMode();
   const toast = useToast();
   const [isCaptchaValid, setIsCaptchaValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Track form submission status
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleCaptchaVerify = (isValid: boolean) => {
-    setIsCaptchaValid(isValid); // Update CAPTCHA validity
+    setIsCaptchaValid(isValid);
   };
 
-  // Handle input change for all form fields
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -34,60 +38,56 @@ const ContactForm: React.FC = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // Validate form and submit
   const handleSubmit = async (e: React.FormEvent) => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
 
     const validationErrors = validateForm(formValues);
     setErrors(validationErrors);
 
-    if (isFormValid(validationErrors) && isCaptchaValid) {
-      setIsFormSubmitted(true); // Set form submission to true
-
-      try {
-        console.log("Form data:", formValues);
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        });
-
-        if (response.ok) {
-          toast({
-            title: "Success",
-            description: "Form submitted successfully!",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          });
-          setFormValues(initialFormValues); // Clear form after successful submission
-        } else {
-          toast({
-            title: "Error",
-            description: "Error submitting the form.",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-          });
-        }
-      } catch (err) {
-        console.error("Error:", err);
-        toast({
-          title: "Error",
-          description: "An unexpected error occurred.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-      }
-    } else {
+    if (!isFormValid(validationErrors) || !isCaptchaValid) {
       toast({
         title: "Error",
         description:
           "Please fill out all fields correctly and complete the CAPTCHA.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent",
+          description:
+            "Thank you for your message! I’ll get back to you shortly.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        setFormValues(initialFormValues);
+        setIsFormSubmitted(true);
+      } else {
+        throw new Error("Form submission error");
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Submission Failed",
+        description:
+          "Something went wrong sending your message. Please try again later.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -98,95 +98,66 @@ const ContactForm: React.FC = () => {
   };
 
   const isFormValid = (validationErrors: ContactFormValues) => {
-    return (
-      formValues.name.length >= 3 &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email) &&
-      formValues.subject.length >= 8 &&
-      formValues.message.length >= 15 &&
-      Object.values(validationErrors).every((error) => error === "")
-    );
+    return Object.values(validationErrors).every((err) => !err);
   };
 
   return (
-    <Box bg={colorMode === "dark" ? "#222222" : "#FFFFFF"}>
+    <Box bg={colorMode === "dark" ? "#222222" : "#FFFFFF"} p={4} rounded="md">
       <form onSubmit={handleSubmit}>
-        <Flex direction={{ base: "column", md: "row" }} gap={4}>
-          {/* Column 1: Name, Email, Subject */}
-          <Flex direction="column" flex="1">
-            <Captcha
-              onVerify={handleCaptchaVerify}
+        <Flex direction={{ base: "column", md: "row" }} gap={6}>
+          {/* Left column */}
+          <Flex direction="column" flex={1} gap={4}>
+            <Captcha onVerify={handleCaptchaVerify} isDisabled={isFormSubmitted} />
+            <FormLabelWithError
+              label="Name" name="name" value={formValues.name}
+              onChange={handleInputChange} error={errors.name}
+              placeholder="Your Name"
               isDisabled={isFormSubmitted}
             />
             <FormLabelWithError
-              label="Name"
-              name="name"
-              value={formValues.name}
-              onChange={handleInputChange}
-              error={errors.name}
-              placeholder="Name"
-              isDisabled={isFormSubmitted} // Disable input after submit
-            />
-
-            <FormLabelWithError
-              label="Email"
-              name="email"
-              value={formValues.email}
-              onChange={handleInputChange}
-              error={errors.email}
-              placeholder="Email"
+              label="Email" name="email" value={formValues.email}
               type="email"
-              isDisabled={isFormSubmitted} // Disable input after submit
+              onChange={handleInputChange} error={errors.email}
+              placeholder="Your Email"
+              isDisabled={isFormSubmitted}
             />
-
             <FormLabelWithError
-              label="Subject"
-              name="subject"
-              value={formValues.subject}
-              onChange={handleInputChange}
-              error={errors.subject}
+              label="Subject" name="subject" value={formValues.subject}
+              onChange={handleInputChange} error={errors.subject}
               placeholder="Subject"
-              isDisabled={isFormSubmitted} // Disable input after submit
+              isDisabled={isFormSubmitted}
             />
           </Flex>
 
-          {/* Column 2: Message and Submit Button */}
-          <Flex direction="column" flex="1">
+          {/* Right column */}
+          <Flex direction="column" flex={1}>
             <Box position="relative">
               <FormLabelWithError
-                label="Message"
-                name="message"
-                value={formValues.message}
-                onChange={handleInputChange}
-                error={errors.message}
-                placeholder="Message"
+                label="Message" name="message" value={formValues.message}
                 isTextArea
-                isDisabled={isFormSubmitted} // Disable input after submit
+                onChange={handleInputChange} error={errors.message}
+                placeholder="Your Message"
+                isDisabled={isFormSubmitted}
               />
               <Tooltip
-                color={"red"}
                 label={
-                  <ul style={{ margin: 0, padding: "5px 10px" }}>
-                    <li>Name: &gt; 3 characters</li>
-                    <li>Email: Valid format</li>
-                    <li>Subject: &gt; 8 characters</li>
-                    <li>Message: &gt; 15 characters</li>
-                  </ul>
+                  <Box fontSize="sm">
+                    <Box as="li">Name: ≥ 3 characters</Box>
+                    <Box as="li">Email: valid format</Box>
+                    <Box as="li">Subject: ≥ 8 characters</Box>
+                    <Box as="li">Message: ≥ 15 characters</Box>
+                  </Box>
                 }
-                placement="top"
                 hasArrow
+                placement="top"
               >
                 <Button
-                  borderRadius={"50%"}
-                  bgColor={"#0DCAF0"}
-                  fontSize={"xs"}
-                  fontStyle={"oblique"}
                   position="absolute"
-                  top="-2px"
-                  right="0px"
-                  p={0.1}
-                  height="13px"
-                  width="13px"
-                  minWidth="13px"
+                  top="-1"
+                  right="0"
+                  size="xs"
+                  borderRadius="full"
+                  colorScheme="cyan"
                 >
                   i
                 </Button>
@@ -195,13 +166,10 @@ const ContactForm: React.FC = () => {
 
             <ContactSecFormSubmitButton
               isDisabled={
-                !isFormValid(errors) ||
-                !isCaptchaValid ||
-                isFormSubmitted ||
-                isLoading
+                isFormSubmitted || isLoading || !isCaptchaValid || !isFormValid(errors)
               }
-              colorMode={colorMode}
               isLoading={isLoading}
+              colorMode={colorMode}
             />
           </Flex>
         </Flex>
