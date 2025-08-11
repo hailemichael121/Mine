@@ -4,34 +4,35 @@ import React from "react";
 const NavLogoSection: React.FC = () => {
   const { colorMode } = useColorMode();
   return (
-    <>
-      {" "}
-      <Stack direction="row">
-        <Image
-          transition=" 0.3s "
-          transform={"rotate(5deg)"}
-          cursor={"pointer"}
-          _hover={{ transform: "rotate(15deg)", mr: "0px" }}
-          backgroundColor={"transparent"}
-          borderRadius={colorMode === "dark" ? "35px" : "15px 20px 15px 30px"}
-          width="50px"
-          height="50px"
-          src={
-            colorMode == "light"
-              ? "images/LogoLightMood.jpg "
-              : "images/LogoDarkMood.png"
-          }
-        />
+    <Stack direction="row" align="center" spacing={0} cursor="pointer">
+      <Image
+        transition="0.3s"
+        transform={"rotate(5deg)"}
+        _hover={{ transform: "rotate(15deg)" }}
+        backgroundColor={"transparent"}
+        borderRadius={colorMode === "dark" ? "35px" : "15px 20px 15px 30px"}
+        width="100px"
+        height="100px"
+        m={0}
+        bg={colorMode === "light" ? "white" : "var(--chakra-colors-secondary)"}
+        src={
+          colorMode === "light"
+            ? "images/LogoLightMood.png"
+            : "images/LogoDarkMood.png"
+        }
+      />
 
-        <Heading
-          pl="10px"
-          color={colorMode == "light" ? "  #222222" : "  #FFFFFF"}
-          _hover={{ textUnderlineOffset: "#7F27FF" }}
-        >
-          Yihun Shekuri
-        </Heading>
-      </Stack>
-    </>
+      <Heading
+        color={colorMode === "light" ? "#222222" : "#FFFFFF"}
+        _hover={{
+          textDecoration: "underline",
+          textUnderlineOffset: "4px",
+          textDecorationColor: "#7F27FF",
+        }}
+      >
+        Yihun Shekuri
+      </Heading>
+    </Stack>
   );
 };
 

@@ -119,13 +119,16 @@ const GitHubActivity: React.FC = () => {
                 year={selectedYear}
                 renderBlock={(block, activity) => (
                   <Tooltip
+                    key={activity.date} // Use a unique value like the date as the key
                     label={`${activity.count} activities on ${activity.date}`}
                   >
                     {block}
                   </Tooltip>
                 )}
                 renderColorLegend={(block, level) => (
-                  <Tooltip label={`Level: ${level}`}>{block}</Tooltip>
+                  <Tooltip key={level} label={`Level: ${level}`}>
+                    {block}
+                  </Tooltip>
                 )}
               />
             </Box>
@@ -160,8 +163,8 @@ const GitHubActivity: React.FC = () => {
                       colorMode === "light" ? "gray.400" : "gray.600"
                     }
                   />
-                  {repos.map((repo, index) => (
-                    <ListItem key={index} pl={4} position="relative">
+                  {repos.map((repo) => (
+                    <ListItem key={repo.name} pl={4} position="relative">
                       <Flex alignItems="center" p={2}>
                         <Icon as={FaGithub} w={5} h={5} mr={2} />
                         <Link href={repo.url} isExternal>
