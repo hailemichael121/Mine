@@ -14,7 +14,6 @@ const NavLogoSection: React.FC = () => {
         width="100px"
         height="100px"
         m={0}
-        bg={colorMode === "light" ? "white" : "var(--chakra-colors-secondary)"}
         src={
           colorMode === "light"
             ? "images/LogoLightMood.png"
