@@ -1,14 +1,23 @@
-import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  VStack,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import {
   HomeContactBtn,
+  HomeMobileActionBtns,
   HomeProfilePhoto,
   HomeProfileText,
   HomeResumeBtn,
-  HomeSocialMEdiaBtn,
+  HomeSocialMediaBtn,
 } from ".";
 import GitHubActivity from "../components/shared/GitHubActivity";
 
 const Home = () => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <VStack>
       <HStack
@@ -31,6 +40,7 @@ const Home = () => {
           pt={{ base: "10px", md: "140px" }}
         >
           <HomeProfileText />
+
           <Flex
             width="100%"
             justifyContent="center"
@@ -38,11 +48,19 @@ const Home = () => {
             p={5}
             flexDirection={{ base: "column", md: "row" }}
           >
-            <HomeResumeBtn />
-            <HomeContactBtn />
+            {/* Conditionally render buttons */}
+            {isMobile ? (
+              <HomeMobileActionBtns />
+            ) : (
+              <>
+                <HomeResumeBtn />
+                <HomeContactBtn />
+              </>
+            )}
           </Flex>
+
           <Box width={{ base: "100%", md: "50%" }}>
-            <HomeSocialMEdiaBtn />
+            <HomeSocialMediaBtn />
           </Box>
         </VStack>
       </HStack>

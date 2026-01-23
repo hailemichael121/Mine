@@ -3,9 +3,15 @@ import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <LandingPage />
     </BrowserRouter>
   );
 }
+
 export default App;

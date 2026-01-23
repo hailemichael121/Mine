@@ -1,15 +1,10 @@
 import ReactDOM from "react-dom/client";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "./theme"; // Import your theme file
 import App from "./App";
-const customTheme = extendTheme({
-  colors: {
-    primary: "#F4F1F1",
-    secondary: "#121212",
-  },
-});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ChakraProvider theme={customTheme}>
+  <ChakraProvider theme={theme}>
     <App />
-  </ChakraProvider>
+  </ChakraProvider>,
 );

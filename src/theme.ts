@@ -1,43 +1,90 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 
-const lightTheme = {
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
+
+// Pure black and white colors
+const colors = {
+  white: "#FFFFFF",
+  black: "#000000",
+  gray: {
+    50: "#FAFAFA",
+    100: "#F5F5F5",
+    200: "#E5E5E5",
+    300: "#D4D4D4",
+    400: "#A3A3A3",
+    500: "#737373",
+    600: "#525252",
+    700: "#404040",
+    800: "#262626",
+    900: "#171717",
+  },
+};
+
+export const theme = extendTheme({
+  config,
   colors: {
-    bg: "#gray", // Light theme background color
-    text: "black", // Text color
-    primary: "#ced8e4", // Primary color
-    secondary: "#121212", // Secondary color
-    accent: "#f59e0b",
+    // Only define black and white
+    white: colors.white,
+    black: colors.black,
+    gray: colors.gray,
   },
-  fonts: {
-    heading: "'Roboto', sans-serif",
-    body: "'Open Sans', sans-serif",
+  semanticTokens: {
+    colors: {
+      // Light mode: white background, black text
+      bg: {
+        default: colors.white,
+        _dark: colors.black,
+      },
+      text: {
+        default: colors.black,
+        _dark: colors.white,
+      },
+      // Pure black/white components
+      surface: {
+        default: colors.white,
+        _dark: colors.black,
+      },
+      border: {
+        default: colors.gray[300],
+        _dark: colors.gray[700],
+      },
+      // If you want inverted elements (black on white in light mode)
+      invertedBg: {
+        default: colors.black,
+        _dark: colors.white,
+      },
+      invertedText: {
+        default: colors.white,
+        _dark: colors.black,
+      },
+    },
   },
-  // ... other theme options
-};
+  // Remove all default Chakra colors
+  components: {
+    Button: {
+      variants: {
+        // Outline button with border matching background
+        outline: (props: any) => ({
+          borderWidth: "1px",
+          borderColor: "bg", // This will match the current bg color
+          color: "text", // This will match the current text color
+          _hover: {
+            // Optional: Add hover effect
+            borderColor: props.colorMode === "light" ? "gray.400" : "gray.600",
+          },
+        }),
 
-const darkTheme = {
-  colors: {
-    // Define colors for dark theme (e.g., black background, white text)
-    bg: "black",
-    text: "Black",
-    primary: "Black", // Adjust primary color shade for dark theme
-    // ... other color definitions
+        // Ghost button (borderless)
+        ghost: (props: any) => ({
+          color: "text",
+          _hover: {
+            bg: props.colorMode === "light" ? "gray.100" : "gray.900",
+          },
+        }),
+      },
+    },
   },
-  fonts: {
-    heading: "'Roboto', sans-serif",
-    body: "'Open Sans', sans-serif",
-  },
-  // ... other theme options
-};
-
-// Combine themes and set initial color mode (optional)
-const config = {
-  initialColorMode: "light", // Optional: Set initial color mode (default is 'light')
-  useSystemColorMode: false, // Optional: Disable system color mode detection
-  themes: {
-    light: lightTheme,
-    dark: darkTheme,
-  },
-};
-
-export const theme = extendTheme(config);
+});
