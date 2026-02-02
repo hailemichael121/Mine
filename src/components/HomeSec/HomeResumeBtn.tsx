@@ -21,7 +21,7 @@ const HomeResumeBtn: React.FC = () => {
 
   const handleDownloadResume = () => {
     window.open(
-      "https://drive.google.com/uc?export=download&id=1ozahY5lwU4uWIA2vOpeef5ThVuP6tLsd",
+      "https://drive.google.com/uc?export=download&id=1FvmzIjVropeaYuFoeyRQ6vBNP74bzqHr",
       "_blank",
     );
   };
