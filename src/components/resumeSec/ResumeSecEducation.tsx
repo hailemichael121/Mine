@@ -1,8 +1,10 @@
-import { Link, Text, Box } from "@chakra-ui/react";
+import { Link, Text, Box, useColorMode } from "@chakra-ui/react";
 import ResumeSecCard from "./ResumeSecCard";
 import { FaGraduationCap } from "react-icons/fa";
 
 const ResumeSecEducation: React.FC = () => {
+  const { colorMode } = useColorMode();
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
   const education = [
     {
       title: "B.Sc. in Software Engineering",
@@ -15,7 +17,7 @@ const ResumeSecEducation: React.FC = () => {
       description: (
         <Box mt={2}>
           <Text>Graduated with distinction (CGPA: 3.49)</Text>
-          <Text mt={2} fontSize="sm" color="gray.500">
+          <Text mt={2} fontSize="sm" color={baseColor} opacity={0.7}>
             Relevant coursework: Algorithms, Data Structures, Web Development
           </Text>
         </Box>
@@ -40,7 +42,7 @@ const ResumeSecEducation: React.FC = () => {
           subtitle={edu.subtitle}
           dateRange={edu.dateRange}
           description={edu.description}
-          icon={<FaGraduationCap color="white" />}
+          icon={<FaGraduationCap color={baseColor} />}
           variant="education"
         />
       ))}

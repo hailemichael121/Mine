@@ -5,6 +5,7 @@ import {
   useColorMode,
   IconButton,
   Flex,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -14,6 +15,8 @@ import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 const ServiceBox: React.FC = () => {
   const { colorMode } = useColorMode();
   const [activeDot, setActiveDot] = useState(0);
+  const servicesPerSlide = useBreakpointValue({ base: 1, md: 2, lg: 3 }) ?? 1;
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
 
   const services = [
     {
@@ -52,8 +55,10 @@ const ServiceBox: React.FC = () => {
     },
   ];
 
-  const servicesPerSlide = 3;
   const maxIndex = Math.ceil(services.length / servicesPerSlide) - 1;
+  const slideWidth = 320;
+  const gap = 24;
+  const translateX = activeDot * (slideWidth + gap) * servicesPerSlide;
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
@@ -73,14 +78,9 @@ const ServiceBox: React.FC = () => {
   };
 
   // Slice the services array based on the active dot
-  const displayedServices = services.slice(
-    activeDot * servicesPerSlide,
-    (activeDot + 1) * servicesPerSlide
-  );
-
   return (
     <Box bg={colorMode === "light" ? "#FFFFFF" : "#222222"} width="100%" p={4}>
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between" align="center" gap={4}>
         {/* Left navigation button */}
         <IconButton
           aria-label="Previous"
@@ -88,6 +88,7 @@ const ServiceBox: React.FC = () => {
           onClick={handlePrev}
           isDisabled={activeDot === 0}
           variant="ghost"
+          color={baseColor}
         />
 
         {/* Swipeable container */}
@@ -96,10 +97,21 @@ const ServiceBox: React.FC = () => {
           overflow="hidden"
           {...swipeHandlers}
           cursor="grab"
+          flex="1"
         >
-          <HStack justify="center" spacing={2} width="100%">
-            {displayedServices.map((service, index) => (
-              <Box key={index} p={"20px"} flexShrink={0}>
+          <Flex
+            gap={`${gap}px`}
+            transform={`translateX(-${translateX}px)`}
+            transition="transform 0.4s ease"
+            width="100%"
+          >
+            {services.map((service, index) => (
+              <Box
+                key={index}
+                flexShrink={0}
+                width={{ base: "100%", md: `${slideWidth}px` }}
+                p={{ base: 2, md: 3 }}
+              >
                 <ServiceSecCard
                   iconSrc={service.iconSrc}
                   altText={service.altText}
@@ -108,7 +120,7 @@ const ServiceBox: React.FC = () => {
                 />
               </Box>
             ))}
-          </HStack>
+          </Flex>
         </Box>
 
         {/* Right navigation button */}
@@ -118,6 +130,7 @@ const ServiceBox: React.FC = () => {
           onClick={handleNext}
           isDisabled={activeDot >= maxIndex}
           variant="ghost"
+          color={baseColor}
         />
       </Flex>
 
@@ -129,8 +142,8 @@ const ServiceBox: React.FC = () => {
             size="10px"
             onClick={() => handleDotClick(dotIndex)}
             cursor="pointer"
-            bg={activeDot === dotIndex ? "#30F2F2" : "#1B1B1B"}
-            border={"solid 1px #254B4B"}
+            bg={activeDot === dotIndex ? baseColor : "transparent"}
+            border={`solid 1px ${baseColor}`}
           />
         ))}
       </HStack>

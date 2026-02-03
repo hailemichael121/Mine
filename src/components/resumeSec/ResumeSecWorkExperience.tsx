@@ -1,9 +1,19 @@
-import { Box, Link, Text, List, ListItem, ListIcon } from "@chakra-ui/react";
+import {
+  Box,
+  Link,
+  Text,
+  List,
+  ListItem,
+  ListIcon,
+  useColorMode,
+} from "@chakra-ui/react";
 import { FiCheckCircle } from "react-icons/fi";
 import ResumeSecCard from "./ResumeSecCard";
 import { FaBriefcase, FaLaptopCode } from "react-icons/fa";
 
 const ResumeSecWorkExperience: React.FC = () => {
+  const { colorMode } = useColorMode();
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
   const experiences = [
     {
       title: "JavaScript/Go Backend Developer",
@@ -22,20 +32,20 @@ const ResumeSecWorkExperience: React.FC = () => {
               "Collaborated with remote team on feature development",
             ].map((item, i) => (
               <ListItem key={i} display="flex" alignItems="flex-start">
-                <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+                <ListIcon as={FiCheckCircle} color={baseColor} mt={1} />
                 <Text>{item}</Text>
               </ListItem>
             ))}
           </List>
           <Box mt={4}>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="sm" color={baseColor} opacity={0.7}>
               <strong>Technologies:</strong> JavaScript, Go, Node.js, AWS,
               PostgreSQL
             </Text>
           </Box>
         </Box>
       ),
-      icon: <FaLaptopCode color="white" />,
+      icon: <FaLaptopCode color={baseColor} />,
       variant: "work",
     },
     {
@@ -55,7 +65,7 @@ const ResumeSecWorkExperience: React.FC = () => {
               "Collaborated with backend team on API integration",
             ].map((item, i) => (
               <ListItem key={i} display="flex" alignItems="flex-start">
-                <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+                <ListIcon as={FiCheckCircle} color={baseColor} mt={1} />
                 <Text>{item}</Text>
               </ListItem>
             ))}
@@ -83,7 +93,7 @@ const ResumeSecWorkExperience: React.FC = () => {
             "Optimizing application performance",
           ].map((item, i) => (
             <ListItem key={i} display="flex" alignItems="flex-start">
-              <ListIcon as={FiCheckCircle} color="blue.500" mt={1} />
+              <ListIcon as={FiCheckCircle} color={baseColor} mt={1} />
               <Text>{item}</Text>
             </ListItem>
           ))}
@@ -101,7 +111,7 @@ const ResumeSecWorkExperience: React.FC = () => {
           subtitle={exp.subtitle}
           dateRange={exp.dateRange}
           description={exp.description}
-          icon={<FaBriefcase color="white" />}
+          icon={<FaBriefcase color={baseColor} />}
           variant="work"
         />
       ))}
