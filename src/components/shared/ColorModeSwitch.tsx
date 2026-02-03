@@ -115,7 +115,7 @@ const ColorModeSwitch = ({ isFloating }: ColorModeSwitchProps) => {
           left="50%"
           initial={false}
           animate={{
-            opacity: !isFloating ? 0 : 0.6,
+            opacity: isDark ? (!isFloating ? 0 : 0.6) : 0,
             width: isFloating ? "180px" : "480px",
             height: isFloating ? "160px" : "200px",
           }}
