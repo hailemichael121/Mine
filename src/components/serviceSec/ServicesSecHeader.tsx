@@ -4,7 +4,7 @@ import { GiPapers } from "react-icons/gi";
 
 const ServicesSecHeader: React.FC = () => {
   return (
-    <HStack justifyContent={"flex-start"} spacing={3}>
+    <HStack justifyContent={"flex-start"} ml={"180px"} spacing={3}>
       <Heading fontSize={{ base: "30px", md: "50px" }} pb={4}>
         My Services
       </Heading>

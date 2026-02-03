@@ -4,12 +4,11 @@ import { Text } from "@chakra-ui/react";
 const AboutMeParagraph: React.FC = () => {
   return (
     <Text textAlign="justify">
-      I love tackling challenges in Software Development, particularly in
-      full-stack applications and front-end development. My expertise spans
-      across Python, Java, React, and Angular, with hands-on experience in
-      creating responsive and efficient web applications. Outside of work, I’m
-      constantly learning and experimenting with new technologies, driven by a
-      passion for continuous improvement and innovation.
+      I like solving problems in software development, mostly in full-stack apps
+      and front-end work. I use Python, Java, React, and Angular in my projects,
+      and I build responsive and efficient web applications. Outside of work I
+      keep learning and trying new tech. I enjoy improving and building better
+      work step by step.
     </Text>
   );
 };

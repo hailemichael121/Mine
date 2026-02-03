@@ -1,71 +1,52 @@
-import { Box, Button, useColorMode } from "@chakra-ui/react";
-import React from "react";
+import { Button, useColorMode, Flex } from "@chakra-ui/react";
+import ThemeToggle from "../shared/ThemeToggleBtn";
 
-const NavMenu: React.FC = () => {
+const NavMenu: React.FC<{ floatingToggle: boolean }> = ({ floatingToggle }) => {
   const { colorMode } = useColorMode();
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <Box pl={20}>
+    <Flex pl={20} align="center" gap={3}>
       <Button
-        borderRadius={"90px"}
-        borderBottomLeftRadius={"95px"}
-        borderTopRightRadius={"200px"}
         width="150px"
-        transition="0.1s"
+        fontSize="15px"
+        variant="ghost" // Simplified background="transparent"
         color={colorMode === "dark" ? "#D5D5D5" : "black"}
-        fontSize={"15px"}
         onClick={() => scrollToSection("about")}
-        backgroundColor="transparent"
-        _hover={{
-          color: " #30F2F2",
-          backgroundColor: "transparent",
-        }}
+        _hover={{ color: "#30F2F2" }}
       >
         About
       </Button>
+
       <Button
-        borderRadius={"30%"}
-        borderBottomLeftRadius={"25px"}
-        borderTopRightRadius={"20px"}
-        color={colorMode === "dark" ? "#D5D5D5" : "black"}
-        fontSize={"15px"}
-        onClick={() => scrollToSection("projects")}
         width="150px"
-        transition="0.1s"
-        backgroundColor="transparent"
-        _hover={{
-          color: " #30F2F2",
-          backgroundColor: "transparent",
-        }}
+        fontSize="15px"
+        variant="ghost"
+        color={colorMode === "dark" ? "#D5D5D5" : "black"}
+        onClick={() => scrollToSection("projects")}
+        _hover={{ color: "#30F2F2" }}
       >
         Projects
       </Button>
 
-      <Button
-        borderRadius={"30%"}
-        borderBottomLeftRadius={"25px"}
-        borderTopRightRadius={"20px"}
-        color={colorMode === "dark" ? "#D5D5D5" : "black"}
-        fontSize={"15px"}
-        onClick={() => scrollToSection("contacts")}
-        width="150px"
-        backgroundColor="transparent"
-        transition="0.1s"
-        _hover={{
-          color: " #30F2F2",
-          backgroundColor: "transparent",
-        }}
-      >
-        Contact
-      </Button>
-    </Box>
+      <Flex align="center" gap={2}>
+        <Button
+          width="150px"
+          fontSize="15px"
+          variant="ghost"
+          color={colorMode === "dark" ? "#D5D5D5" : "black"}
+          onClick={() => scrollToSection("contacts")}
+          _hover={{ color: "#30F2F2" }}
+        >
+          Contact
+        </Button>
+
+        <ThemeToggle floating={floatingToggle} />
+      </Flex>
+    </Flex>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   useColorMode,
   IconButton,
   Flex,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -14,6 +15,9 @@ import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 const ServiceBox: React.FC = () => {
   const { colorMode } = useColorMode();
   const [activeDot, setActiveDot] = useState(0);
+  const isMobile = useBreakpointValue({ base: true, md: false });
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
+  const surfaceColor = colorMode === "light" ? "#FFFFFF" : "#262626";
 
   const services = [
     {
@@ -52,7 +56,7 @@ const ServiceBox: React.FC = () => {
     },
   ];
 
-  const servicesPerSlide = 3;
+  const servicesPerSlide = isMobile ? 1 : 3;
   const maxIndex = Math.ceil(services.length / servicesPerSlide) - 1;
 
   const swipeHandlers = useSwipeable({
@@ -75,20 +79,24 @@ const ServiceBox: React.FC = () => {
   // Slice the services array based on the active dot
   const displayedServices = services.slice(
     activeDot * servicesPerSlide,
-    (activeDot + 1) * servicesPerSlide
+    (activeDot + 1) * servicesPerSlide,
   );
 
   return (
-    <Box bg={colorMode === "light" ? "#FFFFFF" : "#222222"} width="100%" p={4}>
+    <Box bg={surfaceColor} width="100%" p={{ base: 4, md: 6 }}>
       <Flex justify="space-between" align="center">
         {/* Left navigation button */}
-        <IconButton
-          aria-label="Previous"
-          icon={<TiChevronLeftOutline fontSize={"30px"} />}
-          onClick={handlePrev}
-          isDisabled={activeDot === 0}
-          variant="ghost"
-        />
+        {!isMobile && (
+          <IconButton
+            aria-label="Previous"
+            icon={<TiChevronLeftOutline fontSize={"30px"} />}
+            onClick={handlePrev}
+            isDisabled={activeDot === 0}
+            variant="ghost"
+            color={baseColor}
+            _hover={{ bg: "transparent" }}
+          />
+        )}
 
         {/* Swipeable container */}
         <Box
@@ -96,10 +104,16 @@ const ServiceBox: React.FC = () => {
           overflow="hidden"
           {...swipeHandlers}
           cursor="grab"
+          flex="1"
         >
-          <HStack justify="center" spacing={2} width="100%">
+          <HStack justify="center" spacing={{ base: 0, md: 2 }} width="100%">
             {displayedServices.map((service, index) => (
-              <Box key={index} p={"20px"} flexShrink={0}>
+              <Box
+                key={index}
+                p={{ base: 2, md: 4 }}
+                flexShrink={0}
+                width={{ base: "100%", md: "auto" }}
+              >
                 <ServiceSecCard
                   iconSrc={service.iconSrc}
                   altText={service.altText}
@@ -112,25 +126,30 @@ const ServiceBox: React.FC = () => {
         </Box>
 
         {/* Right navigation button */}
-        <IconButton
-          aria-label="Next"
-          icon={<TiChevronRightOutline fontSize={"30px"} />}
-          onClick={handleNext}
-          isDisabled={activeDot >= maxIndex}
-          variant="ghost"
-        />
+        {!isMobile && (
+          <IconButton
+            aria-label="Next"
+            icon={<TiChevronRightOutline fontSize={"30px"} />}
+            onClick={handleNext}
+            isDisabled={activeDot >= maxIndex}
+            variant="ghost"
+            color={baseColor}
+            _hover={{ bg: "transparent" }}
+          />
+        )}
       </Flex>
 
       {/* Pagination dots */}
-      <HStack justify="center" mt={4}>
+      <HStack justify="center" mt={4} spacing={3}>
         {[...Array(maxIndex + 1)].map((_, dotIndex) => (
           <Circle
             key={dotIndex}
-            size="10px"
+            size="8px"
             onClick={() => handleDotClick(dotIndex)}
             cursor="pointer"
-            bg={activeDot === dotIndex ? "#30F2F2" : "#1B1B1B"}
-            border={"solid 1px #254B4B"}
+            bg={activeDot === dotIndex ? baseColor : "transparent"}
+            border={`1px solid ${baseColor}`}
+            opacity={activeDot === dotIndex ? 1 : 0.4}
           />
         ))}
       </HStack>

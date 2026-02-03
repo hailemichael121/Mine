@@ -37,6 +37,12 @@ const ProjectSecCategory: React.FC<Props> = ({
 }) => {
   const { colorMode } = useColorMode();
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
+  const surfaceColor = colorMode === "light" ? "#FFFFFF" : "#262626";
+  const subtleBg =
+    colorMode === "light"
+      ? "rgba(38, 38, 38, 0.08)"
+      : "rgba(255, 255, 255, 0.08)";
 
   const categories = [
     { name: "All Projects", count: projectCounts.all },
@@ -63,40 +69,47 @@ const ProjectSecCategory: React.FC<Props> = ({
             variant="outline"
             size="lg"
             borderRadius="full"
-            bg={colorMode === "dark" ? "gray.700" : "white"}
-            boxShadow="md"
+            bg={surfaceColor}
+            borderColor={baseColor}
+            color={baseColor}
+            boxShadow={`0 18px 30px -24px ${baseColor}`}
           >
             {activeCategory}
-            <Badge ml={2} colorScheme="blue" borderRadius="full" px={2} py={1}>
+            <Badge
+              ml={2}
+              borderRadius="full"
+              px={2}
+              py={1}
+              border="1px solid"
+              borderColor={baseColor}
+              color={baseColor}
+              bg="transparent"
+            >
               {categories.find((cat) => cat.name === activeCategory)?.count ||
                 0}
             </Badge>
           </MenuButton>
-          <MenuList
-            minWidth="200px"
-            bg={colorMode === "dark" ? "gray.700" : "white"}
-          >
+          <MenuList minWidth="200px" bg={surfaceColor} borderColor={baseColor}>
             {categories.map((category) => (
               <MenuItem
                 key={category.name}
                 onClick={() => onCategoryChange(category.name)}
                 display="flex"
                 justifyContent="space-between"
-                bg={
-                  activeCategory === category.name
-                    ? colorMode === "dark"
-                      ? "gray.600"
-                      : "gray.100"
-                    : "transparent"
-                }
+                bg={activeCategory === category.name ? subtleBg : "transparent"}
+                color={baseColor}
               >
                 {category.name}
                 <Badge
-                  colorScheme="blue"
                   borderRadius="full"
                   px={2}
-                  variant={
-                    activeCategory === category.name ? "solid" : "outline"
+                  border="1px solid"
+                  borderColor={baseColor}
+                  bg={
+                    activeCategory === category.name ? baseColor : "transparent"
+                  }
+                  color={
+                    activeCategory === category.name ? surfaceColor : baseColor
                   }
                 >
                   {category.count}
@@ -124,42 +137,36 @@ const ProjectSecCategory: React.FC<Props> = ({
               size="lg"
               cursor="pointer"
               onClick={() => onCategoryChange(category.name)}
-              bg={
-                activeCategory === category.name
-                  ? colorMode === "dark"
-                    ? "blue.600"
-                    : "blue.100"
-                  : colorMode === "dark"
-                  ? "gray.700"
-                  : "gray.100"
-              }
+              bg={activeCategory === category.name ? baseColor : "transparent"}
               color={
-                activeCategory === category.name
-                  ? colorMode === "dark"
-                    ? "white"
-                    : "blue.800"
-                  : colorMode === "dark"
-                  ? "white"
-                  : "gray.800"
+                activeCategory === category.name ? surfaceColor : baseColor
               }
+              border="1px solid"
+              borderColor={baseColor}
               borderRadius="full"
-              boxShadow="sm"
+              boxShadow={`0 18px 30px -24px ${baseColor}`}
               px={4}
               py={2}
               position="relative"
               _hover={{
                 transform: "translateY(-2px)",
-                boxShadow: "md",
+                boxShadow: `0 22px 36px -28px ${baseColor}`,
               }}
               transition="all 0.2s ease"
             >
               {category.name}
               <Badge
                 ml={2}
-                colorScheme="blue"
                 borderRadius="full"
                 px={2}
-                variant={activeCategory === category.name ? "solid" : "subtle"}
+                border="1px solid"
+                borderColor={baseColor}
+                bg={
+                  activeCategory === category.name
+                    ? surfaceColor
+                    : "transparent"
+                }
+                color={activeCategory === category.name ? baseColor : baseColor}
               >
                 {category.count}
               </Badge>
@@ -171,7 +178,7 @@ const ProjectSecCategory: React.FC<Props> = ({
                   transform="translateX(-50%)"
                   width="60%"
                   height="3px"
-                  bg="blue.500"
+                  bg={baseColor}
                   borderRadius="full"
                 />
               )}

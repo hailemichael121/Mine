@@ -7,6 +7,7 @@ import {
   IconButton,
   DrawerHeader,
   DrawerBody,
+  DrawerOverlay,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
@@ -40,7 +41,7 @@ const SideMenu = () => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     // Observe only specific sections
@@ -83,28 +84,34 @@ const SideMenu = () => {
           <IconButton
             aria-label="Open Menu"
             icon={<CiMenuFries />}
+            isRound={true} // Makes it circular
+            size="lg"
+            boxShadow="0 4px 12px rgba(0,0,0,0.15)"
             position="fixed"
-            top={10}
-            right={10}
+            bottom={8} // Bottom right
+            right={6}
             zIndex={100000}
             onClick={onOpen}
           />
 
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-            <DrawerContent w={"30%"}>
-              <DrawerHeader>
-                {/* Close Button */}
+            {/* Overlay background for focus */}
+            <DrawerOverlay />
+            <DrawerContent maxW="280px" w="80%" borderRightRadius="2xl">
+              <DrawerHeader borderBottomWidth="1px">
+                Navigation
                 <IconButton
                   aria-label="Close Menu"
                   icon={<AiOutlineClose />}
                   onClick={onClose}
+                  variant="ghost"
                   position="absolute"
-                  top={4}
-                  right={4}
+                  top={3}
+                  right={3}
                 />
               </DrawerHeader>
               <DrawerBody>
-                <VStack gap={"20px"} mt={10}>
+                <VStack gap="24px" mt={8} align="stretch">
                   {menuItems.map((item) => (
                     <MenuItem
                       key={item.id}
@@ -124,5 +131,4 @@ const SideMenu = () => {
     </>
   );
 };
-
 export default SideMenu;

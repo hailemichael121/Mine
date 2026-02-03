@@ -65,8 +65,6 @@ const GitHubActivity: React.FC = () => {
 
   return (
     <Box
-      p={6}
-      mb={12}
       bg={
         colorMode === "light"
           ? "var(--chakra-colors-primary)"

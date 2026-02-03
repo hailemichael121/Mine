@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import {
   About,
-  Blogs,
+  BlogsHighlight,
   ContactMe,
   NavigationBar,
   Resume,
@@ -39,7 +39,7 @@ const LandingPage = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     const contactObserver = new IntersectionObserver(
@@ -48,11 +48,11 @@ const LandingPage = () => {
           if (entry.isIntersecting) {
             controlsContact.start({ opacity: 1, y: 0 });
           } else {
-            controlsContact.start({ opacity: 0, y: 50 }); // Reset when out of view
+            controlsContact.start({ opacity: 0, y: 50 });
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (aboutNode) aboutObserver.observe(aboutNode);
@@ -99,7 +99,7 @@ const LandingPage = () => {
           <ProjectsCurtain />
         </div>
         <div id="blogs">
-          <Blogs />
+          <BlogsHighlight />
         </div>
         <div id="contacts">
           <MotionDiv

@@ -5,11 +5,12 @@ import {
   Flex,
   Tag,
   Image,
-  Link,
+  Link as ChakraLink,
   useColorMode,
   chakra,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { BlogPost } from "./blogsData";
 
 interface BlogCardProps {
@@ -18,27 +19,12 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   const { colorMode } = useColorMode();
+  const location = useLocation();
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
+  const cardBg = colorMode === "light" ? "#FFFFFF" : "#262626";
 
-  // Wavy divider component
-  const WavyDivider = () => (
-    <Box
-      position="relative"
-      height="20px"
-      overflow="hidden"
-      width="100%"
-      my={2}
-    >
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        height="40px"
-        backgroundRepeat="repeat-x"
-        backgroundSize="1200px 100px"
-        transform="scaleY(0.5)"
-      />
-    </Box>
+  const DividerLine = () => (
+    <Box height="1px" width="100%" bg={baseColor} opacity={0.2} my={4} />
   );
 
   return (
@@ -47,32 +33,34 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       transition={{ duration: 0.3 }}
       style={{ height: "100%" }}
     >
-      <Link href={post.url} _hover={{ textDecoration: "none" }}>
+      <ChakraLink
+        as={RouterLink}
+        to={`/blog/${post.slug}`}
+        state={{ from: location.pathname }}
+        _hover={{ textDecoration: "none" }}
+      >
         <Box
-          bg={colorMode === "dark" ? "#22222" : "white"}
-          borderRadius="xl"
+          bg={cardBg}
+          borderRadius="2xl"
           overflow="hidden"
-          boxShadow="lg"
+          boxShadow={`0 22px 40px -30px ${baseColor}`}
           _hover={{
-            boxShadow:
-              colorMode === "dark"
-                ? "0 15px 40px -10px rgba(0, 0, 0, 0.3)"
-                : "0 15px 40px -10px rgba(0, 0, 0, 0.1)",
+            boxShadow: `0 26px 50px -32px ${baseColor}`,
             transform: "translateY(-5px)",
           }}
           transition="all 0.3s ease"
           h="100%"
           position="relative"
           border="1px solid"
-          borderColor={colorMode === "dark" ? "gray.700" : "gray.200"}
+          borderColor={baseColor}
         >
-          {/* Image container with gradient overlay */}
+          {/* Image container */}
           <Box
             position="relative"
             h="200px"
             w="100%"
             overflow="hidden"
-            bg={colorMode === "dark" ? "#22222" : "gray.100"}
+            bg={cardBg}
           >
             <Image
               src={post.image}
@@ -85,83 +73,64 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
                 transform: "scale(1.05)",
               }}
             />
-            {/* Gradient overlay */}
-            <Box
-              position="absolute"
-              bottom="0"
-              left="0"
-              right="0"
-              height="50%"
-              bgGradient={
-                colorMode === "dark"
-                  ? "linear(to-t, gray.800, transparent)"
-                  : "linear(to-t, white, transparent)"
-              }
-            />
           </Box>
 
-          {/* Wavy separator */}
-          <WavyDivider />
+          <DividerLine />
 
           {/* Content */}
-          <Box p={6}>
+          <Box p={{ base: 5, md: 6 }}>
             <Flex mb={3} gap={2} flexWrap="wrap">
               {post.tags.map((tag) => (
                 <Tag
                   key={tag}
-                  colorScheme="blue"
-                  variant="subtle"
+                  variant="outline"
                   size="sm"
                   borderRadius="full"
                   px={3}
-                  boxShadow="sm"
+                  borderColor={baseColor}
+                  color={baseColor}
+                  opacity={0.85}
                 >
                   {tag}
                 </Tag>
               ))}
             </Flex>
-            <Heading
-              size="lg"
-              mb={3}
-              lineHeight="tall"
-              bgGradient={
-                colorMode === "dark"
-                  ? "linear(to-r, blue.300, cyan.400)"
-                  : "linear(to-r, blue.500, cyan.600)"
-              }
-              bgClip="text"
-            >
+            <Heading size="lg" mb={3} lineHeight="tall" color={baseColor}>
               {post.title}
             </Heading>
-            <Text color={colorMode === "dark" ? "gray.400" : "gray.600"} mb={4}>
+            <Text color={baseColor} mb={4} opacity={0.75}>
               {post.excerpt}
             </Text>
             <Flex
               justify="space-between"
-              color={colorMode === "dark" ? "gray.400" : "gray.500"}
+              color={baseColor}
               fontSize="sm"
               mt={6}
             >
               <chakra.span
                 px={3}
                 py={1}
-                borderRadius="md"
-                bg={colorMode === "dark" ? "gray.700" : "gray.100"}
+                borderRadius="full"
+                border="1px solid"
+                borderColor={baseColor}
+                opacity={0.85}
               >
                 {post.date}
               </chakra.span>
               <chakra.span
                 px={3}
                 py={1}
-                borderRadius="md"
-                bg={colorMode === "dark" ? "gray.700" : "gray.100"}
+                borderRadius="full"
+                border="1px solid"
+                borderColor={baseColor}
+                opacity={0.85}
               >
                 {post.readTime}
               </chakra.span>
             </Flex>
           </Box>
         </Box>
-      </Link>
+      </ChakraLink>
     </motion.div>
   );
 };

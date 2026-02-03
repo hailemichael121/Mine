@@ -8,13 +8,22 @@ import {
   IconButton,
   useToast,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Flag from "react-world-flags";
-
+import { motion } from "framer-motion";
 import { RiMic2Fill, RiVoiceprintFill } from "react-icons/ri";
 
-// Greetings
-const greetings = [
+// ─────────────────────────────────────────────
+// 1. TYPES & CONSTANTS
+// ─────────────────────────────────────────────
+
+type Greeting = {
+  text: string;
+  lang: string;
+  countryCode: string | null;
+};
+
+const greetings: Greeting[] = [
   { text: "ሰላም", lang: "am", countryCode: "ET" },
   { text: "Haayyo", lang: "ti", countryCode: "ET" },
   { text: "Hitoti ", lang: "sid", countryCode: "ET" },
@@ -33,12 +42,12 @@ const greetings = [
   { text: "مرحبا", lang: "ar", countryCode: "SA" },
 ];
 
-const bounce = keyframes`
-  0% { transform: translateY(-50px) rotate(-15deg); opacity: 0; }
-  30% { transform: translateY(10px) rotate(10deg); opacity: 1; }
-  60% { transform: translateY(-5px) rotate(-5deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-`;
+const WELCOME_MESSAGE =
+  "Welcome to my circle.... Happy to work with you onward!";
+
+// ─────────────────────────────────────────────
+// 2. ANIMATIONS (KEYFRAMES) - Only typing related
+// ─────────────────────────────────────────────
 
 const wave = keyframes`
   0% { transform: rotate(0deg); }
@@ -114,6 +123,7 @@ const irregularWave2 = keyframes`
     opacity: 0;
   }
 `;
+
 const irregularWave3 = keyframes`
   0% {
     transform: scale(1) rotate(0deg) skew(0deg, 0deg);
@@ -147,21 +157,463 @@ const irregularWave3 = keyframes`
   }
 `;
 
+// ─────────────────────────────────────────────
+// 3. HELPERS & UTILITIES
+// ─────────────────────────────────────────────
+
+/**
+ * Maps language codes to SpeechSynthesis lang strings
+ */
+const getSpeechLang = (lang: string): string => {
+  const langMap: Record<string, string> = {
+    am: "am-ET",
+    ar: "ar-SA",
+    es: "es-ES",
+    fr: "fr-FR",
+    de: "de-DE",
+    it: "it-IT",
+    jp: "ja-JP",
+    kr: "ko-KR",
+    ti: "am-ET", // Tigrinya falls back to Amharic
+    sid: "am-ET", // Sidama falls back to Amharic
+    om: "am-ET", // Oromo falls back to Amharic
+  };
+  return langMap[lang] || "en-US";
+};
+
+/**
+ * Gets appropriate font family for each language
+ */
+const getFontFamily = (lang: string): string => {
+  if (lang === "am") return "'Noto Sans Ethiopic', monospace";
+  if (lang === "ar") return "'Amiri', monospace";
+  return "monospace";
+};
+
+/**
+ * Calculate typing speed based on text length and complexity
+ */
+const getTypingSpeed = (text: string, isBackspace: boolean = false): number => {
+  // Check if text contains non-Latin characters
+  const hasComplexChars = /[^\x00-\x7F]/.test(text);
+
+  // Base speed: faster for Latin, slower for complex scripts
+  // Backspace is slightly faster than typing
+  const baseSpeed = isBackspace
+    ? hasComplexChars
+      ? 80
+      : 60
+    : hasComplexChars
+      ? 120
+      : 100;
+
+  // Adjust based on text length
+  const lengthAdjustment = Math.max(20, 100 - text.length * 1.5);
+
+  return Math.max(30, Math.min(120, baseSpeed + lengthAdjustment));
+};
+
+// ─────────────────────────────────────────────
+// 4. CUSTOM HOOKS (still in same file)
+// ─────────────────────────────────────────────
+
+function useRotatingGreeting(isPaused: boolean) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    // If we are currently speaking, do not progress the timer
+    if (isPaused) return;
+
+    const typingTime = 2500; // Time text stays visible before backspacing
+    const backspaceTime = 1500;
+
+    const cycleTimer = setTimeout(() => {
+      // Start backspacing
+      setIsTyping(false);
+
+      setTimeout(() => {
+        let nextIndex;
+        do {
+          nextIndex = Math.floor(Math.random() * greetings.length);
+        } while (nextIndex === currentIndex && greetings.length > 1);
+
+        setCurrentIndex(nextIndex);
+
+        setTimeout(() => {
+          setIsTyping(true);
+        }, 300);
+      }, backspaceTime);
+    }, typingTime);
+
+    return () => clearTimeout(cycleTimer);
+  }, [currentIndex, isPaused]); // isPaused (isSpeaking) resets the timer
+
+  return {
+    currentGreeting: greetings[currentIndex],
+    isTyping,
+    setCurrent: (index: number) => {
+      setCurrentIndex(index);
+      setIsTyping(true);
+    },
+  };
+}
+
+// ─────────────────────────────────────────────
+// 5. INTERNAL SUB-COMPONENTS
+// ─────────────────────────────────────────────
+
+interface TypingGreetingProps {
+  text: string;
+  isRTL: boolean;
+  isTyping: boolean;
+  onTypingStateChange: (isDone: boolean) => void;
+}
+
+const TypingGreeting = ({
+  text,
+  isRTL,
+  isTyping,
+  onTypingStateChange,
+}: TypingGreetingProps) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (isTyping) {
+      // Start typing from where we left off (usually 0)
+      onTypingStateChange(false);
+
+      const type = () => {
+        if (indexRef.current < text.length) {
+          indexRef.current++;
+          setDisplayedText(text.slice(0, indexRef.current));
+          timer = setTimeout(type, getTypingSpeed(text, false));
+        } else {
+          onTypingStateChange(true); // FLAG SHOWS HERE
+        }
+      };
+      timer = setTimeout(type, 100);
+    } else {
+      // Start backspacing
+      onTypingStateChange(false);
+
+      const backspace = () => {
+        if (indexRef.current > 0) {
+          indexRef.current--;
+          setDisplayedText(text.slice(0, indexRef.current));
+          timer = setTimeout(backspace, getTypingSpeed(text, true));
+        }
+      };
+      timer = setTimeout(backspace, 100);
+    }
+
+    return () => clearTimeout(timer);
+    // We only want to restart this effect when 'text' identity changes
+    // or the 'isTyping' phase flips.
+  }, [text, isTyping, onTypingStateChange]);
+
+  // Reset index when the text object itself changes (new greeting selected)
+  useEffect(() => {
+    if (isTyping && displayedText === "") {
+      indexRef.current = 0;
+    }
+  }, [text, isTyping]);
+
+  return (
+    <Box
+      as="span"
+      display="inline-block"
+      dir={isRTL ? "rtl" : "ltr"}
+      minW="1ch"
+    >
+      {displayedText}
+      <Box
+        as="span"
+        display="inline-block"
+        w="2px"
+        h="1em"
+        bg="currentColor"
+        ml={1}
+        animation={`${keyframes`0%, 100% { opacity: 1 } 50% { opacity: 0 }`} 0.8s infinite`}
+        verticalAlign="middle"
+      />
+    </Box>
+  );
+};
+interface SpeechButtonProps {
+  text: string;
+  isDark: boolean;
+  onToggle: () => void;
+  isSpeaking: boolean;
+  isSupported: boolean;
+}
+
+const SpeechButton = ({
+  text,
+  isDark,
+  onToggle,
+  isSpeaking,
+  isSupported,
+}: SpeechButtonProps) => {
+  if (!isSupported) return null;
+
+  return (
+    <Box
+      position="absolute"
+      top={0}
+      right={0}
+      width="60px"
+      height="60px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      {/* Wave animations */}
+      {isSpeaking && (
+        <>
+          <Box
+            position="absolute"
+            width="100%"
+            height="100%"
+            borderRadius="50%"
+            border="2px solid"
+            borderColor={isDark ? "gray.400" : "gray.600"}
+            animation={`${irregularWave1} 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
+          />
+          <Box
+            position="absolute"
+            width="100%"
+            height="100%"
+            borderRadius="50%"
+            border="2px solid"
+            borderColor={isDark ? "gray.500" : "gray.700"}
+            animation={`${irregularWave2} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
+          />
+          <Box
+            position="absolute"
+            width="100%"
+            height="100%"
+            borderRadius="50%"
+            border="2px solid"
+            borderColor={isDark ? "gray.600" : "gray.800"}
+            animation={`${irregularWave3} 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
+          />
+        </>
+      )}
+
+      {/* Mic button */}
+      <IconButton
+        aria-label={isSpeaking ? "Stop reading" : `Read "${text}" aloud`}
+        icon={isSpeaking ? <RiVoiceprintFill /> : <RiMic2Fill />}
+        onClick={onToggle}
+        variant="ghost"
+        colorScheme={isSpeaking ? "red" : isDark ? "white" : "black"}
+        size="lg"
+        width="100%"
+        height="100%"
+        borderRadius="50%"
+        backgroundColor={
+          isSpeaking
+            ? isDark
+              ? "blackAlpha.300"
+              : "whiteAlpha.300"
+            : "transparent"
+        }
+        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        _hover={{
+          backgroundColor: isSpeaking
+            ? isDark
+              ? "blackAlpha.400"
+              : "whiteAlpha.400"
+            : isDark
+              ? "blackAlpha.200"
+              : "whiteAlpha.200",
+          transform: "scale(1.05)",
+        }}
+        sx={{
+          "& svg": {
+            fontSize: "24px",
+            color: isSpeaking
+              ? isDark
+                ? "white"
+                : "black"
+              : isDark
+                ? "gray.300"
+                : "gray.700",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          },
+        }}
+      />
+    </Box>
+  );
+};
+
+interface GreetingHeaderProps {
+  greeting: Greeting;
+  isTyping: boolean;
+  onSpeak: () => void;
+}
+
+const GreetingHeader = ({
+  greeting,
+  isTyping,
+  onSpeak,
+}: GreetingHeaderProps) => {
+  const [showFlag, setShowFlag] = useState(false);
+
+  // Sync the local flag state with the typing component
+  const handleTypingStateChange = useCallback((isDone: boolean) => {
+    setShowFlag(isDone);
+  }, []);
+
+  return (
+    <Flex
+      flexDirection={{ base: "column", md: "row" }}
+      alignItems="center"
+      justifyContent={{ base: "center", md: "flex-start" }}
+      cursor="pointer"
+      onClick={onSpeak}
+      minH="60px"
+    >
+      <Heading
+        as="h2"
+        fontSize={{ base: "28px", md: "40px" }}
+        fontFamily={getFontFamily(greeting.lang)}
+      >
+        <Text
+          as="span"
+          display="inline-block"
+          animation={`${wave} 1.2s infinite`}
+          mr={2}
+        >
+          👋
+        </Text>
+        <TypingGreeting
+          text={greeting.text}
+          isRTL={greeting.lang === "ar"}
+          isTyping={isTyping}
+          onTypingStateChange={handleTypingStateChange}
+        />
+      </Heading>
+
+      {/* Flag logic: Only show if greeting has a code AND typing is finished */}
+      <Box
+        ml={{ base: 0, md: 4 }}
+        mt={{ base: 2, md: 0 }}
+        display="inline-block"
+        transition="all 0.4s ease"
+        opacity={showFlag && greeting.countryCode ? 1 : 0}
+        transform={showFlag ? "scale(1)" : "scale(0.8)"}
+        visibility={showFlag && greeting.countryCode ? "visible" : "hidden"}
+      >
+        {greeting.countryCode && (
+          <Flag
+            code={greeting.countryCode}
+            style={{ width: "32px", height: "20px" }}
+          />
+        )}
+      </Box>
+    </Flex>
+  );
+};
+interface NameHeadingProps {
+  isDark: boolean;
+}
+
+const NameHeading = ({ isDark }: NameHeadingProps) => {
+  return (
+    <Heading
+      as="h1"
+      fontSize={{ base: "32px", md: "52px" }}
+      fontWeight="bold"
+      mb={2}
+      position="relative"
+      display="inline-block"
+      transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+      _after={{
+        content: '""',
+        position: "absolute",
+        left: 0,
+        bottom: "4px",
+        width: { base: "100%", md: "0%" },
+        height: "3px",
+        bg: isDark ? "white" : "black",
+        borderRadius: "2px",
+        transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
+      _hover={{
+        _after: { width: "100%" },
+      }}
+    >
+      Yihun Shekuri
+    </Heading>
+  );
+};
+
+const IntroText = () => {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
+
+  return (
+    <Box fontSize={{ base: "sm", md: "md" }} mt={6} transition="all 0.3s ease">
+      <Box position="relative" display="inline-block" px={4} py={1}>
+        <Text as="span" position="relative" zIndex={1} fontWeight="medium">
+          Full-stack developer
+        </Text>
+
+        <Box
+          as="svg"
+          position="absolute"
+          top="40%"
+          left="50%"
+          width="calc(100% + 40px)"
+          height="calc(100% + 34px)"
+          viewBox="0 0 240 60"
+          fill="none"
+          transform="translate(-50%, -50%) rotate(-2deg)"
+          pointerEvents="none"
+          zIndex={0}
+        >
+          <motion.path
+            d="M10,35 C10,10 230,8 230,30 C230,52 15,58 20,35 C23,20 60,18 90,18"
+            stroke={isDark ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.5)"}
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{
+              delay: 1.2,
+              duration: 1.8,
+              ease: "easeInOut",
+            }}
+          />
+        </Box>
+      </Box>
+      <Text as="span" ml={6}>
+        from Addis Ababa. I create clean & efficient web & mobile apps.
+      </Text>
+    </Box>
+  );
+};
+
+// ─────────────────────────────────────────────
+// 6. MAIN COMPONENT
+// ─────────────────────────────────────────────
+
 const HomeProfileText = () => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
-  const [current, setCurrent] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [nextGreetingIndex, setNextGreetingIndex] = useState<number | null>(
-    null,
-  );
   const toast = useToast();
-  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const welcomeMessage =
-    "Welcome to my circle.... Happy to work with you onward!";
+  // Use our custom hook for greeting rotation
+  const { currentGreeting, isTyping } = useRotatingGreeting(isSpeaking);
+
+  // Check speech synthesis support
   useEffect(() => {
     if ("speechSynthesis" in window) {
       setIsSupported(true);
@@ -176,132 +628,34 @@ const HomeProfileText = () => {
     }
   }, [toast]);
 
-  // Text to speak - ONLY THE GREETING TEXT
-  const currentGreeting = greetings[current];
-  const textToSpeak = currentGreeting.text;
-
+  // Speech synthesis logic
   const handleSpeak = () => {
-    if (!isSupported) {
-      toast({
-        title: "Feature not available",
-        description: "Text-to-speech is not supported in your browser",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
+    if (!isSupported) return;
 
     if (isSpeaking) {
-      // Stop speaking gracefully
-      if (speechRef.current) {
-        speechRef.current = null;
-      }
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
     } else {
-      // Start speaking ONLY the greeting text
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const utterance = new SpeechSynthesisUtterance(currentGreeting.text);
+      utterance.lang = getSpeechLang(currentGreeting.lang);
 
-      // Set language based on current greeting
-      try {
-        utterance.lang =
-          currentGreeting.lang === "am"
-            ? "am-ET"
-            : currentGreeting.lang === "ar"
-              ? "ar-SA"
-              : currentGreeting.lang === "es"
-                ? "es-ES"
-                : currentGreeting.lang === "fr"
-                  ? "fr-FR"
-                  : currentGreeting.lang === "de"
-                    ? "de-DE"
-                    : currentGreeting.lang === "it"
-                      ? "it-IT"
-                      : currentGreeting.lang === "jp"
-                        ? "ja-JP"
-                        : currentGreeting.lang === "kr"
-                          ? "ko-KR"
-                          : "en-US";
-      } catch (e) {
-        utterance.lang = "en-US";
-      }
-
-      utterance.rate = 1;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-
-      utterance.onstart = () => {
-        setIsSpeaking(true);
-        // Pause the auto-rotation while speaking
-        setIsTransitioning(false);
-      };
+      utterance.onstart = () => setIsSpeaking(true);
 
       utterance.onend = () => {
-        setIsSpeaking(false);
-        speechRef.current = null;
+        // Logic for the second part of the speech
+        const welcomeUtterance = new SpeechSynthesisUtterance(WELCOME_MESSAGE);
+        welcomeUtterance.lang = utterance.lang;
 
-        if (nextGreetingIndex !== null) {
-          setCurrent(nextGreetingIndex);
-          setNextGreetingIndex(null);
-        }
+        welcomeUtterance.onend = () => {
+          setIsSpeaking(false); // Only set to false after EVERYTHING is read
+        };
 
-        // Speak the welcome message in the SAME language as the greeting
-        setTimeout(() => {
-          const welcomeUtterance = new SpeechSynthesisUtterance(welcomeMessage);
-          welcomeUtterance.lang = utterance.lang; // <-- reuse greeting lang
-          welcomeUtterance.rate = 1;
-          welcomeUtterance.pitch = 1;
-          welcomeUtterance.volume = 1;
-          window.speechSynthesis.speak(welcomeUtterance);
-        }, 500);
+        window.speechSynthesis.speak(welcomeUtterance);
       };
 
-      utterance.onerror = (event) => {
-        if (event.error !== "interrupted") {
-          console.error("Speech synthesis error:", event);
-          setIsSpeaking(false);
-          speechRef.current = null;
-
-          toast({
-            title: "Speech error",
-            description: "Could not read text aloud",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-      };
-
-      speechRef.current = utterance;
       window.speechSynthesis.speak(utterance);
     }
   };
-
-  // Random greeting every 2s, but wait if speaking
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isSpeaking && !isTransitioning) {
-        const nextIndex = Math.floor(Math.random() * greetings.length);
-
-        // Start smooth transition
-        setIsTransitioning(true);
-
-        // Wait 300ms for fade out, then change greeting
-        setTimeout(() => {
-          setCurrent(nextIndex);
-          // Wait another 300ms for fade in
-          setTimeout(() => setIsTransitioning(false), 300);
-        }, 300);
-      } else if (isSpeaking) {
-        // If currently speaking, queue the next greeting
-        const nextIndex = Math.floor(Math.random() * greetings.length);
-        setNextGreetingIndex(nextIndex);
-      }
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [isSpeaking, isTransitioning]);
 
   return (
     <Box
@@ -313,198 +667,23 @@ const HomeProfileText = () => {
       pt={{ base: 10, md: "70px" }}
       position="relative"
     >
-      {/* Speech button with wave animation */}
-      {isSupported && (
-        <Box
-          position="absolute"
-          top={0}
-          right={0}
-          width="60px"
-          height="60px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          {/* Irregular wave circles - only show when speaking */}
-          {isSpeaking && (
-            <>
-              <Box
-                position="absolute"
-                width="100%"
-                height="100%"
-                borderRadius="50%"
-                border="2px solid"
-                borderColor={isDark ? "gray.400" : "gray.600"}
-                animation={`${irregularWave1} 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
-              />
-              <Box
-                position="absolute"
-                width="100%"
-                height="100%"
-                borderRadius="50%"
-                border="2px solid"
-                borderColor={isDark ? "gray.500" : "gray.700"}
-                animation={`${irregularWave2} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
-              />
-              <Box
-                position="absolute"
-                width="100%"
-                height="100%"
-                borderRadius="50%"
-                border="2px solid"
-                borderColor={isDark ? "gray.600" : "gray.800"}
-                animation={`${irregularWave3} 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
-              />
-            </>
-          )}
+      <SpeechButton
+        text={currentGreeting.text}
+        isDark={isDark}
+        onToggle={handleSpeak}
+        isSpeaking={isSpeaking}
+        isSupported={isSupported}
+      />
 
-          {/* Mic button - transparent and centered */}
-          <IconButton
-            aria-label={
-              isSpeaking ? "Stop reading" : `Read "${textToSpeak}" aloud`
-            }
-            icon={isSpeaking ? <RiVoiceprintFill /> : <RiMic2Fill />}
-            onClick={handleSpeak}
-            variant="ghost"
-            colorScheme={isSpeaking ? "red" : isDark ? "white" : "black"}
-            size="lg"
-            width="100%"
-            height="100%"
-            borderRadius="50%"
-            backgroundColor={
-              isSpeaking
-                ? isDark
-                  ? "blackAlpha.300"
-                  : "whiteAlpha.300"
-                : "transparent"
-            }
-            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-            _hover={{
-              backgroundColor: isSpeaking
-                ? isDark
-                  ? "blackAlpha.400"
-                  : "whiteAlpha.400"
-                : isDark
-                  ? "blackAlpha.200"
-                  : "whiteAlpha.200",
-              transform: "scale(1.05)",
-            }}
-            sx={{
-              "& svg": {
-                fontSize: "24px",
-                // animation: isSpeaking
-                //   ? `${wave} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite`
-                //   : "none",
-                color: isSpeaking
-                  ? isDark
-                    ? "white"
-                    : "black"
-                  : isDark
-                    ? "gray.300"
-                    : "gray.700",
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              },
-            }}
-          />
-        </Box>
-      )}
+      <GreetingHeader
+        greeting={currentGreeting}
+        isTyping={isTyping}
+        onSpeak={handleSpeak}
+      />
 
-      {/* Greeting with waving hand - Clickable to speak */}
-      <Flex
-        flexDirection={{ base: "column", md: "row" }}
-        alignItems="center"
-        justifyContent={{ base: "center", md: "flex-start" }}
-        animation={`${bounce} 0.8s cubic-bezier(0.4, 0, 0.2, 1)`}
-        cursor="pointer"
-        onClick={handleSpeak}
-        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-        opacity={isTransitioning ? 0.5 : 1}
-        _hover={{
-          opacity: 0.9,
-          transform: "translateY(-2px)",
-        }}
-      >
-        <Heading
-          as="h2"
-          fontSize={{ base: "28px", md: "40px" }}
-          fontFamily={
-            currentGreeting.lang === "am"
-              ? "'Noto Sans Ethiopic', monospace"
-              : currentGreeting.lang === "ar"
-                ? "'Amiri', monospace"
-                : "monospace"
-          }
-          transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-        >
-          <Text
-            as="span"
-            display="inline-block"
-            animation={`${wave} 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite`}
-            mr={2}
-          >
-            👋
-          </Text>
-          {currentGreeting.text}
-        </Heading>
+      <NameHeading isDark={isDark} />
 
-        {currentGreeting.countryCode && (
-          <Box
-            ml={{ base: 0, md: 2 }}
-            mt={{ base: 2, md: 0 }}
-            display="inline-block"
-            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-            opacity={isTransitioning ? 0.5 : 1}
-          >
-            <Flag
-              code={currentGreeting.countryCode}
-              style={{
-                width: "32px",
-                height: "20px",
-                display: "block",
-                margin: "0 auto",
-                transition: "all 0.3s ease",
-              }}
-            />
-          </Box>
-        )}
-      </Flex>
-
-      {/* Name */}
-      <Heading
-        as="h1"
-        fontSize={{ base: "32px", md: "52px" }}
-        fontWeight="bold"
-        mb={2}
-        position="relative"
-        display="inline-block"
-        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-        _after={{
-          content: '""',
-          position: "absolute",
-          left: 0,
-          bottom: "4px",
-          width: { base: "100%", md: "0%" },
-          height: "3px",
-          bg: isDark ? "white" : "black",
-          borderRadius: "2px",
-          transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-        _hover={{
-          _after: { width: "100%" },
-        }}
-      >
-        Yihun Shekuri
-      </Heading>
-
-      {/* Intro text */}
-      <Box
-        fontSize={{ base: "sm", md: "md" }}
-        mt={2}
-        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-      >
-        Full-stack developer from Addis Ababa. I create clean & efficient web &
-        mobile apps.
-      </Box>
+      <IntroText />
     </Box>
   );
 };

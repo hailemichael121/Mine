@@ -6,13 +6,12 @@ import {
   VStack,
   Link,
   useBreakpointValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { CiMicrophoneOn } from "react-icons/ci";
 import { TfiEmail } from "react-icons/tfi";
-import { RiUserLocationFill } from "react-icons/ri";
-import { MdLocationCity } from "react-icons/md";
-import { FaGraduationCap, FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 import { PiBracketsCurlyLight } from "react-icons/pi";
 
 // Define the type for personal details
@@ -31,22 +30,6 @@ const personalDetails: PersonalDetail[] = [
     label: "Email",
     value: "yihunaashe@gmail.com",
     isLink: true,
-    linkUrl: "mailto:yihunaashe@gmail.com",
-  },
-  {
-    icon: RiUserLocationFill,
-    label: "Residence",
-    value: "Addis Ababa, Ethiopia",
-  },
-  { icon: MdLocationCity, label: "City", value: "Addis Ababa" },
-  {
-    icon: FaGraduationCap,
-    label: "Degree",
-    value: {
-      base: "BSc SE",
-      md: "BSc Software Engineering",
-      lg: "Bachelor of Science in Software Engineering",
-    },
   },
   {
     icon: PiBracketsCurlyLight,
@@ -74,10 +57,20 @@ const personalDetails: PersonalDetail[] = [
 
 const AboutSecPersonalDetails: React.FC = () => {
   const isSmallScreen = useBreakpointValue({ base: true, md: true, lg: false });
+  const { colorMode } = useColorMode();
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
+  const mutedColor =
+    colorMode === "light"
+      ? "rgba(38, 38, 38, 0.7)"
+      : "rgba(255, 255, 255, 0.7)";
 
   return (
     <VStack align="flex-start" spacing={4} w="100%">
-      <Heading size="lg" fontSize={{ base: "20px", md: "24px" }}>
+      <Heading
+        size="lg"
+        fontSize={{ base: "20px", md: "24px" }}
+        color={baseColor}
+      >
         Personal Details
       </Heading>
       <VStack spacing={3} w="100%">
@@ -91,7 +84,7 @@ const AboutSecPersonalDetails: React.FC = () => {
             wrap="wrap"
             spacing={4} // Ensure enough space between icon and text
           >
-            <Flex color="#6C757D" align="center" flexShrink={0} w="150px">
+            <Flex color={mutedColor} align="center" flexShrink={0} w="150px">
               <detail.icon fontSize="20px" />
               <Text pl={2}>{detail.label}:</Text>
             </Flex>
@@ -101,7 +94,9 @@ const AboutSecPersonalDetails: React.FC = () => {
                 href={detail.linkUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                color={detail.label === "Freelance" ? "green" : "blue"}
+                color={baseColor}
+                opacity={0.8}
+                _hover={{ opacity: 1, textDecoration: "none" }}
               >
                 <Text textAlign="left" wordBreak="break-word">
                   {typeof detail.value === "string"
@@ -112,11 +107,19 @@ const AboutSecPersonalDetails: React.FC = () => {
             ) : (
               <>
                 {!isSmallScreen && typeof detail.value !== "string" ? (
-                  <Text textAlign="left" wordBreak="break-word">
+                  <Text
+                    textAlign="left"
+                    wordBreak="break-word"
+                    color={baseColor}
+                  >
                     {detail.value.lg}
                   </Text>
                 ) : (
-                  <Text textAlign="left" wordBreak="break-word">
+                  <Text
+                    textAlign="left"
+                    wordBreak="break-word"
+                    color={baseColor}
+                  >
                     {typeof detail.value === "string"
                       ? detail.value
                       : detail.value.base}

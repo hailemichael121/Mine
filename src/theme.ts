@@ -25,6 +25,10 @@ const colors = {
 
 export const theme = extendTheme({
   config,
+  fonts: {
+    heading: '"Mova", "Arenq", "Ruslan Display", system-ui, sans-serif',
+    body: '"Mova", system-ui, sans-serif',
+  },
   colors: {
     // Only define black and white
     white: colors.white,

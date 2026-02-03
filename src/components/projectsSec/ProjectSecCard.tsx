@@ -5,7 +5,7 @@ import {
   Image,
   Text,
   Heading,
-  Link,
+  Link as ChakraLink,
   HStack,
   Tag,
   useColorMode,
@@ -40,49 +40,75 @@ const ProjectSecCard: React.FC<Props> = ({
 }) => {
   const { colorMode } = useColorMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const gradientOverlay =
-    colorMode === "dark"
-      ? "linear(to-t, rgba(17,17,17,0.7), rgba(17,17,17,0))"
-      : "linear(to-t, rgba(255,255,255,0.7), rgba(255,255,255,0))";
+  const baseColor = colorMode === "dark" ? "#FFFFFF" : "#262626";
+  const surfaceColor = colorMode === "dark" ? "#262626" : "#FFFFFF";
 
   return (
     <>
       <motion.div
-        initial={{ scale: 0.5, opacity: 0 }}
+        initial={{ scale: 0.92, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
         viewport={{ once: true }}
-        whileHover={{ scale: 1.03 }}
+        whileHover={{ scale: 1.015 }}
       >
         <Box
-          borderRadius="xl"
+          borderRadius="3xl"
           overflow="hidden"
-          bg={
-            colorMode === "dark"
-              ? "rgba(17, 17, 17, 0.4)"
-              : "rgba(255, 255, 255, 0.4)"
-          }
-          backdropFilter="blur(10px)"
+          bg={surfaceColor}
           border="1px solid"
-          borderColor={colorMode === "dark" ? "gray.700" : "gray.200"}
-          boxShadow={
-            colorMode === "dark"
-              ? "10px 10px 20px rgba(0, 0, 0, 0.3), -5px -5px 10px rgba(80, 80, 80, 0.1)"
-              : "10px 10px 20px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.5)"
-          }
+          borderColor={baseColor}
+          boxShadow={`0 40px 70px -52px ${baseColor}`}
           cursor="pointer"
           onClick={() => setIsModalOpen(true)}
-          transition="all 0.3s ease"
+          transition="all 0.35s ease"
+          position="relative"
+          _before={{
+            content: '""',
+            position: "absolute",
+            top: "-14px",
+            left: "36px",
+            width: "120px",
+            height: "16px",
+            borderRadius: "999px",
+            border: "1px solid",
+            borderColor: baseColor,
+            bg: surfaceColor,
+            boxShadow: `0 10px 24px -18px ${baseColor}`,
+          }}
+          _after={{
+            content: '""',
+            position: "absolute",
+            inset: "14px",
+            borderRadius: "2xl",
+            border: "1px dashed",
+            borderColor: baseColor,
+            opacity: 0.15,
+            pointerEvents: "none",
+          }}
           _hover={{
             transform: "translateY(-5px)",
-            boxShadow:
-              colorMode === "dark"
-                ? "15px 15px 30px rgba(0, 0, 0, 0.4), -10px -10px 20px rgba(80, 80, 80, 0.2)"
-                : "15px 15px 30px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.7)",
+            boxShadow: `0 48px 80px -60px ${baseColor}`,
           }}
         >
-          <Box position="relative">
+          <Box position="relative" overflow="hidden">
+            <Box
+              position="absolute"
+              top="12px"
+              left="16px"
+              zIndex={2}
+              border="1px solid"
+              borderColor={baseColor}
+              borderRadius="full"
+              px={3}
+              py={1}
+              fontSize="xs"
+              color={baseColor}
+              bg={surfaceColor}
+              opacity={0.9}
+            >
+              Featured Project
+            </Box>
             {video ? (
               <video
                 controls={false}
@@ -105,8 +131,9 @@ const ProjectSecCard: React.FC<Props> = ({
                       src={image}
                       alt={`${title} Image ${index + 1}`}
                       w="100%"
-                      h="200px"
+                      h="220px"
                       objectFit="cover"
+                      filter="grayscale(1)"
                     />
                   </SwiperSlide>
                 ))}
@@ -116,7 +143,7 @@ const ProjectSecCard: React.FC<Props> = ({
             {/* 👇 Wavy SVG Divider */}
             <Box
               position="absolute"
-              bottom="-12px"
+              bottom="-16px"
               left="0"
               w="101%"
               zIndex={1}
@@ -129,67 +156,87 @@ const ProjectSecCard: React.FC<Props> = ({
               >
                 <path
                   d="M0,40 C480,140 960,-40 1440,40 L1440,100 L0,100 Z"
-                  fill={colorMode === "dark" ? "#1b1b1b" : "#ffffff"}
+                  fill={surfaceColor}
+                />
+                <path
+                  d="M0,40 C480,140 960,-40 1440,40"
+                  fill="none"
+                  stroke={baseColor}
+                  strokeWidth="2"
                 />
               </svg>
             </Box>
           </Box>
 
-          <Box p={4} position="relative" zIndex={2}>
-            <Heading size="md" mb={2}>
+          <Box p={5} position="relative" zIndex={2}>
+            <Heading size="md" mb={2} color={baseColor}>
               {title}
             </Heading>
-            <Text noOfLines={2} mb={4}>
+            <Text noOfLines={3} mb={4} color={baseColor} opacity={0.75}>
               {description}
             </Text>
 
             <HStack spacing={2} mb={4} flexWrap="wrap">
               {tags?.slice(0, 3).map((tag, index) => (
-                <Tag key={index} size="sm" colorScheme="blue" variant="subtle">
+                <Tag
+                  key={index}
+                  size="sm"
+                  variant="outline"
+                  borderColor={baseColor}
+                  color={baseColor}
+                  opacity={0.85}
+                >
                   {tag}
                 </Tag>
               ))}
               {tags && tags.length > 3 && (
-                <Tag size="sm" colorScheme="gray" variant="subtle">
+                <Tag
+                  size="sm"
+                  variant="outline"
+                  borderColor={baseColor}
+                  color={baseColor}
+                  opacity={0.85}
+                >
                   +{tags.length - 3}
                 </Tag>
               )}
             </HStack>
 
-            <HStack spacing={4}>
+            <HStack spacing={3}>
               {sourceLink && (
-                <Link
+                <ChakraLink
                   href={sourceLink}
                   isExternal
                   onClick={(e) => e.stopPropagation()}
-                  color={colorMode === "dark" ? "blue.300" : "blue.500"}
+                  color={baseColor}
+                  border="1px solid"
+                  borderColor={baseColor}
+                  borderRadius="full"
+                  px={3}
+                  py={1}
+                  _hover={{ textDecoration: "none", opacity: 0.85 }}
                 >
                   <BsGithub fontSize={"20px"} />
-                </Link>
+                </ChakraLink>
               )}
               {siteLink && (
-                <Link
+                <ChakraLink
                   href={siteLink}
                   isExternal
                   onClick={(e) => e.stopPropagation()}
-                  color={colorMode === "dark" ? "blue.300" : "blue.500"}
+                  color={baseColor}
+                  border="1px solid"
+                  borderColor={baseColor}
+                  borderRadius="full"
+                  px={3}
+                  py={1}
+                  _hover={{ textDecoration: "none", opacity: 0.85 }}
                 >
                   <GrLink fontSize={"20px"} />
-                </Link>
+                </ChakraLink>
               )}
             </HStack>
           </Box>
-
-          {/* Bottom gradient overlay */}
-          <Box
-            position="absolute"
-            bottom="0"
-            left="0"
-            right="0"
-            height="80px"
-            bgGradient={gradientOverlay}
-            zIndex={1}
-          />
         </Box>
       </motion.div>
 

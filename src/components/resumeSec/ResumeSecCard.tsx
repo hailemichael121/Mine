@@ -23,6 +23,8 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
   const { colorMode } = useColorMode();
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.1 });
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
+  const cardBg = colorMode === "light" ? "#FFFFFF" : "#262626";
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -37,25 +39,6 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
     if (inView) controls.start("visible");
   }, [controls, inView]);
 
-  // Color variants
-  const variants = {
-    work: {
-      bg: colorMode === "light" ? "white" : "#222222",
-      borderColor: "blue.400",
-      accent: "blue.500",
-    },
-    education: {
-      bg: colorMode === "light" ? "white" : "#222222",
-      borderColor: "purple.400",
-      accent: "purple.500",
-    },
-    skills: {
-      bg: colorMode === "light" ? "white" : "#222222",
-      borderColor: "green.400",
-      accent: "green.500",
-    },
-  };
-
   return (
     <Box
       as={motion.div}
@@ -63,54 +46,56 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
       initial="hidden"
       animate={controls}
       variants={cardVariants}
-      bg={variants[variant].bg}
-      p={6}
-      borderRadius="xl"
+      data-variant={variant}
+      bg={cardBg}
+      p={{ base: 5, md: 6 }}
+      borderRadius="2xl"
       mb={6}
       position="relative"
-      borderLeft="4px solid"
-      borderColor={variants[variant].borderColor}
-      boxShadow={
-        colorMode === "light"
-          ? "0 4px 24px rgba(0, 0, 0, 0.05)"
-          : "0 4px 24px rgba(0, 0, 0, 0.2)"
-      }
-      _hover={{
-        transform: "translateY(-4px)",
-        boxShadow:
-          colorMode === "light"
-            ? `0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 2px ${variants[variant].borderColor}`
-            : `0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 2px ${variants[variant].borderColor}`,
+      border="1px solid"
+      borderColor={baseColor}
+      boxShadow={`0 20px 40px -32px ${baseColor}`}
+      _before={{
+        content: '""',
+        position: "absolute",
+        top: "14px",
+        left: "14px",
+        right: "14px",
+        height: "1px",
+        backgroundColor: baseColor,
+        opacity: 0.25,
       }}
-      transition="all 0.3s ease"
+      _hover={{
+        transform: "translateY(-6px)",
+        boxShadow: `0 26px 50px -34px ${baseColor}`,
+      }}
+      transition="all 0.35s ease"
     >
       {icon && (
         <Box
           position="absolute"
-          top={-4}
-          right={6}
+          top={{ base: -3, md: -4 }}
+          right={{ base: 4, md: 6 }}
           p={2}
-          bg={variants[variant].accent}
+          bg={cardBg}
+          border="1px solid"
+          borderColor={baseColor}
           borderRadius="full"
+          color={baseColor}
         >
           {icon}
         </Box>
       )}
 
-      <Heading
-        as="h2"
-        size="lg"
-        mb={2}
-        fontWeight="600"
-        color={colorMode === "light" ? "gray.800" : "white"}
-      >
+      <Heading as="h2" size="lg" mb={2} fontWeight="600" color={baseColor}>
         {title}
       </Heading>
 
       <Text
         fontSize="md"
         mb={2}
-        color={variants[variant].accent}
+        color={baseColor}
+        opacity={0.8}
         fontWeight="500"
       >
         {subtitle}
@@ -122,14 +107,16 @@ const ResumeSecCard: React.FC<ResumeSecCardProps> = ({
         py={1}
         mb={4}
         fontSize="sm"
-        bg={colorMode === "light" ? "gray.100" : "gray.700"}
-        color={colorMode === "light" ? "gray.600" : "gray.300"}
-        borderRadius="md"
+        border="1px solid"
+        borderColor={baseColor}
+        color={baseColor}
+        borderRadius="full"
+        opacity={0.8}
       >
         {dateRange}
       </chakra.span>
 
-      <Box fontSize="md" lineHeight="tall">
+      <Box fontSize="md" lineHeight="tall" color={baseColor} opacity={0.9}>
         {description}
       </Box>
     </Box>

@@ -1,5 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BlogDetail, Blogs, LandingPage } from "./pages";
 
 function App() {
   return (
@@ -9,7 +9,11 @@ function App() {
         v7_relativeSplatPath: true,
       }}
     >
-      <LandingPage />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+      </Routes>
     </BrowserRouter>
   );
 }

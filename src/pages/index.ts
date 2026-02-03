@@ -33,3 +33,6 @@ export { default as ContactMeSecHeader } from "../components/contactMeSec/Contac
 export { default as ElipseMold } from "../components/shared/ElipseMold";
 export { default as Elipse } from "../components/shared/Elipses";
 export { default as Blogs } from "./Blogs";
+export { default as BlogDetail } from "./BlogDetail";
+export { default as BlogsHighlight } from "../components/blogsSec/BlogsHighlight";
+export { default as LandingPage } from "./LandingPage";
