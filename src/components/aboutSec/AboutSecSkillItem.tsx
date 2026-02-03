@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Image, Tooltip, useColorMode, LinkBox } from "@chakra-ui/react";
+import { Flex, Image, Tooltip, useColorMode, Box } from "@chakra-ui/react";
 
 interface SkillItemProps {
   imgSrc: string;
@@ -7,6 +7,7 @@ interface SkillItemProps {
   label: string;
   imgWidth?: string;
   onClick?: () => void;
+  href?: string; // optional link
 }
 
 const AboutSecSkillItem: React.FC<SkillItemProps> = ({
@@ -15,14 +16,21 @@ const AboutSecSkillItem: React.FC<SkillItemProps> = ({
   label,
   imgWidth = "30px",
   onClick,
+  href,
 }) => {
   const { colorMode } = useColorMode();
   const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
   const cardBg = colorMode === "light" ? "#FFFFFF" : "#262626";
 
+  const Wrapper = href ? "a" : "div"; // Conditional tag
+
   return (
     <Tooltip label={label} hasArrow bg={baseColor} color={cardBg}>
-      <LinkBox
+      <Box
+        as={Wrapper}
+        href={href}
+        target={href ? "_blank" : undefined}
+        rel={href ? "noopener noreferrer" : undefined}
         p={{ base: "8px", md: "12px" }}
         borderRadius={{ base: "12px", md: "16px" }}
         border="1px solid"
@@ -36,6 +44,7 @@ const AboutSecSkillItem: React.FC<SkillItemProps> = ({
         }}
         onClick={onClick}
         cursor="pointer"
+        display="inline-block"
       >
         <Flex alignItems="center" justifyContent="center">
           <Image
@@ -44,10 +53,10 @@ const AboutSecSkillItem: React.FC<SkillItemProps> = ({
             width={imgWidth}
             loading="lazy"
             filter="grayscale(1)"
-            _groupHover={{ filter: "grayscale(0)" }}
+            _hover={{ filter: "grayscale(0)" }}
           />
         </Flex>
-      </LinkBox>
+      </Box>
     </Tooltip>
   );
 };
