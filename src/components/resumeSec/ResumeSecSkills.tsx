@@ -1,4 +1,4 @@
-import { Box, Tag, Text, Wrap } from "@chakra-ui/react";
+import { Box, Tag, Text, Wrap, useColorMode } from "@chakra-ui/react";
 import ResumeSecCard from "./ResumeSecCard";
 import { FaCode } from "react-icons/fa";
 
@@ -25,6 +25,8 @@ const skillCategories = [
 ];
 
 const ResumeSecSkills: React.FC = () => {
+  const { colorMode } = useColorMode();
+  const baseColor = colorMode === "light" ? "#262626" : "#FFFFFF";
   return (
     <ResumeSecCard
       title="Technical Skills"
@@ -32,19 +34,21 @@ const ResumeSecSkills: React.FC = () => {
         <Box mt={3}>
           {skillCategories.map((category) => (
             <Box key={category.name} mb={4}>
-              <Text fontWeight="600" mb={2}>
+              <Text fontWeight="600" mb={2} color={baseColor}>
                 {category.name}
               </Text>
               <Wrap spacing={2}>
                 {category.skills.map((skill) => (
                   <Tag
                     key={skill}
-                    colorScheme="green"
-                    variant="subtle"
+                    variant="outline"
                     size="md"
                     px={3}
                     py={1}
                     borderRadius="full"
+                    borderColor={baseColor}
+                    color={baseColor}
+                    opacity={0.85}
                   >
                     {skill}
                   </Tag>
@@ -54,7 +58,7 @@ const ResumeSecSkills: React.FC = () => {
           ))}
         </Box>
       }
-      icon={<FaCode color="white" />}
+      icon={<FaCode color={baseColor} />}
       variant="skills"
     />
   );

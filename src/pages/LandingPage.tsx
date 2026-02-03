@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import {
   About,
-  Blogs,
+  BlogsHighlight,
   ContactMe,
   NavigationBar,
   Resume,
@@ -99,7 +99,7 @@ const LandingPage = () => {
           <ProjectsCurtain />
         </div>
         <div id="blogs">
-          <Blogs />
+          <BlogsHighlight />
         </div>
         <div id="contacts">
           <MotionDiv

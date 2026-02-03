@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Box, SimpleGrid, VStack, useBreakpointValue } from "@chakra-ui/react";
 import React from "react";
 import {
   ResumeSecEducation,
@@ -8,27 +8,81 @@ import {
 } from ".";
 
 const Resume: React.FC = () => {
+  const isMobile = useBreakpointValue({ base: true, lg: false });
   return (
     <Box maxW="1200px" mx="auto" px={{ base: 5, md: 8 }} py={10}>
       <ResumeSecHeader />
 
-      <SimpleGrid
-        columns={{ base: 1, lg: 2 }}
-        spacing={16}
-        alignItems="flex-start"
-      >
-        {/* Left Column */}
-        <VStack spacing={8} align="stretch">
-          <ResumeSecWorkExperience />
+      {isMobile ? (
+        <VStack spacing={6} align="stretch">
+          <Box
+            display="flex"
+            gap={4}
+            overflowX="auto"
+            scrollSnapType="x mandatory"
+            pb={2}
+            sx={{
+              "& > *": {
+                flex: "0 0 85%",
+                scrollSnapAlign: "center",
+              },
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            <ResumeSecWorkExperience />
+          </Box>
+          <Box
+            display="flex"
+            gap={4}
+            overflowX="auto"
+            scrollSnapType="x mandatory"
+            pb={2}
+            sx={{
+              "& > *": {
+                flex: "0 0 85%",
+                scrollSnapAlign: "center",
+              },
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            <ResumeSecEducation />
+          </Box>
+          <Box
+            display="flex"
+            gap={4}
+            overflowX="auto"
+            scrollSnapType="x mandatory"
+            pb={2}
+            sx={{
+              "& > *": {
+                flex: "0 0 85%",
+                scrollSnapAlign: "center",
+              },
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            <ResumeSecSkills />
+          </Box>
         </VStack>
+      ) : (
+        <SimpleGrid
+          columns={{ base: 1, lg: 2 }}
+          spacing={16}
+          alignItems="flex-start"
+        >
+          {/* Left Column */}
+          <VStack spacing={8} align="stretch">
+            <ResumeSecWorkExperience />
+          </VStack>
 
-        {/* Right Column */}
-        <VStack spacing={8} align="stretch">
-          <ResumeSecEducation />
-          <ResumeSecSkills />
-          {/* Add other sections here if needed */}
-        </VStack>
-      </SimpleGrid>
+          {/* Right Column */}
+          <VStack spacing={8} align="stretch">
+            <ResumeSecEducation />
+            <ResumeSecSkills />
+            {/* Add other sections here if needed */}
+          </VStack>
+        </SimpleGrid>
+      )}
     </Box>
   );
 };
