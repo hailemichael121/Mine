@@ -21,3 +21,12 @@
     url("../fonts/Mova.otf") format("opentype"),
     url("../fonts/Mova.ttf") format("truetype");
 }
+
+h1,
+h2,
+h3,
+h4,
+.cute-font {
+  font-family: "Mova", "Arenq", "Beckman", "Segoe UI", sans-serif;
+  letter-spacing: 0.4px;
+}

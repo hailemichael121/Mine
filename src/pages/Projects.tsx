@@ -1,5 +1,5 @@
 // components/projectsSec/Projects.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, SimpleGrid, useColorMode } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { ProjectSecCard, ProjectSecCategory } from ".";
@@ -23,6 +23,20 @@ const Projects: React.FC = () => {
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
   };
+
+  useEffect(() => {
+    const handleSkillSelect = (event: Event) => {
+      const detail = (event as CustomEvent<{ category?: string }>).detail;
+      if (detail?.category) {
+        setActiveCategory(detail.category);
+      }
+    };
+
+    window.addEventListener("skillCategorySelect", handleSkillSelect);
+    return () => {
+      window.removeEventListener("skillCategorySelect", handleSkillSelect);
+    };
+  }, []);
 
   const filteredProjects =
     activeCategory === "All Projects"

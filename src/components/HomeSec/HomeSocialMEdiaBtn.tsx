@@ -16,36 +16,26 @@ const socials = [
     icon: FaGithub,
     url: "https://github.com/Hailemichael121",
     label: "GitHub",
-    color: "#333",
-    hoverColor: "#f0f6fc",
   },
   {
     icon: FaInstagram,
     url: "https://instagram.com/haile_michael_121",
     label: "Instagram",
-    color: "#E4405F",
-    hoverColor: "#f0a6ca",
   },
   {
     icon: FaLinkedin,
     url: "https://linkedin.com/in/hailemichael121/",
     label: "LinkedIn",
-    color: "#0A66C2",
-    hoverColor: "#a6d4fa",
   },
   {
     icon: FaTelegram,
     url: "https://t.me/Sholet1234",
     label: "Telegram",
-    color: "#0088cc",
-    hoverColor: "#a6d4fa",
   },
   {
     icon: FaXTwitter,
     url: "https://www.x.com/hailemichael121",
     label: "X / Twitter",
-    color: "#000000",
-    hoverColor: "#d1d5db",
   },
 ];
 
@@ -57,6 +47,22 @@ const HomeSocialMediaBtn: React.FC = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const baseColor = isDark ? "#FFFFFF" : "#262626";
+  const invertColor = isDark ? "#262626" : "#FFFFFF";
+  const buttonStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "52px",
+    height: "52px",
+    borderRadius: "14px",
+    backgroundColor: "transparent",
+    border: `1.5px solid ${baseColor}`,
+    color: baseColor,
+    textDecoration: "none",
+    transition: "transform 0.25s ease, background-color 0.25s ease, color 0.25s ease",
+  } as const;
 
   if (!mounted) {
     return (
@@ -81,32 +87,16 @@ const HomeSocialMediaBtn: React.FC = () => {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                backgroundColor: isDark ? "#2D3748" : "#EDF2F7", // gray.700 / gray.100
-                color: isDark ? "#E2E8F0" : "#1A202C",
-                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                transition: "all 0.3s ease",
-                textDecoration: "none",
-              }}
+              style={buttonStyle}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.2)";
-                e.currentTarget.style.backgroundColor = "#4299E1"; // blue.400
-                e.currentTarget.style.color = "white";
-                e.currentTarget.style.boxShadow = "0 10px 20px rgba(0,0,0,0.2)";
+                e.currentTarget.style.transform = "translateY(-4px) scale(1.02)";
+                e.currentTarget.style.backgroundColor = baseColor;
+                e.currentTarget.style.color = invertColor;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.backgroundColor = isDark
-                  ? "#2D3748"
-                  : "#EDF2F7";
-                e.currentTarget.style.color = isDark ? "#E2E8F0" : "#1A202C";
-                e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+                e.currentTarget.style.transform = "translateY(0) scale(1)";
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = baseColor;
               }}
             >
               {React.createElement(social.icon, { size: 24 })}
@@ -122,7 +112,7 @@ const HomeSocialMediaBtn: React.FC = () => {
       style={{
         position: "relative",
         width: "100%",
-        height: "120px",
+        height: "110px",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
@@ -135,28 +125,14 @@ const HomeSocialMediaBtn: React.FC = () => {
         // Calculate final positions in a row
         const totalItems = socials.length;
         const containerWidth = 400;
-        const itemWidth = 50;
+        const itemWidth = 52;
         const spacing =
           (containerWidth - totalItems * itemWidth) / (totalItems - 1);
         const finalX =
           (itemWidth + spacing) * index - containerWidth / 2 + itemWidth / 2;
 
         // Animation values
-        const startY = -100;
-        const delay = index * 0.15;
-
-        // Straight down with small bounce
-        const FINAL_Y = 55;
-
-        const bounceSequence = [startY, 30, 12, FINAL_Y];
-
-        // Straight X movement - minimal side wobble
-        const xSequence = [
-          finalX, // Start at final X position
-          finalX + (Math.random() * 10 - 5), // Tiny wobble
-          finalX + (Math.random() * 6 - 3), // Smaller wobble
-          finalX, // Settle at final position
-        ];
+        const delay = index * 0.1;
 
         return (
           <Tooltip
@@ -168,50 +144,48 @@ const HomeSocialMediaBtn: React.FC = () => {
             <MotionDiv
               style={{
                 position: "absolute",
-                top: startY + "px",
+                top: "0px",
                 left: "50%",
-                width: "50px",
-                height: "50px",
-                backgroundColor: isDark ? "#2D3748" : "#F7FAFC",
-                borderRadius: "50%",
+                width: "52px",
+                height: "52px",
+                backgroundColor: "transparent",
+                borderRadius: "14px",
+                border: `1.5px solid ${baseColor}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
                 cursor: "pointer",
                 zIndex: socials.length - index,
-                color: isDark ? social.hoverColor : social.color,
+                color: baseColor,
                 transform: "translateX(-50%)", // Center horizontally
               }}
               initial={{
-                y: startY,
+                y: 24,
                 x: finalX,
-                rotate: 0,
-                scale: 0,
+                rotate: -6,
+                scale: 0.9,
                 opacity: 0,
               }}
               animate={{
-                y: bounceSequence,
-                x: xSequence,
-                rotate: [0, 15, -10, 5, 0], // Small rotation during fall
-                scale: [0, 1.2, 0.95, 1],
-                opacity: [0, 1, 1, 1],
+                y: 0,
+                x: finalX,
+                rotate: 0,
+                scale: 1,
+                opacity: 1,
               }}
               transition={{
-                duration: 1.2 + Math.random() * 0.3,
-                ease: "easeOut",
+                type: "spring",
+                stiffness: 260,
+                damping: 18,
                 delay: delay,
-                times: [0, 0.4, 0.7, 1],
               }}
               whileHover={{
-                scale: 1.3,
-                rotate: 360,
-                backgroundColor: social.color,
-                color: "white",
-                boxShadow: `0 15px 30px ${social.color}40`,
-                transition: { duration: 0.3 },
+                y: -6,
+                scale: 1.04,
+                backgroundColor: baseColor,
+                color: invertColor,
               }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => window.open(social.url, "_blank")}
             >
               {React.createElement(social.icon, { size: 24 })}

@@ -24,6 +24,7 @@ export { default as ProjectSecHeader } from "../components/projectsSec/ProjectSe
 export { default as ServicesSecHeader } from "../components/serviceSec/ServicesSecHeader";
 export { default as ServiceBox } from "../components/serviceSec/ServiceBox";
 export { default as BlogsSecHeader } from "../components/blogsSec/BlogsSecHeader";
+export { default as BlogsHighlight } from "../components/blogsSec/BlogsHighlight";
 export { default as ResumeSecHeader } from "../components/resumeSec/ResumeSecHeader";
 export { default as ResumeSecCard } from "../components/resumeSec/ResumeSecCard";
 export { default as ResumeSecSkills } from "../components/resumeSec/ResumeSecSkills";
@@ -33,3 +34,4 @@ export { default as ContactMeSecHeader } from "../components/contactMeSec/Contac
 export { default as ElipseMold } from "../components/shared/ElipseMold";
 export { default as Elipse } from "../components/shared/Elipses";
 export { default as Blogs } from "./Blogs";
+export { default as BlogDetail } from "./BlogDetail";
