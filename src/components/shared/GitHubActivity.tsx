@@ -7,24 +7,20 @@ import {
   Box,
   Heading,
   Text,
-  List,
-  ListItem,
   Icon,
   Flex,
   useColorMode,
-  Divider,
   Button,
   ButtonGroup,
   VStack,
-  Link,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { FaStar, FaGithub } from "react-icons/fa";
 
 const GitHubActivity: React.FC = () => {
-  const [publicRepoCount, setPublicRepoCount] = useState(0);
+  // const [publicRepoCount, setPublicRepoCount] = useState(0);
   const [starCount, setStarCount] = useState(0);
-  const [repos, setRepos] = useState<{ name: string; url: string }[]>([]);
+  // const [repos, setRepos] = useState<{ name: string; url: string }[]>([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const { colorMode } = useColorMode();
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -32,29 +28,29 @@ const GitHubActivity: React.FC = () => {
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
-        const userResponse = await axios.get(
-          "https://api.github.com/users/hailemichael121"
-        );
+        // const userResponse = await axios.get(
+        //   "https://api.github.com/users/hailemichael121",
+        // );
         const reposResponse = await axios.get(
-          "https://api.github.com/users/hailemichael121/repos"
+          "https://api.github.com/users/hailemichael121/repos",
         );
 
-        setPublicRepoCount(userResponse.data.public_repos);
+        // setPublicRepoCount(userResponse.data.public_repos);
 
         const stars = reposResponse.data.reduce(
           (acc: number, repo: { stargazers_count: number }) =>
             acc + repo.stargazers_count,
-          0
+          0,
         );
         setStarCount(stars);
 
-        const repoData = reposResponse.data
-          .slice(0, 5)
-          .map((repo: { name: string; html_url: string }) => ({
-            name: repo.name,
-            url: repo.html_url,
-          }));
-        setRepos(repoData);
+        // const repoData = reposResponse.data
+        //   .slice(0, 5)
+        //   .map((repo: { name: string; html_url: string }) => ({
+        //     name: repo.name,
+        //     url: repo.html_url,
+        //   }));
+        // setRepos(repoData);
       } catch (error) {
         console.error("Error fetching GitHub data:", error);
       }
@@ -82,14 +78,31 @@ const GitHubActivity: React.FC = () => {
     >
       <VStack>
         <Box>
-          <Heading as="h1" size="lg" mt={4} mb={2} ml={6} textAlign="left">
-            GitHub Activity
-          </Heading>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            mb={4}
+            w="100%"
+            flexDirection={{ base: "column", md: "row" }}
+          >
+            <Flex alignItems="center" ml={6}>
+              <Icon as={FaGithub} w={6} h={6} mr={2} />
+              <Heading as="h1" size="lg">
+                GitHub Activity
+              </Heading>
+            </Flex>
+
+            <Flex alignItems="center" mb={{ base: 2, md: 0 }}>
+              <Icon as={FaStar} w={5} h={5} mr={2} />
+              <Text fontSize="lg">Stars: {starCount}</Text>
+            </Flex>
+          </Flex>
+
           <Box display="flex" justifyContent="center" mb={4}>
             <ButtonGroup size="sm" isAttached variant="outline">
               {Array.from(
                 { length: 5 },
-                (_, i) => new Date().getFullYear() - i
+                (_, i) => new Date().getFullYear() - i,
               ).map((year) => (
                 <Button
                   key={year}
@@ -119,7 +132,7 @@ const GitHubActivity: React.FC = () => {
                 year={selectedYear}
                 renderBlock={(block, activity) => (
                   <Tooltip
-                    key={activity.date} // Use a unique value like the date as the key
+                    key={activity.date}
                     label={`${activity.count} activities on ${activity.date}`}
                   >
                     {block}
@@ -142,7 +155,7 @@ const GitHubActivity: React.FC = () => {
           width={"100%"}
           flexDirection={{ base: "column", md: "row" }}
         >
-          <Flex direction="column" alignItems="center" mb={{ base: 2, md: 0 }}>
+          {/* <Flex direction="column" alignItems="center" mb={{ base: 2, md: 0 }}>
             <Flex>
               {" "}
               <Icon as={FaGithub} w={6} h={6} mr={2} />
@@ -176,11 +189,7 @@ const GitHubActivity: React.FC = () => {
                 </Box>
               </List>
             </Flex>
-          </Flex>
-          <Flex alignItems="flex-start" mb={{ base: 2, md: 0 }}>
-            <Icon as={FaStar} w={6} h={6} mr={2} />
-            <Text fontSize="lg">Stars: {starCount}</Text>
-          </Flex>
+          </Flex> */}
         </Flex>
       </VStack>
     </Box>
